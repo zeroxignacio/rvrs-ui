@@ -1,0 +1,2 @@
+(this["webpackJsonpreverse-frontend"]=this["webpackJsonpreverse-frontend"]||[]).push([[15],{757:function(n,t,e){"use strict";var r,a=e(34),i=e(3).d.div(r||(r=Object(a.a)(["\n  min-height: calc(100vh - 221px);\n  margin-left: auto;\n  margin-right: auto;\n  max-width: 590px;\n  padding-top: 50px;\n  justify-content: center;\n  flex-wrap: wrap;\n"])));t.a=i},870:function(n,t,e){"use strict";e.r(t);e(0);var r=e(757),a=e(4);t.default=function(){return Object(a.jsx)(r.a,{children:"404"})}}}]);
+//# sourceMappingURL=15.cae2c28b.chunk.js.map
