@@ -11,6 +11,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { Pool2 } from 'state/types'
 import { Skeleton } from 'components/Skeleton'
 import Ripples from 'react-ripples'
+import styled from 'styled-components'
 import BondsContainer from '../../components/layout/containers/bondsContainer'
 import ContentCard from '../../components/layout/cards/bonds/contentCard'
 import HeaderCard from '../../components/layout/cards/bonds/headerCard'
@@ -253,15 +254,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
         {/* Claim RVRS */}
         <Flex>
           {rewardsNo > 0 ?
-            <div
-              style={{
-                display: 'inline-flex',
-                borderRadius: 17,
-                overflow: 'hidden',
-                marginLeft: '7px',
-                boxShadow: '0 0 20px 0px #506063'
-              }}
-            >
+            <Div>
               <Ripples>
                 <ClaimButton
                   style={{ marginLeft: '0px', justifyContent: "center" }}
@@ -281,7 +274,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   </Flex>
                 </ClaimButton>
               </Ripples>
-            </div>
+            </Div>
             :
             <ClaimButtonDisabled
               style={{ marginLeft: '7px', justifyContent: "center" }}
@@ -306,5 +299,19 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
     </BondsContainer>
   )
 }
+
+const Div = styled.div`
+  display: inline-flex;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-left: 7px;
+  box-shadow: 0 0 10px 0px #506063;
+  transition: 0.3s ease-in-out;
+  :hover {
+    box-shadow: 0px 0px 15px 0px #5A6F73;
+    color: #FFFF;
+} 
+`
+
 
 export default Bonds
