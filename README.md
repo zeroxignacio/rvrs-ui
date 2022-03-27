@@ -2,8 +2,8 @@
 Open interface for the Reverse Protocol.
 
 # Deployments
-- Production
-- Develop
+- Production: https://rvrs-main.vercel.app/dashboard
+- Develop: https://rvrs-develop.vercel.app/dashboard
 
 # Getting Started
 - Confirm having NodeJS installed. This app is built using React on TS.
