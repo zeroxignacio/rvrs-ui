@@ -1,5 +1,5 @@
 # RVRS UI
-Open user interface for the Reverse Protocol.
+Open interface for the Reverse Protocol.
 
 # Deployments
 - Production
