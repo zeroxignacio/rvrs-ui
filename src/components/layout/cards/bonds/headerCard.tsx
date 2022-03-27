@@ -5,7 +5,7 @@ const contentCard = styled(Container)`
   background-image: linear-gradient(to right, #333B4C, #37404E);
   border-radius: 15px;
   padding: 0px;
-  margin-bottom: 10px
+  margin-bottom: 8px
 `
 
 export default contentCard

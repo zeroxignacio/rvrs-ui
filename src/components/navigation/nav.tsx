@@ -145,11 +145,11 @@ const ConnectButton = styled.div`
   border-radius: 35px;
   padding: 5px;
   transition: 0.3s ease-in-out;
-  box-shadow: -30px 0px 50px -5px #55747D, 30px 0px 50px -5px #4B5674;
+  box-shadow: -20px 0px 30px -10px #55747D, 20px 0px 30px -10px #4B5674;
   &:hover  {
     font-weight: 700;
     border-color: #FFFF !important;
-    box-shadow: 20px 0px 40px 0px #55747D, -20px 0px 40px 0px #4B5674;
+    box-shadow: 20px 0px 30px -5px #55747D, -20px 0px 30px -5px #4B5674;
     background-color: #374052;
     transform: translate(-6px)
   }

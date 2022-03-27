@@ -53,6 +53,10 @@ const StyledModal = styled.div`
   border: 1px solid #FFF;
   border-radius: 25px;
   z-index: ${({ theme }) => theme.zIndices.modal};
+  transition: all 0.3s ease-in-out;
+  &:hover  {
+    box-shadow: 20px 0px 40px -20px #55747D, -20px 0px 20px -20px #4B5674;
+  }
 
 `
 
@@ -66,10 +70,10 @@ const DismissButton = styled.button`
   border: 0px;
   border-style: solid !important;
   border-color: #5F6C74 !important;
+  transition: all 0.3s ease-in-out;
   :hover {
       background: none;
       color: #FFFF;
-      transition: 0.5s;
   } 
 `
 

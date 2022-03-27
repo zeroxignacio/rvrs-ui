@@ -258,7 +258,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 display: 'inline-flex',
                 borderRadius: 17,
                 overflow: 'hidden',
-                marginLeft: '10px',
+                marginLeft: '7px',
                 boxShadow: '0 0 20px 0px #506063'
               }}
             >
@@ -284,7 +284,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             </div>
             :
             <ClaimButtonDisabled
-              style={{ marginLeft: '10px', justifyContent: "center" }}
+              style={{ marginLeft: '7px', justifyContent: "center" }}
               disabled={!rewardsNo}
               onClick={async () => {
                 setPendingTx(true)

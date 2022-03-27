@@ -19,7 +19,7 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss, mb }) => 
         display: 'inline-flex',
         borderRadius: 15,
         overflow: 'hidden',
-        marginLeft: '10px',
+        marginLeft: '0px',
       }}
     >
       <Ripples>

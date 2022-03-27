@@ -103,7 +103,7 @@ const Dashboard = () => {
           </ContentCard>
           <ContentCard style={{ marginRight: '7px' }} >
             <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>To Reach Cap</Typography>
+            <Typography>Portfolio Value</Typography>
           </ContentCard>
           <ContentCard >
             <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
@@ -117,13 +117,13 @@ const Dashboard = () => {
           </ContentCard>
           <ContentCard>
             <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>Treasury Balance</Typography>
+            <Typography>Market Cap/Treasury Ratio</Typography>
           </ContentCard>
         </Flex>
         <Flex justifyContent="center" marginTop="10px">
           <ContentCard>
             <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>RVRS Per $1 Worth of Treasury</Typography>
+            <Typography>Treasury Balance</Typography>
           </ContentCard>
         </Flex>
       </DashboardContainer>
