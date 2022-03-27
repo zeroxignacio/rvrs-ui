@@ -10,10 +10,11 @@ const bondButton = styled.button`
     border-radius: 15px;
     border: 0px;
     box-shadow: 0px 0px 10px #506063;
-    min-width: 110px;   
+    min-width: 110px;  
+    transition: 0.3s ease-in-out;
+ 
     :hover {
         background-image: linear-gradient(#5E7073, #909BBF);
-        transition: 0.3s;
         color: #FFFF;
     } 
 `

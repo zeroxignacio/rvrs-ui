@@ -1,5 +1,3 @@
-import { Button } from "@pancakeswap-libs/uikit";
-import typographyBold from "components/layout/typography/typographyBold";
 import React from "react";
 import Ripples, { createRipples } from 'react-ripples'
 import styled from "styled-components";

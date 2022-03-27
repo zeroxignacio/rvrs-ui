@@ -12,27 +12,24 @@ import { NavLink } from 'react-router-dom'
 import rvrs from 'config/constants/rvrs'
 import { Flex } from '../layout/flex'
 
-
 const Nav = (props) => {
   const { account, connect, reset } = useWallet()
   const rvrsPriceUsd = usePriceCakeBusd()
   const rvrsBalance = getBalanceNumber(useTokenBalance(getCakeAddress())).toLocaleString('en-us', { maximumFractionDigits: 0 });
   const { onPresentConnectModal } = useWalletModal(connect, reset)
 
-
-
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: "20px" }}>
         <ButtonContainer>
-            <StyledButton
-              as={StyledNavLink}
-              to="/staking"
-              isActive={(match, { pathname }) =>
-                Boolean(match) ||
-                pathname.startsWith('/staking')
-              }>Staking
-            </StyledButton>
+          <StyledButton
+            as={StyledNavLink}
+            to="/staking"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/staking')
+            }>Staking
+          </StyledButton>
           <StyledButton
             as={StyledNavLink}
             to="/bonds"
@@ -52,8 +49,6 @@ const Nav = (props) => {
           </StyledButton>
         </ButtonContainer>
       </ButtonGroup>
-
-
       <ButtonGroup>
         {account != null && account.length > 1 ?
           <ConnectButton
@@ -86,8 +81,6 @@ const Nav = (props) => {
           </ConnectButton>
         }
       </ButtonGroup>
-
-
     </MenuContainer>
   )
 }
@@ -97,18 +90,6 @@ const MenuContainer = styled(Container)`
   text-align: end;
   flex-wrap: wrap;
   max-width: 730px;
-`
-
-const pulse = keyframes`
-  0% {
-    box-shadow: 0px 0px 5px -5px #5A6F73;
-  }
-  50% {
-    box-shadow: -10px 0px 30px -5px #506970, 0px 0px 40px -5px #464F68
-  }
-  100% {
-    box-shadow: 0px 0px 5px -5px #5A6F73;
-  }
 `
 
 const StyledButton = styled.div`
@@ -122,9 +103,10 @@ const StyledButton = styled.div`
   padding-right: 28px;
   font-size: 18px;
   font-weight: 500;
+  transition: 0.3s ease-in-out;
+
   &:hover  {
     background-color: #363F50;
-    transition: 0.5s;
   }
 `
 
@@ -138,10 +120,23 @@ const ConnectButton = styled.div`
   padding: 5px;
   font-size: 18px;
   font-weight: 500;
+  transition: 0.3s ease-in-out;
+
   &:hover  {
     background-color: #363F50;
-    transition: 0.5s;
-    transform: translate(-5px)
+    transform: translate(-6px)
+  }
+`
+
+const pulse = keyframes`
+  0% {
+    box-shadow: -10px 0px 60px -20px #55747D, 10px 0px 60px -10px #4B5674;
+  }
+  50% {
+    box-shadow: -40px 0px 50px -5px #55747D, 40px 0px 50px -5px #4B5674;
+  }
+  100% {
+    box-shadow: -10px 0px 60px -20px #55747D, 10px 0px 60px -10px #4B5674;
   }
 `
 
@@ -153,17 +148,15 @@ const ButtonContainer = styled.div`
   border: 1.5px;
   border-color: #CBCBCB !important;
   border-style: solid !important;
-  animation: ${pulse} 8s infinite ease-out;
+  animation: ${pulse} 5s infinite ease-out;
 `
 
 const activeClassName = 'ACTIVE'
 
 const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
   &:focus  {
-    background-image: linear-gradient(to right, #464F68, #506970);
-    font-weight: 600;
+    background-image: linear-gradient(to right, #464F68, #516B73);
     transform: translate(0px)
-
   }
 `
 

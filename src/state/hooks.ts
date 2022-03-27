@@ -14,8 +14,6 @@ import {Airdrop, Farm, Pool, Pool2, State, State2} from './types'
 import {QuoteToken} from '../config/constants/types'
 
 const ZERO = new BigNumber(0)
-const TEN_POW_18 = new BigNumber(10).pow(18)
-
 export const useFetchPublicData = () => {
   const dispatch = useDispatch()
   const { slowRefresh } = useRefresh()
@@ -27,7 +25,6 @@ export const useFetchPublicData = () => {
 }
 
 // Farms
-
 export const useFarms = (): Farm[] => {
   const farms = useSelector((state: State) => state.farms.data)
   return farms
