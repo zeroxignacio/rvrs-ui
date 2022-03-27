@@ -124,13 +124,13 @@ const ConnectedButton = styled.div`
 
 const pulse = keyframes`
   0% {
-    box-shadow: -10px 0px 60px -20px #55747D, 10px 0px 60px -10px #4B5674;
+    box-shadow: -50px 0 40px -30px #55747D, 50px 0 40px -30px #4B5674;
   }
   50% {
-    box-shadow: -40px 0px 50px -5px #55747D, 40px 0px 50px -5px #4B5674;
+    box-shadow: 20px 0 40px -20 #55747D, -20px 0 40px -20 #4B5674;
   }
   100% {
-    box-shadow: -10px 0px 60px -20px #55747D, 10px 0px 60px -10px #4B5674;
+    box-shadow: -50px 0 40px -30px #55747D, 50px 0 40px -30px #4B5674;
   }
 `
 
@@ -163,10 +163,11 @@ const ButtonContainer = styled.div`
   border: 1.5px;
   border-color: #CBCBCB !important;
   border-style: solid !important;
-  animation: ${pulse} 5s infinite ease-out;
+  box-shadow: -20px 0px 40px -15px #55747D, 20px 0px 40px -15px #4B5674;
+
   transition: 0.3s ease-in-out;
   &:hover  {
-    border-color: #FFFF !important;
+    box-shadow: 25px 0px 40px -10px #55747D, -25px 0px 40px -10px #4B5674;
   }
 `
 

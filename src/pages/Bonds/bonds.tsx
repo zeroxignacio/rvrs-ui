@@ -14,7 +14,6 @@ import { QuoteToken } from 'config/constants/types'
 import Page from 'components/layout/containers/page'
 import PoolCard from './card'
 
-
 const Bond: React.FC = () => {
   const { path } = useRouteMatch()
   const { account } = useWallet()

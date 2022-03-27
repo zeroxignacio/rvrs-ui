@@ -16,7 +16,7 @@ const MenuBottom = (props) => {
             <a style={{ marginBottom: "14px" }} target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/" className="nav-links">
               <TypographyBold>Docs</TypographyBold>
             </a>
-            <a target="_blanK" rel="noreferrer" href="https://discord.gg/yquJYbUtVy" className="nav-links">
+            <a target="_blanK" rel="noreferrer" href="https://discord.com/invite/rvrsprotocol" className="nav-links">
               <TypographyBold>Discord</TypographyBold>
             </a>
           </Flex>
@@ -26,6 +26,14 @@ const MenuBottom = (props) => {
             </a>
             <a target="_blanK" rel="noreferrer" href="https://twitter.com/RVRSProtocol" className="nav-links">
               <TypographyBold>Twitter</TypographyBold>
+            </a>
+          </Flex>
+          <Flex flexDirection="column" alignItems="start" marginLeft="-80px">
+            <a style={{ marginBottom: "14px" }} target="_blanK" rel="noreferrer" href="https://medium.com/@reverseprotocolONE" className="nav-links">
+              <TypographyBold>Medium</TypographyBold>
+            </a>
+            <a target="_blanK" rel="noreferrer" href="https://t.me/ReverseProtocolOne" className="nav-links">
+              <TypographyBold>Telegram</TypographyBold>
             </a>
           </Flex>
           <Link to="/">
@@ -47,15 +55,14 @@ const TypographyBold = styled.p`
 const NavContainer = styled(Container)`
   text-align: center;
   padding: 20px;
-  max-width: 520px;
+  max-width: 590px;
 `
 const MenuContainer = styled(Container)`
   padding-bottom: 10px;
-  background-coloe: linear-gradient(to right, #354256, #2C3646);
   background-color: rgba(42, 52, 67, 0.6);
+  transition: all 0.3s ease-in-out;
   :hover {
     background-color: rgba(42, 52, 67, 1);
-    transition: 0.5s;
   }
   max-width: 4000px;
 `
