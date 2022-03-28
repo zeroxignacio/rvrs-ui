@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "components/layout/modal";
+import Modal from "components/modals/components/modal";
 import { Button, Flex, LinkExternal } from "@reverse/uikit";
 import { localStorageKey } from "./config";
 

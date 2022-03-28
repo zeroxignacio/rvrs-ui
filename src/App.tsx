@@ -37,18 +37,18 @@ const App: React.FC = () => {
       <Nav />
       {account != null && account.length > 1 ?
         <Suspense fallback>
-          <Route path="/bonds">
-            <BONDS />
-          </Route>
-          <Route path="/staking">
-            <STAKEDEPRECATED />
-          </Route>
-          <Route path="/dashboard">
-            <DASHBOARD />
-          </Route>
-          <Route path="/airdrop">
-            <AIRDROP />
-          </Route>
+            <Route path="/bonds">
+              <BONDS />
+            </Route>
+            <Route path="/staking">
+              <STAKEDEPRECATED />
+            </Route>
+            <Route path="/dashboard">
+              <DASHBOARD />
+            </Route>
+            <Route path="/airdrop">
+              <AIRDROP />
+            </Route>
         </Suspense>
         :
         <Page />

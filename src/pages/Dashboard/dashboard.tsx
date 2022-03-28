@@ -5,7 +5,7 @@ import { useWallet } from "@binance-chain/bsc-use-wallet"
 import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
-import { Skeleton } from 'components/Skeleton'
+import { Skeleton } from 'components/skeleton'
 import DashboardContainer from 'components/layout/containers/airdropContainer'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'

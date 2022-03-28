@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Container } from "react-bootstrap";
+import { Flex } from "components/layout/flex";
+import TypographyTitle from "components/layout/typography/typographyTitle";
 import { InjectedProps } from "./types";
-import TypographyTitle from "../typography/typographyTitle";
-import { Flex } from "../flex";
 
 interface Props extends InjectedProps {
   title: string;

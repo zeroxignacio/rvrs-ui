@@ -1,13 +1,13 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import Modal from 'components/layout/modal'
-import ModalActions from 'components/layout/modal/modalActions'
+import Modal from 'components/modals/components/modal'
+import ModalActions from 'components/modals/components/modal/modalActions'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { TranslateString } from 'utils/translateTextHelpers'
-import useWalletModal from 'components/WalletModal'
+import useWalletModal from 'components/modals/WalletModal'
 import ModalButton from 'components/layout/buttons/modalButton'
-import TokenInput from '../../../components/layout/modal/input'
+import TokenInput from 'components/modals/components/modal/input'
 
 interface DepositModalProps {
   max: BigNumber
