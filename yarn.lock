@@ -2257,7 +2257,7 @@
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.0.0"
 
-"@pancakeswap-libs/uikit@https://github.com/ReverseProtocol/reverse-uikit#c4f005e5eeb12d70b31557acef8b797232b53897":
+"@reverse/uikit@https://github.com/ReverseProtocol/reverse-uikit#c4f005e5eeb12d70b31557acef8b797232b53897":
   version "0.10.2"
   resolved "https://github.com/ReverseProtocol/reverse-uikit.git#c4f005e5eeb12d70b31557acef8b797232b53897"
   integrity sha512-p9LCdzsS2GacCQeG0LcWhc/DtDZBIYkTbROBZm1CDtadD5Kb9iyrcMgy6rERbj5IS4DXV6VHxoInz9uj1zx8eg==

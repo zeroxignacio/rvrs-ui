@@ -1,5 +1,5 @@
 import React from "react";
-import { useModal } from "@pancakeswap-libs/uikit";
+import { useModal } from "@reverse/uikit";
 
 import ConnectModal from "./ConnectModal";
 import AccountModal from "./AccountModal";

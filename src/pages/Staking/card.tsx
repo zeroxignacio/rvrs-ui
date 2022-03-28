@@ -1,24 +1,24 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { useModal } from '@pancakeswap-libs/uikit'
+import { useModal } from '@reverse/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useERC20 } from 'hooks/useContract'
 import { useSousApprove } from 'hooks/useApprove'
 import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { QuoteToken, PoolCategory } from 'config/constants/types'
+import { QuoteToken } from 'config/constants/types'
 import { Pool } from 'state/types'
-import { Skeleton } from 'components/Skeleton'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
+import Skeleton from 'components/Skeleton/Skeleton'
 import Typography from 'components/layout/typography/typography'
 import { Flex } from 'components/layout/flex'
 import TypographyBold from 'components/layout/typography/typographyBold'
 import TypographyTitle from 'components/layout/typography/typographyTitle'
-import WithdrawModal from './modals/withdrawModal'
-import StakeModal from './modals/stakeModal'
+import WithdrawModal from 'components/modals/withdrawModal'
+import StakeModal from '../../components/modals/stakeModal'
 import { usePriceCakeBusd } from "../../state/hooks";
 import ContentCard from './containers/contentCard'
 import ContentCard2 from './containers/contentCard2'
@@ -36,20 +36,18 @@ interface HarvestProps {
 }
 
 const Card: React.FC<HarvestProps> = ({ pool }) => {
-  const { sousId, stakingTokenName, stakingTokenAddress, apy, tokenDecimals, poolCategory, isFinished, userData, stakingLimit, pricePerShare } = pool
+  const { sousId, stakingTokenName, stakingTokenAddress, apy, tokenDecimals, userData, pricePerShare } = pool
 
   // rvrs
   const rvrsBalance = getBalanceNumber(useTokenBalance(getCakeAddress()));
   const rvrsBalanceStr = rvrsBalance.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const rvrsPrice = usePriceCakeBusd()
-
-  const isBnbPool = poolCategory === PoolCategory.BINANCE
   const stakingTokenContract = useERC20(stakingTokenAddress)
 
   // func
   const { account } = useWallet()
   const { onApprove } = useSousApprove(stakingTokenContract, sousId)
-  const { onStake } = useSousStake(sousId, isBnbPool)
+  const { onStake } = useSousStake(sousId)
   const { onUnstake } = useSousUnstake(sousId)
 
   const [requestedApproval, setRequestedApproval] = useState(false)
@@ -58,7 +56,6 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
   const isOldSyrup = stakingTokenName === QuoteToken.SYRUP
-  const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
 
   // staked
   const staked = new BigNumber(userData?.stakedBalance || 0);
@@ -68,7 +65,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   // misc
   const accountHasStakedBalance = staked?.toNumber() > 0;
-  const needsApproval = !accountHasStakedBalance && !allowance.toNumber() && !isBnbPool;
+  const needsApproval = !accountHasStakedBalance && !allowance.toNumber();
 
   // tvl
   const tvlNo = pool.tvl && pool.tvl.toNumber();
@@ -76,6 +73,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   // apy
   const apyNo = apy && apy.toNumber();
+  const apyNull = apyNo < 5;
   const apyStr = apy && apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const monthlyRoiStr = apy && apy.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
@@ -97,9 +95,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   }, [onApprove, setRequestedApproval])
   const [onPresentDeposit] = useModal(
     <StakeModal
-      max={stakingLimit && stakingTokenBalance.isGreaterThan(convertedLimit) ? convertedLimit : stakingTokenBalance}
+      max={stakingTokenBalance}
       onConfirm={onStake}
-      tokenName={stakingLimit ? `${stakingTokenName} (${stakingLimit} max)` : stakingTokenName}
+      tokenName={stakingTokenName}
     />,
   )
 
@@ -171,7 +169,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 Unstake
               </UnstakeButton>
               <StakeButton
-                disabled={isFinished && sousId !== 0}
+                disabled={apyNull}
                 onClick={onPresentDeposit}>
                 &nbsp;Stake&nbsp;
               </StakeButton>
@@ -189,7 +187,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 Unstake
               </UnstakeButton>
               <StakeButton
-                disabled={isFinished && sousId !== 0}
+                disabled={apyNull}
                 onClick={onPresentDeposit}
               >
                 &nbsp;Stake&nbsp;

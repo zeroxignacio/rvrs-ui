@@ -1,7 +1,7 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { ResetCSS } from '@pancakeswap-libs/uikit'
+import { ResetCSS } from '@reverse/uikit'
 import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
 import MenuBottom from 'components/navigation/footer'
@@ -37,18 +37,18 @@ const App: React.FC = () => {
       <Nav />
       {account != null && account.length > 1 ?
         <Suspense fallback>
-          <Route path="/bonds">
-            <BONDS />
-          </Route>
-          <Route path="/staking">
-            <STAKEDEPRECATED />
-          </Route>
-          <Route path="/dashboard">
-            <DASHBOARD />
-          </Route>
-          <Route path="/airdrop">
-            <AIRDROP />
-          </Route>
+            <Route path="/bonds">
+              <BONDS />
+            </Route>
+            <Route path="/staking">
+              <STAKEDEPRECATED />
+            </Route>
+            <Route path="/dashboard">
+              <DASHBOARD />
+            </Route>
+            <Route path="/airdrop">
+              <AIRDROP />
+            </Route>
         </Suspense>
         :
         <Page />

@@ -1,4 +1,4 @@
-import { Button, Flex } from "@pancakeswap-libs/uikit";
+import { Button, Flex } from "@reverse/uikit";
 import React from "react";
 import useWalletModal from "./useWalletModal";
 

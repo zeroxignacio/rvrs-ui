@@ -1,4 +1,4 @@
-import { Svg, SvgProps } from "@pancakeswap-libs/uikit";
+import { Svg, SvgProps } from "@reverse/uikit";
 import React from "react";
 
 

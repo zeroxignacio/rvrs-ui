@@ -173,14 +173,11 @@ export const usePriceCakeBusd = (): BigNumber => {
 }
 
 export const usePrices = () => {
-  const misPrice = usePriceCakeBusd()
+  const rvrsPrice = usePriceCakeBusd()
   const onePrice = usePriceBnbBusd()
 
-
   return [
-      {name: QuoteToken.MIS, price: misPrice},
-      {name: QuoteToken.RVRS, price: misPrice},
-      {name: QuoteToken.CAKE, price: misPrice},
+      {name: QuoteToken.RVRS, price: rvrsPrice},
       {name: QuoteToken.ONE, price: onePrice},
   ]
 }
