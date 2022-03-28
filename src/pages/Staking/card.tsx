@@ -36,7 +36,7 @@ interface HarvestProps {
 }
 
 const Card: React.FC<HarvestProps> = ({ pool }) => {
-  const { sousId, stakingTokenName, stakingTokenAddress, apy, tokenDecimals, userData, pricePerShare } = pool
+  const { sousId, stakingTokenName, stakingTokenAddress, apy, userData, pricePerShare, apr } = pool
 
   // rvrs
   const rvrsBalance = getBalanceNumber(useTokenBalance(getCakeAddress()));
@@ -75,7 +75,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const apyNo = apy && apy.toNumber();
   const apyNull = apyNo < 5;
   const apyStr = apy && apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const monthlyRoiStr = apy && apy.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const monthlyRoiStr = apr && apr.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
   // approve, withdraw, deposit
   const [onPresentWithdraw] = useModal(
