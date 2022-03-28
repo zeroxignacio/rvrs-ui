@@ -24,7 +24,7 @@ export const useFetchPublicData = () => {
   }, [dispatch, slowRefresh])
 }
 
-// Farms
+// farms
 export const useFarms = (): Farm[] => {
   const farms = useSelector((state: State) => state.farms.data)
   return farms
@@ -72,8 +72,7 @@ export const useFarmUser = (pid) => {
 }
 
 
-// Pools
-
+// pools
 export const usePools = (account): Pool[] => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
@@ -122,49 +121,12 @@ export const usePoolFromPid = (sousId): Pool => {
   return pool
 }
 
-// Prices
-
+// prices
 export const usePriceBnbBusd = (): BigNumber => {
   const pid = rvrs.pids.pidBnbBusd // BUSD-BNB LP
   const farm = useFarmFromPid(pid)
   return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : ZERO
 }
-
-
-
-// export const fetchrvrsPrice = (): BigNumber => {
-//   const query = `
-//   {ethereum(network: bsc){
-//     address(address: {is: "0xbf9a298a948079bed1e0902e78c61b1b30f58e7e"}){
-//     balances {
-//     currency {
-//     symbol
-//     }
-//     value
-//     }}
-//     }}
-// `;
-// const url = "https://graphql.bitquery.io/";
-// const opts = {
-//     method: "POST",
-//     headers: {
-//         "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//         query
-//     })
-// };
-
-// fetch(url, opts)
-//   .then(response => response.json())
-//   .then(json => {
-//     if (process.env.REACT_APP_DEBUG === "true") console.log(json.data.ethereum.address[0].balances);
-//   })
-//   .catch(console.error);
-
-//   return new BigNumber(3);
-// }
-
 
 export const usePriceCakeBusd = (): BigNumber => {
   const pid = 3;
@@ -173,14 +135,11 @@ export const usePriceCakeBusd = (): BigNumber => {
 }
 
 export const usePrices = () => {
-  const misPrice = usePriceCakeBusd()
+  const rvrsPrice = usePriceCakeBusd()
   const onePrice = usePriceBnbBusd()
 
-
   return [
-      {name: QuoteToken.MIS, price: misPrice},
-      {name: QuoteToken.RVRS, price: misPrice},
-      {name: QuoteToken.CAKE, price: misPrice},
+      {name: QuoteToken.RVRS, price: rvrsPrice},
       {name: QuoteToken.ONE, price: onePrice},
   ]
 }
@@ -191,8 +150,8 @@ export const lookupPrice = (tokenName, prices) => {
   if (tokenPrice) {
     return tokenPrice.price
   }
-  console.log('prices', prices)
-  console.log("ERROR: No price found for", tokenName)
+  // console.log('prices', prices)
+  // console.log("ERROR: No price found for", tokenName)
   return new BigNumber(0)
 }
 
@@ -214,7 +173,7 @@ export const getTotalValueFromQuoteTokens = (quoteTokenAmount, quoteToken, price
     const price = lookupPrice(QuoteToken.RVRS, prices)
     return new BigNumber(2).times(quoteTokenAmount).times(price)
   }
-  console.log("ERROR: NO PRICE FOUND FOR QuoteToken:", quoteToken)
+  // console.log("ERROR: NO PRICE FOUND FOR QuoteToken:", quoteToken)
   return new BigNumber(0)
 }
 

@@ -33,8 +33,8 @@ export const useTotalSupply = () => {
 
   useEffect(() => {
     async function fetchTotalSupply() {
-      const cakeContract = getContract(cakeABI, getCakeAddress())
-      const supply = await cakeContract.methods.totalSupply().call()
+      const rvrsContract = getContract(cakeABI, getCakeAddress())
+      const supply = await rvrsContract.methods.totalSupply().call()
       setTotalSupply(new BigNumber(supply))
     }
 
@@ -50,8 +50,8 @@ export const useBurnedBalance = (tokenAddress: string) => {
 
   useEffect(() => {
     const fetchBalance = async () => {
-      const cakeContract = getContract(cakeABI, getCakeAddress())
-      const bal = await cakeContract.methods.balanceOf('0x000000000000000000000000000000000000dEaD').call()
+      const rvrsContract = getContract(cakeABI, getCakeAddress())
+      const bal = await rvrsContract.methods.balanceOf('0x000000000000000000000000000000000000dEaD').call()
       setBalance(new BigNumber(bal))
     }
 
@@ -95,21 +95,5 @@ export const useRvrsOneTreasuryBalance = (tokenAddress: string) => {
   return balance
 }
 
-export const useRvrsUstTreasuryBalance = (tokenAddress: string) => {
-  const [balance, setBalance] = useState(new BigNumber(0))
-  const { slowRefresh } = useRefresh()
-
-  useEffect(() => {
-    const fetchBalance = async () => {
-      const rvrsustContract = getContract(cakeABI, getRvrsUstAddress())
-      const bal = await rvrsustContract.methods.balanceOf('0xA3904e99b6012EB883DB1090D02D4e954539EC61').call()
-      setBalance(new BigNumber(bal))
-    }
-
-    fetchBalance()
-  }, [tokenAddress, slowRefresh])
-
-  return balance
-}
 
 export default useTokenBalance

@@ -1,4 +1,4 @@
-import { Button, CopyIcon } from "@pancakeswap-libs/uikit";
+import { Button, CopyIcon } from "@reverse/uikit";
 import React, { useState } from "react";
 import styled from "styled-components";
 

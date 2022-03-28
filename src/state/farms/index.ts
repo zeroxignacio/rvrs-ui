@@ -65,7 +65,7 @@ export const fetchFarmUserDataAsync = (account) => async (dispatch) => {
   dispatch(setFarmUserData({ arrayOfUserDataObjects }))
 }
 
-export const fetchrvrsPriceAsync = () => async (dispatch) => { // Change the address below to rvrs-BUSD LP
+export const fetchrvrsPriceAsync = () => async (dispatch) => {
   const query = `
   {ethereum(network: bsc){
     address(address: {is: "${rvrs.addr.rvrsUstAddr}"}){

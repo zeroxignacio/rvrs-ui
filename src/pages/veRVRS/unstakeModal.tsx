@@ -1,10 +1,10 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
-import ModalActions from 'components/layout/modal/modalActions'
+import ModalActions from 'components/modals/components/modal/modalActions'
 import styled from 'styled-components'
-import { Modal } from '@pancakeswap-libs/uikit'
+import { Modal } from '@reverse/uikit'
 import ModalButton from 'components/layout/buttons/modalButton'
-import TokenInput from 'components/layout/modal/input'
+import TokenInput from 'components/modals/components/modal/input'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 
 const DEFAULT_TOKEN_DECIMALS = new BigNumber(10).pow(18)

@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "components/layout/modal";
+import Modal from "components/modals/components/modal";
 import WalletCard from "./WalletCard";
 import config from "./config";
 import { Login } from "./types";

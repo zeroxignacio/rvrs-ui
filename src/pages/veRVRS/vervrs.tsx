@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import Page from 'components/layout/containers/page'
-import { Flex } from '@pancakeswap-libs/uikit'
+import { Flex } from '@reverse/uikit'
 import { useWallet } from "@binance-chain/bsc-use-wallet"
 import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TypographyBold from 'components/layout/typography/typographyBold'

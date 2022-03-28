@@ -1,8 +1,13 @@
-#loading {width: 100%;height: 100%;top: 0px;left: 0px;position: fixed;display: block; z-index: 99;
-     
-    background-color: rgb(56, 70, 89); 
-
+#loading {
+    width: 100%; 
+    height: 100%; 
+    top: 0px; 
+    left: 0px; 
+    position: fixed; 
+    display: block; 
+    z-index: 99;
+    background: radial-gradient(circle at 100%, #2B3647, #2B3647 50%, #39475C 75%, #2B3647 75%);
     display: flex; flex-flow: column; 
-    align-items: center; justify-content: center;}
-
-  
+    align-items: center; 
+    justify-content: center;
+}

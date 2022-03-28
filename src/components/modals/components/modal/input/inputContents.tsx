@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js/bignumber'
 import Ripples, { createRipples } from 'react-ripples'
-import Input, { InputProps } from '../../../Input'
+import Input, { InputProps } from 'components/modals/components/Input'
 
 interface TokenInputProps extends InputProps {
   max: number | string

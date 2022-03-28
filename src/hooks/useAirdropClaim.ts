@@ -4,7 +4,7 @@ import {fetchAirdropUserDataAsync} from 'state/actions'
 import { airdropClaim } from 'utils/callHelpers'
 import {useAirdropContract} from './useContract'
 
-// Claim airdrop
+// claim airdrop
 const useAirdropClaim = (account) => {
   const dispatch = useDispatch()
   const airdropContract = useAirdropContract()
