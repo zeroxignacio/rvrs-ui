@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { useModal } from '@pancakeswap-libs/uikit'
+import { useModal } from '@reverse/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useERC20 } from 'hooks/useContract'
 import { useSousApprove } from 'hooks/useApprove'

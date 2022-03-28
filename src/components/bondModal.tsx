@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Modal } from '@pancakeswap-libs/uikit'
+import { Modal } from '@reverse/uikit'
 import ModalActions from 'components/layout/modal/modalActions'
 import styled from 'styled-components'
 import TokenInput from './layout/modal/input'

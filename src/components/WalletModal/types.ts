@@ -1,4 +1,4 @@
-import { SvgProps } from "@pancakeswap-libs/uikit";
+import { SvgProps } from "@reverse/uikit";
 import { FC } from "react";
 
 export type ConnectorId =

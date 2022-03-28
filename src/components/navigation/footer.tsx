@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, Toggle, useModal } from '@pancakeswap-libs/uikit'
+import { Flex, Toggle, useModal } from '@reverse/uikit'
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap';
