@@ -14,7 +14,7 @@ const MenuBottom = (props) => {
         <Flex justifyContent="space-between" marginTop="10px">
           <Flex flexDirection="column" alignItems="start" >
             <a style={{ marginBottom: "14px" }} target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/" className="nav-links">
-              <TypographyBold>Docs</TypographyBold>
+              <TypographyBold>Docs&nbsp;</TypographyBold>
             </a>
             <a target="_blanK" rel="noreferrer" href="https://discord.com/invite/rvrsprotocol" className="nav-links">
               <TypographyBold>Discord</TypographyBold>
