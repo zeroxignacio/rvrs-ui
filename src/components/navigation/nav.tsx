@@ -55,7 +55,8 @@ const Nav = (props) => {
             }>
             <Flex alignItems="center">
               <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
-              <div style={{ marginLeft: '10px', marginRight: '20px' }}>{account.substring(0, 6)} </div>
+              <div style={{ marginLeft: '10px', marginRight: '10px' }}>{account.substring(0, 6)} </div>
+              <ActivePulse  style={{ marginRight: '20px' }}/>
             </Flex>
           </ConnectedButton>
           :
@@ -70,7 +71,7 @@ const Nav = (props) => {
             onClick={onPresentConnectModal} {...props}>
             <Flex alignItems="center">
               <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
-              <div style={{ marginLeft: '10px', marginRight: '20px' }}>Connect</div>
+              <div style={{ marginLeft: '10px', marginRight: '15px' }}>Connect</div>
             </Flex>
           </ConnectButton>
         }
@@ -133,6 +134,35 @@ const pulse = keyframes`
     box-shadow: -50px 0 40px -30px #55747D, 50px 0 40px -30px #4B5674;
   }
 `
+
+
+const activePulse = keyframes`
+  0% {
+    transform: scale(0.90);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.90);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+`
+
+const ActivePulse = styled.div`
+  background: #9ACECE;
+  border-radius: 50%;
+  margin: 0px;
+  height: 10px;
+  width: 10px;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  transform: scale(1);
+  animation: ${activePulse} 2s infinite;
+`
+
 
 const ConnectButton = styled.div`
   background-color: #2D3544;
