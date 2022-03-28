@@ -1,6 +1,6 @@
 {
-  "name": "reverse-frontend",
-  "version": "0.1.0",
+  "name": "reverse-ui",
+  "version": "2.0",
   "private": true,
   "homepage": ".",
   "scripts": {
