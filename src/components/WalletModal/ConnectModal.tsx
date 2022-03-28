@@ -1,6 +1,4 @@
 import React from "react";
-import styled from "styled-components";
-import { HelpIcon, Link } from "@pancakeswap-libs/uikit";
 import Modal from "components/layout/modal";
 import WalletCard from "./WalletCard";
 import config from "./config";
@@ -10,7 +8,6 @@ interface Props {
   login: Login;
   onDismiss?: () => void;
 }
-
 
 const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null }) => (
   <Modal title="Connect to Reverse" onDismiss={onDismiss}>

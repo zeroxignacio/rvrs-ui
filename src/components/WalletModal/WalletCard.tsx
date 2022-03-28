@@ -1,5 +1,3 @@
-import { Button } from "@pancakeswap-libs/uikit";
-import typographyBold from "components/layout/typography/typographyBold";
 import React from "react";
 import Ripples, { createRipples } from 'react-ripples'
 import styled from "styled-components";
@@ -21,7 +19,7 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss, mb }) => 
         display: 'inline-flex',
         borderRadius: 15,
         overflow: 'hidden',
-        marginLeft: '10px',
+        marginLeft: '0px',
       }}
     >
       <Ripples>

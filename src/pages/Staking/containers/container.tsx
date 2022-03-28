@@ -15,6 +15,7 @@ const container = styled.div`
   border: 1px;
   border-style: solid !important;
   border-color: #FFFFFF !important;
+  overflow: hidden;
 `
 
 export default container

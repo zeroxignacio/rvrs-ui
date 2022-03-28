@@ -1,19 +1,17 @@
 import styled from 'styled-components'
 
 const claimButton = styled.button`
+    min-width: 110px;
     padding: 12px;
-    background-image: linear-gradient(#506063, #909BBF);
+    background-image: linear-gradient(#506063, #98A3C3);
     border-radius: 18px;
     border: 0px;
-    color: #EEEEEE;
-    box-shadow: 0px 0px 8px #506063;
+    opacity: 0.9;
+    transition: 0.3s ease-in-out;
     :hover {
-        background-image: linear-gradient(#506063, #A1ACCD);
-        box-shadow: 0px 0px 12px #5A6F73;
-        color: #FFFF;
-        transition: 0.5s;
+        opacity: 0.9;
+        background-image: linear-gradient(#53686C, #A1ACCD);
     } 
-    min-width: 110px;
 `
 
 export default claimButton

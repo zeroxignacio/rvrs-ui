@@ -2,7 +2,6 @@ import masterchefAbi from 'config/abi/masterchef.json';
 import autorvrsAbi from 'config/abi/autorvrs.json';
 import multicall from 'utils/multicall';
 import {getAutoRvrsAddress, getMasterChefAddress} from 'utils/addressHelpers';
-import BigNumber from 'bignumber.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export const fetchPoolsTotalStaking = async () => {

@@ -1,38 +1,29 @@
 import React, { useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { usePriceCakeBusd } from 'state/hooks'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container, ButtonGroup, Button } from 'react-bootstrap'
-import { getBalanceNumber } from 'utils/formatBalance'
-import useTokenBalance from 'hooks/useTokenBalance'
 import useWalletModal from 'components/WalletModal'
-import { getCakeAddress } from 'utils/addressHelpers'
 import { NavLink } from 'react-router-dom'
 import rvrs from 'config/constants/rvrs'
 import { Flex } from '../layout/flex'
 
-
 const Nav = (props) => {
   const { account, connect, reset } = useWallet()
-  const rvrsPriceUsd = usePriceCakeBusd()
-  const rvrsBalance = getBalanceNumber(useTokenBalance(getCakeAddress())).toLocaleString('en-us', { maximumFractionDigits: 0 });
   const { onPresentConnectModal } = useWalletModal(connect, reset)
-
-
 
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: "20px" }}>
         <ButtonContainer>
-            <StyledButton
-              as={StyledNavLink}
-              to="/staking"
-              isActive={(match, { pathname }) =>
-                Boolean(match) ||
-                pathname.startsWith('/staking')
-              }>Staking
-            </StyledButton>
+          <StyledButton
+            as={StyledNavLink}
+            to="/staking"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/staking')
+            }>Staking
+          </StyledButton>
           <StyledButton
             as={StyledNavLink}
             to="/bonds"
@@ -52,11 +43,9 @@ const Nav = (props) => {
           </StyledButton>
         </ButtonContainer>
       </ButtonGroup>
-
-
       <ButtonGroup>
         {account != null && account.length > 1 ?
-          <ConnectButton
+          <ConnectedButton
             style={{ justifyContent: "space-between" }}
             as={StyledNavLink}
             to="/dashboard"
@@ -68,7 +57,7 @@ const Nav = (props) => {
               <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
               <div style={{ marginLeft: '10px', marginRight: '20px' }}>{account.substring(0, 6)} </div>
             </Flex>
-          </ConnectButton>
+          </ConnectedButton>
           :
           <ConnectButton
             as={StyledNavLink}
@@ -86,8 +75,6 @@ const Nav = (props) => {
           </ConnectButton>
         }
       </ButtonGroup>
-
-
     </MenuContainer>
   )
 }
@@ -99,49 +86,72 @@ const MenuContainer = styled(Container)`
   max-width: 730px;
 `
 
-const pulse = keyframes`
-  0% {
-    box-shadow: 0px 0px 5px -5px #5A6F73;
-  }
-  50% {
-    box-shadow: -10px 0px 30px -5px #506970, 0px 0px 40px -5px #464F68
-  }
-  100% {
-    box-shadow: 0px 0px 5px -5px #5A6F73;
-  }
-`
-
 const StyledButton = styled.div`
+  background-color: #2D3544;
+  font-size: 18px;
+  font-weight: 500;
   text-align: center;
   border: #FFFF solid 0px;
   border-radius: 35px;
-  background-color: #2D3544;
   padding-top: 20px;
   padding-bottom: 20px;
-  padding-left: 28px;
-  padding-right: 28px;
-  font-size: 18px;
-  font-weight: 500;
+  padding-left: 27px;
+  padding-right: 27px;
+  transition: 0.3s ease-in-out;
   &:hover  {
-    background-color: #363F50;
-    transition: 0.5s;
+    background-color: #374052;
   }
 `
 
-const ConnectButton = styled.div`
+const ConnectedButton = styled.div`
+  background-color: #2D3544;
+  font-size: 18px;
+  font-weight: 500;
   text-align: center;
   border: 1.5px;
   border-style: solid !important;
   border-color: #CBCBCB !important;
   border-radius: 35px;
-  background-color: #2D3544;
   padding: 5px;
+  transition: 0.3s ease-in-out;
+  &:hover  {
+    background-color: #374052;
+    box-shadow: 20px 0px 40px -20px #55747D, -20px 0px 20px -20px #4B5674;
+    border-color: #FFFF !important;
+    transform: translate(-6px)
+  }
+`
+
+const pulse = keyframes`
+  0% {
+    box-shadow: -50px 0 40px -30px #55747D, 50px 0 40px -30px #4B5674;
+  }
+  50% {
+    box-shadow: 20px 0 40px -20 #55747D, -20px 0 40px -20 #4B5674;
+  }
+  100% {
+    box-shadow: -50px 0 40px -30px #55747D, 50px 0 40px -30px #4B5674;
+  }
+`
+
+const ConnectButton = styled.div`
+  background-color: #2D3544;
   font-size: 18px;
   font-weight: 500;
+  text-align: center;
+  border: 1.5px;
+  border-style: solid !important;
+  border-color: #CBCBCB !important;
+  border-radius: 35px;
+  padding: 5px;
+  transition: 0.3s ease-in-out;
+  box-shadow: -20px 0px 30px -10px #55747D, 20px 0px 30px -10px #4B5674;
   &:hover  {
-    background-color: #363F50;
-    transition: 0.5s;
-    transform: translate(-5px)
+    font-weight: 700;
+    border-color: #FFFF !important;
+    box-shadow: 20px 0px 30px -5px #55747D, -20px 0px 30px -5px #4B5674;
+    background-color: #374052;
+    transform: translate(-6px)
   }
 `
 
@@ -153,17 +163,20 @@ const ButtonContainer = styled.div`
   border: 1.5px;
   border-color: #CBCBCB !important;
   border-style: solid !important;
-  animation: ${pulse} 8s infinite ease-out;
+  box-shadow: -20px 0px 40px -15px #55747D, 20px 0px 40px -15px #4B5674;
+
+  transition: 0.3s ease-in-out;
+  &:hover  {
+    box-shadow: 25px 0px 40px -10px #55747D, -25px 0px 40px -10px #4B5674;
+  }
 `
 
 const activeClassName = 'ACTIVE'
 
 const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
   &:focus  {
-    background-image: linear-gradient(to right, #464F68, #506970);
-    font-weight: 600;
+    background-image: linear-gradient(to right, #464F68, #516B73);
     transform: translate(0px)
-
   }
 `
 

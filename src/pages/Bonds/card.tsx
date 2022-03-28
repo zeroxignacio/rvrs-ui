@@ -10,6 +10,8 @@ import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { Pool2 } from 'state/types'
 import { Skeleton } from 'components/Skeleton'
+import Ripples from 'react-ripples'
+import styled from 'styled-components'
 import BondsContainer from '../../components/layout/containers/bondsContainer'
 import ContentCard from '../../components/layout/cards/bonds/contentCard'
 import HeaderCard from '../../components/layout/cards/bonds/headerCard'
@@ -88,6 +90,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const positiveRoi = roiNo > 0;
   const fivePercentRoi = roiNo > 5;
   const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
+  const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(100)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
   // tvl
   const tbvNo = pool2.tvl && pool2.tvl.toNumber();
@@ -133,26 +136,24 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             </Flex>
             {fivePercentRoi ?
               <Flex alignItems="end">
-                {user && (needsApproval ? (
+                {needsApproval ?
                   <BondButton
                     style={{ justifyContent: "center" }}
                     disabled={hasEnded}
                     onClick={handleApprove}>
                     Enable
                   </BondButton>
-                ) : (
+                  :
                   <BondButton style={{ justifyContent: "center" }}
                     disabled={hasEnded}
                     onClick={onPresentDeposit}>
                     Bond
                   </BondButton>
-                ))}
+                }
               </Flex>
               :
               <Flex alignItems="end">
-                {user &&
-                  <BondButtonDisabled disabled>Sold Out</BondButtonDisabled>
-                }
+                <BondButtonDisabled disabled>Sold Out</BondButtonDisabled>
               </Flex>
             }
           </Flex>
@@ -187,17 +188,24 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           <Flex justifyContent="space-between">
             {/* ROI */}
             <Flex flexDirection="column" alignItems="start">
-              <TypographyBold style={{ marginBottom: "5px" }}>vROI</TypographyBold>
-              {hasStarted ?
+              {fivePercentRoi ?
                 <div>
-                  {positiveRoi ?
+                  <TypographyBold style={{ marginBottom: "5px" }}>vROI</TypographyBold>
+                  {hasStarted ?
                     <Typography>{roiStr}%</Typography>
                     :
-                    <Typography>Sold&nbsp;Out</Typography>
+                    <Skeleton height={10} width={60} />
                   }
                 </div>
                 :
-                <Skeleton height={10} width={60} />
+                <div>
+                  <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
+                  {hasStarted ?
+                    <Typography>{estRoiAfterSoldOutStr}%</Typography>
+                    :
+                    <Skeleton height={10} width={60} />
+                  }
+                </div>
               }
             </Flex>
             {/* Vesting */}
@@ -244,52 +252,66 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           </Flex>
         </ContentCard>
         {/* Claim RVRS */}
-        {user && (
-          <Flex>
-            {rewardsNo > 0 ?
-              <ClaimButton
-                style={{ marginLeft: '20px', justifyContent: "center" }}
-                disabled={!rewardsNo}
-                onClick={async () => {
-                  setPendingTx(true)
-                  await onReward()
-                  setPendingTx(false)
-                }}>
-                <Flex flexDirection="column" alignItems="center">
-                  <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
-                  {hasStarted ?
-                    <Typography>{rewardsStr}&nbsp;RVRS</Typography>
-                    :
-                    <Skeleton height={10} width={60} />
-                  }
-                </Flex>
-              </ClaimButton>
-              :
-              <ClaimButtonDisabled
-                style={{ marginLeft: '20px', justifyContent: "center" }}
-                disabled={!rewardsNo}
-                onClick={async () => {
-                  setPendingTx(true)
-                  await onReward()
-                  setPendingTx(false)
-                }}>
-                <Flex flexDirection="column" alignItems="center">
-                  <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
-                  {hasStarted ?
-                    <Typography>{rewardsStr}&nbsp;RVRS</Typography>
-                    :
-                    <Skeleton height={10} width={60} />
-                  }
-                </Flex>
-              </ClaimButtonDisabled>
-            }
-          </Flex>
-        )}
+        <Flex>
+          {rewardsNo > 0 ?
+            <Div>
+              <Ripples>
+                <ClaimButton
+                  style={{ marginLeft: '0px', justifyContent: "center" }}
+                  disabled={!rewardsNo}
+                  onClick={async () => {
+                    setPendingTx(true)
+                    await onReward()
+                    setPendingTx(false)
+                  }}>
+                  <Flex flexDirection="column" alignItems="center">
+                    <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
+                    {hasStarted ?
+                      <Typography>{rewardsStr}&nbsp;RVRS</Typography>
+                      :
+                      <Skeleton height={10} width={60} />
+                    }
+                  </Flex>
+                </ClaimButton>
+              </Ripples>
+            </Div>
+            :
+            <ClaimButtonDisabled
+              style={{ marginLeft: '7px', justifyContent: "center" }}
+              disabled={!rewardsNo}
+              onClick={async () => {
+                setPendingTx(true)
+                await onReward()
+                setPendingTx(false)
+              }}>
+              <Flex flexDirection="column" alignItems="center">
+                <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
+                {hasStarted ?
+                  <Typography>0 RVRS</Typography>
+                  :
+                  <Skeleton height={10} width={60} />
+                }
+              </Flex>
+            </ClaimButtonDisabled>
+          }
+        </Flex>
       </Flex>
     </BondsContainer>
   )
 }
 
+const Div = styled.div`
+  display: inline-flex;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-left: 7px;
+  box-shadow: 0 0 10px 0px #506063;
+  transition: 0.3s ease-in-out;
+  :hover {
+    box-shadow: 0px 0px 15px 0px #5A6F73;
+    color: #FFFF;
+} 
+`
+
+
 export default Bonds
-
-

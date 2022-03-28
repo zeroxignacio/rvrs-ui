@@ -34,6 +34,8 @@ const Airdrop = () => {
   const totalDistributedNo = totalDistributed;
   const totalDistributedStr = totalDistributed.toLocaleString('en-us', { maximumFractionDigits: 2 });
 
+  const claimedNotZero = claimed > 0;
+
   const toClaimStr = toClaim.toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 2 })
   const claimedStr = claimed.toLocaleString('en-us', { maximumFractionDigits: 3 })
   const lastClaimAmountStr = lastClaimAmount.toLocaleString('en-us', { maximumFractionDigits: 0 })
@@ -60,7 +62,7 @@ const Airdrop = () => {
         </TitleCard>
         <Flex justifyContent="center">
           <ContentCard style={{ marginRight: '7px' }}>
-            {totalDistributedNo > 10 ?
+            {totalDistributedNo > 0 ?
               <TypographyBold style={{ marginBottom: '5px' }}>${totalDistributedStr}</TypographyBold>
               :
               <Typography><Skeleton height={20} marginBottom="5px" /></Typography>
@@ -76,15 +78,15 @@ const Airdrop = () => {
             <Typography>Yearly Returns</Typography>
           </ContentCardMain>
           <ContentCard style={{ marginLeft: '7px' }}>
-            {account != null && account.length > 1 ?
+            {claimedNotZero ?
               <div>
                 <TypographyBold style={{ marginBottom: '5px' }}>{claimedStr} UST</TypographyBold>
-                <Typography>Claimed by ({account.substring(0, 5)})</Typography>
+                <Typography>Claimed</Typography>
               </div>
               :
               <div>
-                <Typography><Skeleton /></Typography>
-                <Typography><Skeleton marginTop="5px" /></Typography>
+                <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
+                <Typography>UST Claimed</Typography>
               </div>
             }
           </ContentCard>

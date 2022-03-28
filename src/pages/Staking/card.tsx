@@ -217,8 +217,8 @@ const StakeButton = styled.button`
   background-image: linear-gradient(180deg, #506063, #909BBF);
   border-radius: 15px;
   border: 0px;
-  padding-left: 110px;
-  padding-right: 110px;
+  padding-left: 100px;
+  padding-right: 100px;
   padding-top: 17px;
   padding-bottom: 17px;
   :hover {
@@ -237,7 +237,7 @@ const UnstakeButton = styled.button`
   background-color: #46505E;
   border-radius: 15px;
   border: 0px;
-  padding-left: 110px;
+  padding-left: 100px;
   padding-right: 100px;
   padding-top: 17px;
   padding-bottom: 17px;

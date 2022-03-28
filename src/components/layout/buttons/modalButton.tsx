@@ -17,7 +17,6 @@ const confirmModalButton = styled.button`
         color: #FFFFFF;
         transition: 0.4s;
     }
-    
 `
 
 export default confirmModalButton
