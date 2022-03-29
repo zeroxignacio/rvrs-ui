@@ -199,11 +199,25 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 </div>
                 :
                 <div>
-                  <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
                   {hasStarted ?
-                    <Typography>{estRoiAfterSoldOutStr}%</Typography>
+                    <div>
+                      {hasEnded ?
+                        <div>
+                          <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
+                          <Typography>Ended</Typography>
+                        </div>
+                        :
+                        <div>
+                          <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
+                          <Typography>{estRoiAfterSoldOutStr}%</Typography>
+                        </div>
+                      }
+                    </div>
                     :
-                    <Skeleton height={10} width={60} />
+                    <div>
+                      <TypographyBold style={{ marginBottom: "5px" }}>vROI</TypographyBold>
+                      <Skeleton height={10} width={60} />
+                    </div>
                   }
                 </div>
               }
