@@ -62,7 +62,7 @@ const MenuContainer = styled(Container)`
   background-color: rgba(42, 52, 67, 0.6);
   transition: all 0.3s ease-in-out;
   :hover {
-    background-color: rgba(42, 52, 67, 1);
+    background-color: #2B3443;
   }
   max-width: 4000px;
 `

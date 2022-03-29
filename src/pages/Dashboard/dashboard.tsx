@@ -122,13 +122,29 @@ const Dashboard = () => {
         </Flex>
         <Flex justifyContent="center" marginTop="10px">
           <ContentCard>
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>Treasury Balance</Typography>
+            <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
+            <a
+              href="https://docs.google.com/spreadsheets/d/1fNsmVWqtPrtZr7z4i2n1ZgRNAEZdX3coPzMbZNPCZ34/edit#gid=1364928066"
+              className="nav-icon"
+            >
+              <LinkTypography>Reverseum Treasury&nbsp;<FaExternalLinkAlt /></LinkTypography>
+            </a>
           </ContentCard>
         </Flex>
       </DashboardContainer>
     </Page>
   )
 }
+
+const LinkTypography = styled.p`
+  transition: all 0.3s ease-in-out;
+  font-size: 16px;
+  color: #CFCFCF;
+  font-weight: 500;
+  :hover {
+    color: #FFFF !important;
+    font-weight: 500;
+  } 
+`
 
 export default Dashboard
