@@ -56,7 +56,7 @@ const Nav = (props) => {
             <Flex alignItems="center">
               <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
               <div style={{ marginLeft: '10px', marginRight: '10px' }}>{account.substring(0, 6)} </div>
-              <ActivePulse  style={{ marginRight: '20px' }}/>
+              <ActivePulse  style={{ marginRight: '15px' }}/>
             </Flex>
           </ConnectedButton>
           :
@@ -84,11 +84,11 @@ const MenuContainer = styled(Container)`
   padding-top: 50px;
   text-align: end;
   flex-wrap: wrap;
-  max-width: 730px;
+  max-width: 770px;
 `
 
 const StyledButton = styled.div`
-  background-color: #2D3544;
+  background: transparent;
   font-size: 18px;
   font-weight: 500;
   text-align: center;
@@ -105,7 +105,7 @@ const StyledButton = styled.div`
 `
 
 const ConnectedButton = styled.div`
-  background-color: #2D3544;
+  background: transparent;
   font-size: 18px;
   font-weight: 500;
   text-align: center;
@@ -165,7 +165,7 @@ const ActivePulse = styled.div`
 
 
 const ConnectButton = styled.div`
-  background-color: #2D3544;
+  background: transparent;
   font-size: 18px;
   font-weight: 500;
   text-align: center;
@@ -186,16 +186,16 @@ const ConnectButton = styled.div`
 `
 
 const ButtonContainer = styled.div`
+  background: transparent;
   border-radius: 35px;
-  background-color: #2D3544;
   padding-top: 23px;
   padding-bottom: 23px;
   border: 1.5px;
   border-color: #CBCBCB !important;
   border-style: solid !important;
   box-shadow: -20px 0px 40px -15px #55747D, 20px 0px 40px -15px #4B5674;
-
   transition: 0.3s ease-in-out;
+
   &:hover  {
     box-shadow: 25px 0px 40px -10px #55747D, -25px 0px 40px -10px #4B5674;
   }

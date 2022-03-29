@@ -238,7 +238,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             </Flex>
             {/* TVL */}
             <Flex flexDirection="column" alignItems="start">
-              <TypographyBold style={{ marginBottom: "5px" }}>TVL</TypographyBold>
+              <TypographyBold style={{ marginBottom: "5px" }}>TVB</TypographyBold>
               <div>
                 {hasStarted ?
                   <Typography>${tbvStr}</Typography>

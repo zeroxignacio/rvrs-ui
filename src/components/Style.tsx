@@ -6,7 +6,11 @@ const Style = createGlobalStyle`
 }
 
 #root {
-  background: radial-gradient(circle at 100%, #2B3647, #2B3647 50%, #39475C 75%, #2B3647 75%);
+  background: radial-gradient(circle at 100%, #2B3647, 
+    #414E63 0%,
+    #2B3647 50%, 
+    #39475C 75%, 
+    #2B3443 75%);
 }
 
 div {
