@@ -6,10 +6,13 @@ import { BLOCKS_PER_YEAR } from 'config'
 import Ripples, { createRipples } from 'react-ripples'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
+import TypographyTitle from 'components/layout/typography/typographyTitle'
 import styled from 'styled-components'
+import Flex from 'components/layout/flex/Flex'
 import ActiveInactiveButton from 'components/layout/buttons/activeInactiveButton'
 import ActiveInactiveContatiner from 'components/layout/containers/activeInactiveContainer'
 import useBlock from 'hooks/useBlock'
+import { Container } from 'react-bootstrap'
 import { usePools2, usePrices, getTotalValueFromQuoteTokens, lookupPrice } from 'state/hooks'
 import { QuoteToken } from 'config/constants/types'
 import Page from 'components/layout/containers/page'
@@ -17,11 +20,30 @@ import PoolCard from './card'
 
 
 const BondsContainer = styled.div`
+background-image: linear-gradient(#2E343E, #323E51);
   border-radius: 20px;
   padding: 10px;
   transition: all 0.3s ease-in-out;
   border-width: 1px;
   border-style: solid;
+`
+
+const TitleCard = styled(Container)`
+  background-image: linear-gradient(to right, #353E50, #3D4853);
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: space-around;
+  position: center;
+  text-align: center;
+  padding: 20px;
+`
+
+const Typography = styled.p`
+    font-size: 16px;
+    color: #fffff;
+    font-weight: 600;
+    min-width: 70px;
+    max-width: 70px;
 `
 
 
@@ -55,6 +77,19 @@ const Bond: React.FC = () => {
   return (
     <Page>
       <BondsContainer>
+
+        <TitleCard>
+          <TypographyTitle style={{ marginTop: '10px', marginBottom: '10px' }}>
+            RVRS rvBonds
+          </TypographyTitle>
+        </TitleCard>
+
+        <Flex alignItems="center" style={{ padding: '20px', paddingLeft: '50px', paddingRight: '120px', marginTop: '20px' }} justifyContent='space-between'>
+          <Typography>Bond</Typography>
+          <Typography>ROI</Typography>
+          <Typography>Vesting</Typography>
+          <Typography>Bonded</Typography>
+        </Flex>
 
         { /* Bonds card layout */}
         <Route path={`${path}`}>

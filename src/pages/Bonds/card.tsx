@@ -137,7 +137,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
     <BondsContainer>
       {hasStarted ?
         <Flex alignItems="center" justifyContent='space-between'>
-
           {/* Bond */}
           <Flex alignItems="center">
           <object type="image/svg+xml" data='/images/ust2.svg' width="35px" style={{marginRight:'8px'}}>&nbsp;</object>
