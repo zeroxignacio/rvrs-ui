@@ -14,6 +14,7 @@ const Nav = (props) => {
 
   return (
     <MenuContainer>
+
       <ButtonGroup style={{ marginRight: "20px" }}>
         <ButtonContainer>
           <StyledButton
@@ -43,6 +44,7 @@ const Nav = (props) => {
           </StyledButton>
         </ButtonContainer>
       </ButtonGroup>
+
       <ButtonGroup>
         {account != null && account.length > 1 ?
           <ConnectedButton
@@ -82,10 +84,9 @@ const Nav = (props) => {
 
 const MenuContainer = styled(Container)`
   padding-top: 50px;
-  // text-align: end;
+  text-align: end;
   flex-wrap: wrap;
-  // max-width: 680px;
-  text-align: center;
+  max-width: 650px;
   background: transparent;
 `
 
