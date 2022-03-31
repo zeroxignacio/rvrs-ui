@@ -9,14 +9,12 @@ interface Props extends InjectedProps {
   title: string;
   hideCloseButton?: boolean;
   onBack?: () => void;
-  bodyPadding?: string;
 }
 
 const Modal: React.FC<Props> = ({
   title,
   onDismiss,
   children,
-  hideCloseButton = false,
 }) => (
 
   <StyledModal>
@@ -46,13 +44,12 @@ const TitleContainer = styled(Container)`
   padding: 20px;
 `
 
-
 const StyledModal = styled.div`
   background-image: linear-gradient(#2D3544, #37404E);
   padding: 20px;
   border: 1px solid #FFF;
   border-radius: 25px;
-  z-index: ${({ theme }) => theme.zIndices.modal};
+  z-index: 100;
   transition: all 0.3s ease-in-out;
   &:hover  {
     box-shadow: 20px 0px 40px -20px #55747D, -20px 0px 20px -20px #4B5674;
