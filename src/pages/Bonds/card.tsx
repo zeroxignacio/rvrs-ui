@@ -134,92 +134,53 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   }, [onApprove, setRequestedApproval])
 
   return (
-    <BondsContainer>
+    <>
       {hasStarted ?
-        <Flex alignItems="center" justifyContent='space-between'>
-          {/* Bond */}
-          <Flex alignItems="center">
-          <object type="image/svg+xml" data='/images/ust2.svg' width="35px" style={{marginRight:'8px'}}>&nbsp;</object>
-          <Flex flexDirection="column">
-            <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
-            <a href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`}
-              className="nav-icon">
-              <TypographySmall style={{ marginTop: "2px" }}>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
-            </a>
-          </Flex>
-          </Flex>
-
-          {/* ROI */}
-          {hasEnded ?
-            <Typography>Ended</Typography>
-            :
-            <div>
-              {fivePercentRoi ?
-                <Typography>{roiStr}%</Typography>
-                :
-                <Typography>Sold Out</Typography>
-              }
-            </div>
-          }
-
-          {hasEnded ?
-            <Typography>Ended</Typography>
-            :
-            <Typography>{vestingStr}&nbsp;Days</Typography>
-          }
-
-          <Typography>{bondedBalanceStr}</Typography>
-
-          {fivePercentRoi ?
-            <Flex>
-              {needsApproval ?
-                <BondButton
-                  disabled={hasEnded}
-                  onClick={handleApprove}>
-                  Enable
-                </BondButton>
-                :
-                <BondButton
-                  disabled={hasEnded}
-                  onClick={onPresentDeposit}>
-                  Bond
-                </BondButton>
-              }
+        <BondsContainer>
+          <Flex alignItems="center" justifyContent='space-between'>
+            {/* Bond */}
+            <Flex alignItems="center">
+              <object type="image/svg+xml" data='/images/ust3.svg' width="35px" style={{ marginRight: '8px' }}>&nbsp;</object>
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
+                <a href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`}
+                  className="nav-icon">
+                  <TypographySmall style={{ marginTop: "2px" }}>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
+                </a>
+              </Flex>
             </Flex>
-            :
-            <BondButton>Sold Out</BondButton>
-          }
 
-        </Flex>
-        :
-        <Skeleton height={10} />
-      }
+            {/* ROI */}
+            {hasEnded ?
+              <Typography>Ended</Typography>
+              :
+              <div>
+                {fivePercentRoi ?
+                  <Typography>{roiStr}%</Typography>
+                  :
+                  <Typography>Sold Out</Typography>
+                }
+              </div>
+            }
 
-      { /* 
-      <HeaderCard>
-        {hasStarted ?
-          <Flex justifyContent="space-between">
-            <Flex justifyContent="space-between">
-              <TypographyTitle>
-                <Flex justifyContent="space-between">
-                  <TypographyTitle style={{ marginLeft: "17px" }}>{tokenName}&nbsp;</TypographyTitle>
-                  <a target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/the-protocol/reverseum-bonding-pools" className="nav-links">
-                    <TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>rvBond</TypographyTitle>
-                  </a>
-                </Flex>
-              </TypographyTitle>
-            </Flex>
+            {hasEnded ?
+              <Typography>Ended</Typography>
+              :
+              <Typography>{vestingStr}&nbsp;Days</Typography>
+            }
+
+            <Typography>{bondedBalanceStr}</Typography>
+
             {fivePercentRoi ?
-              <Flex alignItems="end">
+              <Flex>
                 {needsApproval ?
                   <BondButton
-                    style={{ justifyContent: "center" }}
                     disabled={hasEnded}
                     onClick={handleApprove}>
                     Enable
                   </BondButton>
                   :
-                  <BondButton style={{ justifyContent: "center" }}
+                  <BondButton
                     disabled={hasEnded}
                     onClick={onPresentDeposit}>
                     Bond
@@ -227,163 +188,18 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 }
               </Flex>
               :
-              <Flex alignItems="end">
-                <BondButtonDisabled disabled>Sold Out</BondButtonDisabled>
-              </Flex>
+              <BondButton>Sold Out</BondButton>
             }
+
           </Flex>
-          :
-          <Flex justifyContent="space-between">
-            <TypographyTitle>
-              <Flex justifyContent="space-between">
-                <TypographyTitle style={{ marginLeft: "17px" }}>{tokenName}&nbsp;</TypographyTitle>
-                <a target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/the-protocol/reverseum-bonding-pools" className="nav-links">
-                  <TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>rvBond</TypographyTitle>
-                </a>
-              </Flex>
-            </TypographyTitle>
-            <Flex alignItems="end">
-              <div>
-                {hoursToStartNo > 1000 ?
-                  <BondButtonDisabled disabled style={{ justifyContent: "center" }}>
-                    <Skeleton height={10} />
-                  </BondButtonDisabled>
-                  :
-                  <BondButtonDisabled disabled style={{ justifyContent: "center" }}>
-                    {hoursToStartStr}h Left
-                  </BondButtonDisabled>
-                }
-              </div>
-            </Flex>
-          </Flex>
-        }
-      </HeaderCard>
-      <Flex justifyContent="space-between">
-        <ContentCard>
-          <Flex justifyContent="space-between">
-            <Flex flexDirection="column" alignItems="start">
-              {fivePercentRoi ?
-                <div>
-                  <TypographyBold style={{ marginBottom: "5px" }}>vROI</TypographyBold>
-                  {hasStarted ?
-                    <Typography>{roiStr}%</Typography>
-                    :
-                    <Skeleton height={10} width={60} />
-                  }
-                </div>
-                :
-                <div>
-                  {hasStarted ?
-                    <div>
-                      {hasEnded ?
-                        <div>
-                          <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
-                          <Typography>Ended</Typography>
-                        </div>
-                        :
-                        <div>
-                          <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
-                          <Typography>{estRoiAfterSoldOutStr}%</Typography>
-                        </div>
-                      }
-                    </div>
-                    :
-                    <div>
-                      <TypographyBold style={{ marginBottom: "5px" }}>vROI</TypographyBold>
-                      <Skeleton height={10} width={60} />
-                    </div>
-                  }
-                </div>
-              }
-            </Flex>
-            <Flex flexDirection="column" alignItems="start">
-              <TypographyBold style={{ marginBottom: "5px" }}>Vesting</TypographyBold>
-              {!hasEnded ?
-                <div>
-                  {hasStarted ?
-                    <Typography>{vestingStr}&nbsp;Days</Typography>
-                    :
-                    <Skeleton height={10} width={60} />}
-                </div>
-                :
-                <Typography>Ended</Typography>
-              }
-            </Flex>
-            <Flex flexDirection="column" alignItems="start">
-              <TypographyBold style={{ marginBottom: "5px" }}>TVB</TypographyBold>
-              <div>
-                {hasStarted ?
-                  <Typography>${tbvStr}</Typography>
-                  :
-                  <Skeleton height={10} width={60} />}
-              </div>
-            </Flex>
-            {user && (
-              <Flex flexDirection="column" alignItems="start">
-                <TypographyBold style={{ marginBottom: "5px" }}>Bonded</TypographyBold>
-                {hasStarted ?
-                  <div>
-                    {bondedBalanceNo ?
-                      <Typography>{bondedBalanceStr}&nbsp;{tokenName}</Typography>
-                      :
-                      <Typography>N/A</Typography>
-                    }
-                  </div>
-                  :
-                  <Typography><Skeleton height={10} width={64} /></Typography>
-                }
-              </Flex>
-            )}
-          </Flex>
-        </ContentCard>
-        <Flex>
-          {rewardsNo > 0 ?
-            <Div>
-              <Ripples>
-                <ClaimButton
-                  style={{ marginLeft: '0px', justifyContent: "center" }}
-                  disabled={!rewardsNo}
-                  onClick={async () => {
-                    setPendingTx(true)
-                    await onReward()
-                    setPendingTx(false)
-                  }}>
-                  <Flex flexDirection="column" alignItems="center">
-                    <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
-                    {hasStarted ?
-                      <Typography>{rewardsStr}&nbsp;RVRS</Typography>
-                      :
-                      <Skeleton height={10} width={60} />
-                    }
-                  </Flex>
-                </ClaimButton>
-              </Ripples>
-            </Div>
-            :
-            <ClaimButtonDisabled
-              style={{ marginLeft: '7px', justifyContent: "center" }}
-              disabled={!rewardsNo}
-              onClick={async () => {
-                setPendingTx(true)
-                await onReward()
-                setPendingTx(false)
-              }}>
-              <Flex flexDirection="column" alignItems="center">
-                <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
-                {hasStarted ?
-                  <Typography>0 RVRS</Typography>
-                  :
-                  <Skeleton height={10} width={60} />
-                }
-              </Flex>
-            </ClaimButtonDisabled>
-          }
-        </Flex>
-      </Flex>
-        */ }
-    </BondsContainer>
+        </BondsContainer>
+        :
+        <Skeleton height={40} />
+      }
+    </>
   )
 }
+
 
 const Div = styled.div`
   display: inline-flex;

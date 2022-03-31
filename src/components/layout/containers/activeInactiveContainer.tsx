@@ -9,6 +9,8 @@ const activeInactiveContatiner = styled(Container)`
   border-color: #CBCBCB !important;
   border-radius: 20px;
   max-width: 200px;
+  margin-bottom: 5px;
+  margin-top: 20px;
 `
 
 export default activeInactiveContatiner

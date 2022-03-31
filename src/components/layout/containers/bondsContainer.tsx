@@ -1,15 +1,15 @@
 import styled from 'styled-components'
 
 const bondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   transition: all 0.3s ease-in-out;
   border-width: 1px;
   border-style: solid;
-  border-color: transparent;
+  border-color: #313131;
   :hover {
-    border-color: #ffffff;
+    border-color: #6F6F6F;
   }
 `
 

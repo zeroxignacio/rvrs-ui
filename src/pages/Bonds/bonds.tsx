@@ -20,22 +20,24 @@ import PoolCard from './card'
 
 
 const BondsContainer = styled.div`
-background-image: linear-gradient(#2E343E, #323E51);
-  border-radius: 20px;
+  background: #121212;
+  border-radius: 10px;
   padding: 10px;
   transition: all 0.3s ease-in-out;
   border-width: 1px;
+  border-color: #313131;
+  box-shadow: 0 0 0px;
   border-style: solid;
 `
 
 const TitleCard = styled(Container)`
-  background-image: linear-gradient(to right, #353E50, #3D4853);
   border-radius: 10px;
   flex-direction: column;
   justify-content: space-around;
   position: center;
+  background: #161616;
   text-align: center;
-  padding: 20px;
+  padding: 10px;
 `
 
 const Typography = styled.p`
@@ -59,7 +61,7 @@ const Bond: React.FC = () => {
     const tvl = getTotalValueFromQuoteTokens(quoteTokens, pool2.quoteTokenSymbol, prices)
     const rewardTokenPrice = lookupPrice(QuoteToken.RVRS, prices)
     const totalRewardPricePerYear = rewardTokenPrice.times(pool2.tokenPerBlock).times(BLOCKS_PER_YEAR)
-    const apy = totalRewardPricePerYear.div(tvl).times(100)
+    const apy = totalRewardPricePerYear.div(tvl).times(100).minus(100)
     return { ...pool2, isFinished: pool2.sousId === 0 ? false : pool2.isFinished && block > pool2.endBlock, apy, tvl }
     // console.log(pool2.sousId, quoteTokens && quoteTokens.toNumber(), tvl && tvl.toNumber())
     // console.log("APY", pool2, tvl && tvl.toNumber())
@@ -104,7 +106,7 @@ const Bond: React.FC = () => {
           <div
             style={{
               display: 'inline-flex',
-              borderRadius: 25,
+              borderRadius: 15,
               overflow: 'hidden',
             }}
           >

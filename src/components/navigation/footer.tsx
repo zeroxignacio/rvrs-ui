@@ -59,11 +59,20 @@ const NavContainer = styled(Container)`
 `
 const MenuContainer = styled(Container)`
   padding-bottom: 10px;
+  background-color: #181818;
+  border-width: 1px 0px 0px 0px;
+  border-color: #313131;
+  box-shadow: 0 0 0px;
+  border-style: solid;
+  margin-top: 30px;
+
   background-color: rgba(42, 52, 67, 0.6);
+  background-color: #121212;
+
   transition: all 0.3s ease-in-out;
   :hover {
-    background-color: #2B3443;
-  }
+    opacity: 1;
+    }
   max-width: 4000px;
 `
 

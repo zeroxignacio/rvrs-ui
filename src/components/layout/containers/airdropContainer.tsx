@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const airdropContainer = styled.div`
   align-self: baseline;
   background-image: linear-gradient(#2E343E, #323E51);
-  border-radius: 30px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   padding: 10px;
