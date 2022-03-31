@@ -1,17 +1,18 @@
 import styled from 'styled-components'
 
 const bondButtonDisabled = styled.button`
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffff;
+    font-size: 16px;
+    font-weight: 500;
+    background: transparent;
+    color: #EEEEEE;
     justify-content: center;
-    min-width: 110px;
-    padding: 12px;
-    background-image: linear-gradient(#506063, #A1ACCD);
-    border-radius: 15px;
-    border: 0px;
-    opacity: 0.3;
-    transition: 0.3s ease-in-out;
+    padding: 10px;
+    border-radius: 9px;
+    border-color: transparent;
+    opacity: 0.2;
+    :hover {
+        background: transparent;
+    } 
 `
 
 export default bondButtonDisabled

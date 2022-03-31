@@ -4,14 +4,11 @@ import styled from "styled-components";
 const activeInactiveContatiner = styled(Container)`
   text-align: center;
   justify-content: center;
-  border: 1px;
-  margin-top: 40px;
-  margin-bottom: 100px;
+  border: 0px;
   border-style: solid !important;
   border-color: #CBCBCB !important;
-  border-radius: 25px;
+  border-radius: 20px;
   max-width: 200px;
-  background-color: #2D3544;
 `
 
 export default activeInactiveContatiner

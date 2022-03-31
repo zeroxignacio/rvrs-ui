@@ -12,6 +12,7 @@ import { Pool2 } from 'state/types'
 import { Skeleton } from 'components/Skeleton'
 import Ripples from 'react-ripples'
 import styled from 'styled-components'
+import { FaExternalLinkSquareAlt } from 'react-icons/fa'
 import BondsContainer from '../../components/layout/containers/bondsContainer'
 import ContentCard from '../../components/layout/cards/bonds/contentCard'
 import HeaderCard from '../../components/layout/cards/bonds/headerCard'
@@ -20,9 +21,23 @@ import ClaimButtonDisabled from '../../components/layout/buttons/claimButtonDisa
 import BondButton from '../../components/layout/buttons/bondButton'
 import BondButtonDisabled from '../../components/layout/buttons/bondButtonDisabled'
 import ClaimButton from '../../components/layout/buttons/claimButton'
-import Typography from '../../components/layout/typography/typography'
-import TypographyBold from '../../components/layout/typography/typographyBold'
-import TypographyTitle from '../../components/layout/typography/typographyTitle'
+
+const Typography = styled.p`
+    font-size: 16px;
+    color: #CFCFCF;
+    font-weight: 400;
+    min-width: 70px;
+    max-width: 70px;
+`
+
+const TypographySmall = styled.p`
+    font-size: 14px;
+    color: #CFCFCF;
+    font-weight: 400;
+    min-width: 50px;
+    max-width: 50px;
+`
+
 
 interface PoolWithApy extends Pool2 {
   apy: BigNumber
@@ -87,7 +102,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
 
   // returns
   const roiNo = (apy && apy.div(365).times(vesting).minus(100)).toNumber();
-  const positiveRoi = roiNo > 0;
   const fivePercentRoi = roiNo > 5;
   const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
   const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(100)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
@@ -121,6 +135,68 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
 
   return (
     <BondsContainer>
+      {hasStarted ?
+        <Flex alignItems="center" justifyContent='space-between'>
+
+          {/* Bond */}
+          <Flex alignItems="center">
+          <object type="image/svg+xml" data='/images/ust2.svg' width="35px" style={{marginRight:'8px'}}>&nbsp;</object>
+          <Flex flexDirection="column">
+            <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
+            <a href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`}
+              className="nav-icon">
+              <TypographySmall style={{ marginTop: "2px" }}>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
+            </a>
+          </Flex>
+          </Flex>
+
+          {/* ROI */}
+          {hasEnded ?
+            <Typography>Ended</Typography>
+            :
+            <div>
+              {fivePercentRoi ?
+                <Typography>{roiStr}%</Typography>
+                :
+                <Typography>Sold Out</Typography>
+              }
+            </div>
+          }
+
+          {hasEnded ?
+            <Typography>Ended</Typography>
+            :
+            <Typography>{vestingStr}&nbsp;Days</Typography>
+          }
+
+          <Typography>{bondedBalanceStr}</Typography>
+
+          {fivePercentRoi ?
+            <Flex>
+              {needsApproval ?
+                <BondButton
+                  disabled={hasEnded}
+                  onClick={handleApprove}>
+                  Enable
+                </BondButton>
+                :
+                <BondButton
+                  disabled={hasEnded}
+                  onClick={onPresentDeposit}>
+                  Bond
+                </BondButton>
+              }
+            </Flex>
+            :
+            <BondButton>Sold Out</BondButton>
+          }
+
+        </Flex>
+        :
+        <Skeleton height={10} />
+      }
+
+      { /* 
       <HeaderCard>
         {hasStarted ?
           <Flex justifyContent="space-between">
@@ -186,7 +262,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
       <Flex justifyContent="space-between">
         <ContentCard>
           <Flex justifyContent="space-between">
-            {/* ROI */}
             <Flex flexDirection="column" alignItems="start">
               {fivePercentRoi ?
                 <div>
@@ -222,7 +297,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 </div>
               }
             </Flex>
-            {/* Vesting */}
             <Flex flexDirection="column" alignItems="start">
               <TypographyBold style={{ marginBottom: "5px" }}>Vesting</TypographyBold>
               {!hasEnded ?
@@ -236,7 +310,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 <Typography>Ended</Typography>
               }
             </Flex>
-            {/* TVL */}
             <Flex flexDirection="column" alignItems="start">
               <TypographyBold style={{ marginBottom: "5px" }}>TVB</TypographyBold>
               <div>
@@ -246,7 +319,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   <Skeleton height={10} width={60} />}
               </div>
             </Flex>
-            {/* Bonded by user */}
             {user && (
               <Flex flexDirection="column" alignItems="start">
                 <TypographyBold style={{ marginBottom: "5px" }}>Bonded</TypographyBold>
@@ -265,7 +337,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             )}
           </Flex>
         </ContentCard>
-        {/* Claim RVRS */}
         <Flex>
           {rewardsNo > 0 ?
             <Div>
@@ -310,6 +381,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           }
         </Flex>
       </Flex>
+        */ }
     </BondsContainer>
   )
 }

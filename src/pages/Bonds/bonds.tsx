@@ -6,6 +6,7 @@ import { BLOCKS_PER_YEAR } from 'config'
 import Ripples, { createRipples } from 'react-ripples'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
+import styled from 'styled-components'
 import ActiveInactiveButton from 'components/layout/buttons/activeInactiveButton'
 import ActiveInactiveContatiner from 'components/layout/containers/activeInactiveContainer'
 import useBlock from 'hooks/useBlock'
@@ -13,6 +14,16 @@ import { usePools2, usePrices, getTotalValueFromQuoteTokens, lookupPrice } from 
 import { QuoteToken } from 'config/constants/types'
 import Page from 'components/layout/containers/page'
 import PoolCard from './card'
+
+
+const BondsContainer = styled.div`
+  border-radius: 20px;
+  padding: 10px;
+  transition: all 0.3s ease-in-out;
+  border-width: 1px;
+  border-style: solid;
+`
+
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch()
@@ -43,40 +54,45 @@ const Bond: React.FC = () => {
 
   return (
     <Page>
-      { /* Bonds card layout */}
-      <Route path={`${path}`}>
-        {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
-      </Route>
-      <Route path={`${path}/inactive`}>
-        {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
-      </Route>
-      { /* Active/Inactive button */}
-      <ActiveInactiveContatiner>
-        <div
-          style={{
-            display: 'inline-flex',
-            borderRadius: 25,
-            overflow: 'hidden',
-          }}
-        >
-          <Ripples>
-            <ActiveInactiveButton as={Link} className="nav-links" to={`${url}`}>
-              Active
-            </ActiveInactiveButton>
-          </Ripples>
-        </div>
-        <div
-          style={{
-            display: 'inline-flex',
-            borderRadius: 15,
-            overflow: 'hidden',
-          }}
-        >
-          <Ripples>
-            <ActiveInactiveButton as={Link} className="nav-links" to={`${url}/inactive`}>Inactive</ActiveInactiveButton>
-          </Ripples>
-        </div>
-      </ActiveInactiveContatiner>
+      <BondsContainer>
+
+        { /* Bonds card layout */}
+        <Route path={`${path}`}>
+          {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+        </Route>
+        <Route path={`${path}/inactive`}>
+          {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+        </Route>
+
+        { /* Active/Inactive button */}
+        <ActiveInactiveContatiner>
+          <div
+            style={{
+              display: 'inline-flex',
+              borderRadius: 25,
+              overflow: 'hidden',
+            }}
+          >
+            <Ripples>
+              <ActiveInactiveButton as={Link} className="nav-links" to={`${url}`}>
+                Active
+              </ActiveInactiveButton>
+            </Ripples>
+          </div>
+          <div
+            style={{
+              display: 'inline-flex',
+              borderRadius: 15,
+              overflow: 'hidden',
+            }}
+          >
+            <Ripples>
+              <ActiveInactiveButton as={Link} className="nav-links" to={`${url}/inactive`}>Inactive</ActiveInactiveButton>
+            </Ripples>
+          </div>
+        </ActiveInactiveContatiner>
+      </BondsContainer>
+
     </Page>
   )
 }

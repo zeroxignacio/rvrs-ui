@@ -1,20 +1,17 @@
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 
 const bondButton = styled.button`
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
+    background: transparent;
     color: #EEEEEE;
     justify-content: center;
-    min-width: 110px;
-    padding: 12px;
-    background-image: linear-gradient(#506063, #A1ACCD);
-    border-radius: 15px;
-    border: 0px;
-    opacity: 1;
-    transition: 0.3s ease-in-out;
+    padding: 10px;
+    border-radius: 9px;
+    border-color: transparent;
+    transition: 0.5s ease-in-out;
     :hover {
-        color: #FFFF;
-        opacity: 0.8;
+        background: #63899D;
     } 
 `
 
