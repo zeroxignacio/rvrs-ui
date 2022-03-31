@@ -71,7 +71,7 @@ const Nav = (props) => {
             onClick={onPresentConnectModal} {...props}>
             <Flex alignItems="center">
               <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
-              <div style={{ marginLeft: '10px', marginRight: '15px' }}>Connect</div>
+              <div style={{ marginLeft: '17px', marginRight: '25px' }}>Connect</div>
             </Flex>
           </ConnectButton>
         }
@@ -179,7 +179,7 @@ const ConnectButton = styled.div`
   &:hover  {
     font-weight: 700;
     border-color: #FFFF !important;
-    box-shadow: 20px 0px 30px -5px #55747D, -20px 0px 30px -5px #4B5674;
+    box-shadow: 20px 0px 30px -5px #55747D, -20px 0px 30px 0px #4B5674;
     background-color: #374052;
     transform: translate(-6px)
   }

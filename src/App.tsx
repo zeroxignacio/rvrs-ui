@@ -16,7 +16,7 @@ BigNumber.config({
 
 const BONDS = lazy(() => import('./pages/Bonds'))
 const STAKEDEPRECATED = lazy(() => import('./pages/Staking'))
-const NOTFOUND = lazy(() => import('./pages/NotFound'))
+const NOTCONNECTED = lazy(() => import('./pages/NotConnected'))
 const DASHBOARD = lazy(() => import('./pages/Dashboard'))
 const AIRDROP = lazy(() => import('./pages/Airdrops'))
 
@@ -51,7 +51,9 @@ const App: React.FC = () => {
             </Route>
         </Suspense>
         :
-        <Page />
+        <Suspense fallback>
+          <NOTCONNECTED />
+        </Suspense>
       }
       <MenuBottom />
     </Router >
