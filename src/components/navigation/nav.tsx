@@ -43,16 +43,13 @@ const Nav = (props) => {
         </StyledButton>
         <StyledButton
           as={StyledNavLink}
-          to="/upcoming"
+          to="/airdrop"
           isActive={(match, { pathname }) =>
             Boolean(match) ||
-            pathname.startsWith('/upcoming')
+            pathname.startsWith('/airdrop')
           }>Airdrop
         </StyledButton>
       </ButtonGroup>
-
-
-
       <ButtonGroup>
         {account != null && account.length > 1 ?
           <Flex style={{alignItems:'center'}}>

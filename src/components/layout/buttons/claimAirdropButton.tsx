@@ -4,13 +4,7 @@ const pulse = keyframes`
   0% {
     box-shadow: 0px 0px 5px #5A6F73;
   }
-  30% {
-    box-shadow: 0px 0px 15px #5A6F73;
-  }
-  30% {
-    box-shadow: 0px 0px 20px #5A6F73;
-  }
-  70% {
+  50% {
     box-shadow: 0px 0px 15px #5A6F73;
   }
   100% {
@@ -19,23 +13,21 @@ const pulse = keyframes`
 `
 
 const claimAirdropButton = styled.button`
-    background-image: linear-gradient(#506063, #909BBF);
-    border-radius: 15px;
-    color: #EEEEEE;
-    border: 0px;
     font-size: 16px;
-    font-weight: 700;
-    padding: 15px;
-    padding-right: 25px;
-    padding-left: 25px;
+    font-weight: 400;
+    background: transparent;
+    color: #EEEEEE;
+    min-width: 90px;
+    border-left: 5px solid #;
+    justify-content: center;
+    padding: 10px;
+    transition: 0.5s ease-in-out;
     animation: ${pulse} 3s infinite ease-out;
     :hover {
-        background-image: linear-gradient(#506063, #A1ACCD);
-        box-shadow: 0px 0px 15px #5A6F73;
-        transition: 0.5s;
-        color: #FFFF;
-        
+        opacity: 0.5;
+        background: transparent;
     } 
+
 `
 
 export default claimAirdropButton
