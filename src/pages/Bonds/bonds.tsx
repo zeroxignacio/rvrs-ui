@@ -80,8 +80,7 @@ const Bond: React.FC = () => {
 
   return (
     <Page>
-         <AirdropContainerWrap>
-
+      <AirdropContainerWrap>
         <BondsContainer>
           <TitleCard style={{ justifyContent: 'space-between' }}>
             <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
@@ -99,24 +98,20 @@ const Bond: React.FC = () => {
             <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
               Inactive rvBonds
             </TypographyTitle>
-            { /* Active/Inactive button */}
           </TitleCard>
-
-          { /* Bonds card layout */}
           <Route path={`${path}`}>
             {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
           </Route>
         </BondsContainer>
       </AirdropContainerWrap>
-
       <AirdropContainerWrap style={{ marginTop: '20px' }}>
-      <BondsContainer style={{ padding: '15px' }}>
-        <Flex justifyContent="center">
-          <Typography>Reverse offers linearly vested bonds by variable returns that use an algorithm to calculate the amount of RVRS to sell for UST.</Typography>
-        </Flex>
-      </BondsContainer>
-    </AirdropContainerWrap>
-    
+        <BondsContainer style={{ padding: '15px' }}>
+          <Flex justifyContent="center">
+            <Typography>Every monday, Reverse offers linearly vested bonds with variable returns that use an algorithm to calculate the amount of RVRS to sell.</Typography>
+          </Flex>
+        </BondsContainer>
+      </AirdropContainerWrap>
+
     </Page>
   )
 }
