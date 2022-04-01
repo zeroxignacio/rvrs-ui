@@ -14,7 +14,7 @@ const Nav = (props) => {
 
   return (
     <MenuContainer>
-
+      
       <ButtonGroup style={{ marginRight: "20px" }}>
         <ButtonContainer>
           <StyledButton
@@ -32,7 +32,7 @@ const Nav = (props) => {
               Boolean(match) ||
               pathname.startsWith('/bonds')
             }
-          >&nbsp;Bonds&nbsp;
+          >Bonds
           </StyledButton>
           <StyledButton
             as={StyledNavLink}
@@ -92,14 +92,14 @@ const MenuContainer = styled(Container)`
 
 const ConnectedButton = styled.div`
   background: transparent;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   text-align: center;
   border-width: 1px;
   border-color: #313131;
   border-style: solid;
-  border-radius: 15px;
-  padding: 15px;
+  border-radius: 10px;
+  padding: 18.5px;
   transition: 0.3s ease-in-out;
   &:hover  {
     // background-color: #374052;
@@ -112,25 +112,26 @@ const ConnectedButton = styled.div`
 const activePulse = keyframes`
   0% {
     transform: scale(0.90);
-    box-shadow: 0 0 0 0 rgba(154, 206, 206, 0.7);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
   }
 
-  70% {
+  50% {
     transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(154, 206, 206, 0);
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
   }
 
   100% {
     transform: scale(0.90);
-    box-shadow: 0 0 0 0 rgba(154, 206, 206, 0.7);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
 `
 
 const ActivePulse = styled.div`
-  background: #9ACECE;
+  background: #FFFFFF;
   border-radius: 50%;
   margin: 0px;
-  height: 10px;
-  width: 10px;
+  height: 8px;
+  width: 8px;
+  opacity: 0.8;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
   transform: scale(1);
   animation: ${activePulse} 2s infinite;
@@ -153,21 +154,32 @@ const ConnectButton = styled.div`
     font-weight: 700;
     border-color: #FFFF !important;
     box-shadow: 20px 0px 30px -5px #55747D, -20px 0px 30px 0px #4B5674;
-    background-color: #374052;
+    background-color: # 374052;
     transform: translate(-6px)
   }
 `
 
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 5px 0px;
+  }
+
+  50% {
+    box-shadow: 0 0 10px 0px;
+  }
+
+  100% {
+    box-shadow: 0 0 5px 0px;
+`
+
 const ButtonContainer = styled.div`
   background: transparent;
-  border-radius: 15px;
+  border-radius: 10px;
   padding-top: 19px;
   padding-bottom: 19px;
   border-width: 1px;
   border-color: #313131;
-  box-shadow: 0 0 0px;
   border-style: solid;
-  // box-shadow: -20px 0px 40px -15px #55747D, 20px 0px 40px -15px #4B5674;
   transition: 0.3s ease-in-out;
 
   &:hover  {
@@ -176,16 +188,16 @@ const ButtonContainer = styled.div`
 `
 const StyledButton = styled.div`
   background: transparent;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
+
   text-align: center;
-  border: #FFFF solid 0px;
   border-radius: 15px;
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 25px;
   padding-right: 25px;
-  border: 1px;
+  border: 0px;
   border-style: solid !important;
   border-color: transparent;
   transition: 0.3s ease-in-out;
@@ -201,6 +213,7 @@ const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
   &:focus  {
     transform: translate(0px);
     border-color: #FFFF !important;
+    text-decoration: underline;
   }
 `
 

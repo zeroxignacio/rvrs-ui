@@ -34,8 +34,9 @@ const TypographySmall = styled.p`
     font-size: 14px;
     color: #CFCFCF;
     font-weight: 400;
-    min-width: 50px;
-    max-width: 50px;
+    min-width: 60px;
+    max-width: 60px;
+    margin-top: 3px;
 `
 
 
@@ -101,9 +102,9 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const vestingStr = vesting.toLocaleString('en-us', { maximumFractionDigits: 1 })
 
   // returns
-  const roiNo = (apy && apy.div(365).times(vesting).minus(100)).toNumber();
+  const roiNo = (apy && apy.div(365).times(vesting).minus(0)).toNumber();
   const fivePercentRoi = roiNo > 5;
-  const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
+  const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(100)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
   // tvl
@@ -145,32 +146,53 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
                 <a href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`}
                   className="nav-icon">
-                  <TypographySmall style={{ marginTop: "2px" }}>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
+                  <TypographySmall>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
                 </a>
               </Flex>
             </Flex>
 
             {/* ROI */}
             {hasEnded ?
-              <Typography>Ended</Typography>
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>vROI</Typography>
+                <TypographySmall style={{ marginTop: "2px" }}>Ended</TypographySmall>
+              </Flex>
               :
               <div>
                 {fivePercentRoi ?
-                  <Typography>{roiStr}%</Typography>
+                  <Flex flexDirection="column">
+                    <Typography style={{ color: 'white' }}>vROI</Typography>
+                    <TypographySmall>{roiStr}%</TypographySmall>
+                  </Flex>
                   :
-                  <Typography>Sold Out</Typography>
+                  <Flex flexDirection="column">
+                    <Typography style={{ color: 'white' }}>vROI</Typography>
+                    <TypographySmall>Sold Out</TypographySmall>
+                  </Flex>
                 }
               </div>
             }
 
             {hasEnded ?
-              <Typography>Ended</Typography>
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>Vesting</Typography>
+                <TypographySmall>Ended</TypographySmall>
+              </Flex>
               :
-              <Typography>{vestingStr}&nbsp;Days</Typography>
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>Vesting</Typography>
+                <TypographySmall>{vestingStr}&nbsp;Days</TypographySmall>
+              </Flex>
             }
 
-            <Typography>{bondedBalanceStr}</Typography>
-
+            <Flex flexDirection="column">
+              <Typography style={{ color: 'white' }}>Bonded</Typography>
+              <TypographySmall>${bondedBalanceStr}</TypographySmall>
+            </Flex>
+            {hasEnded ?
+              <BondButton disabled>Ended</BondButton>
+            :
+            <div>
             {fivePercentRoi ?
               <Flex>
                 {needsApproval ?
@@ -190,6 +212,9 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
               :
               <BondButton>Sold Out</BondButton>
             }
+            </div>
+}
+
 
           </Flex>
         </BondsContainer>

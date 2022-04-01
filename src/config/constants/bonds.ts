@@ -512,7 +512,7 @@ const pools2: Pool2Config[] = [
         startBlock: 23785238,
         endBlock: 24001239,
         lockBlock: 24001239
-    },
+    }, */
     {
         sousId: 21,
         sortOrder: 100,
@@ -536,7 +536,7 @@ const pools2: Pool2Config[] = [
         isSingleAsset: true,
         tokenDecimals: 18,
         tokenPerBlock: '0.047',
-    },    */
+    },    
 
     {
         sousId: 22,
@@ -551,7 +551,7 @@ const pools2: Pool2Config[] = [
         endBlock: 24556212,
         lockBlock: 24556212,
 
-        isFinished: false,
+        isFinished: true,
 
         quoteTokenSymbol: QuoteToken.UST,
         quoteTokenPoolAddress: UST_ADDRESS,

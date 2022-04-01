@@ -26,28 +26,21 @@ const BondsContainer = styled.div`
   transition: all 0.3s ease-in-out;
   border-width: 1px;
   border-color: #313131;
-  box-shadow: 0 0 0px;
   border-style: solid;
 `
 
 const TitleCard = styled(Container)`
-  border-radius: 10px;
-  flex-direction: column;
-  justify-content: space-around;
+  border-radius: 5px;
+  justify-content: space-between;
   position: center;
   background: #161616;
   text-align: center;
   padding: 10px;
+  margin-bottom: 10px;
+  border-width: 0px;
+  border-color: #313131;
+  border-style: solid;
 `
-
-const Typography = styled.p`
-    font-size: 16px;
-    color: #fffff;
-    font-weight: 600;
-    min-width: 70px;
-    max-width: 70px;
-`
-
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch()
@@ -80,54 +73,39 @@ const Bond: React.FC = () => {
     <Page>
       <BondsContainer>
 
-        <TitleCard>
-          <TypographyTitle style={{ marginTop: '10px', marginBottom: '10px' }}>
-            RVRS rvBonds
+        <TitleCard style={{ justifyContent: 'space-between' }}>
+          <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
+            rvBonds
           </TypographyTitle>
+          { /* Active/Inactive button */}
+          
         </TitleCard>
-
-        <Flex alignItems="center" style={{ padding: '20px', paddingLeft: '50px', paddingRight: '120px', marginTop: '20px' }} justifyContent='space-between'>
-          <Typography>Bond</Typography>
-          <Typography>ROI</Typography>
-          <Typography>Vesting</Typography>
-          <Typography>Bonded</Typography>
-        </Flex>
 
         { /* Bonds card layout */}
         <Route path={`${path}`}>
           {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
         </Route>
-        <Route path={`${path}/inactive`}>
+
+
+
+      </BondsContainer>
+
+
+      <BondsContainer style={{marginTop:'20px'}}>
+
+        <TitleCard style={{ justifyContent: 'space-between' }}>
+          <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
+            Inactive rvBonds
+          </TypographyTitle>
+          { /* Active/Inactive button */}
+        </TitleCard>
+
+        { /* Bonds card layout */}
+        <Route path={`${path}`}>
           {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
         </Route>
 
-        { /* Active/Inactive button */}
-        <ActiveInactiveContatiner>
-          <div
-            style={{
-              display: 'inline-flex',
-              borderRadius: 15,
-              overflow: 'hidden',
-            }}
-          >
-            <Ripples>
-              <ActiveInactiveButton as={Link} className="nav-links" to={`${url}`}>
-                Active
-              </ActiveInactiveButton>
-            </Ripples>
-          </div>
-          <div
-            style={{
-              display: 'inline-flex',
-              borderRadius: 15,
-              overflow: 'hidden',
-            }}
-          >
-            <Ripples>
-              <ActiveInactiveButton as={Link} className="nav-links" to={`${url}/inactive`}>Inactive</ActiveInactiveButton>
-            </Ripples>
-          </div>
-        </ActiveInactiveContatiner>
+
       </BondsContainer>
 
     </Page>

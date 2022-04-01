@@ -5,7 +5,7 @@ const activeInactiveButton = styled.button`
     font-weight: 500;
     color: #FFFF;
     display: inline-flex;
-    padding: 15px;
+    padding: 3px;
 `
 
 export default activeInactiveButton
