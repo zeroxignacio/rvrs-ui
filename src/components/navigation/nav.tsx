@@ -14,68 +14,89 @@ const Nav = (props) => {
 
   return (
     <MenuContainer>
-      
       <ButtonGroup style={{ marginRight: "20px" }}>
-        <ButtonContainer>
-          <StyledButton
-            as={StyledNavLink}
-            to="/staking"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/staking')
-            }>Staking
-          </StyledButton>
-          <StyledButton
-            as={StyledNavLink}
-            to="/bonds"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/bonds')
-            }
-          >Bonds
-          </StyledButton>
-          <StyledButton
-            as={StyledNavLink}
-            to="/airdrop"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/airdrop')
-            }>Airdrop
-          </StyledButton>
-        </ButtonContainer>
+
+        <StyledButton
+          as={StyledNavLink}
+          to="/upcoming"
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/upcoming')
+          }>veRVRS
+        </StyledButton>
+        <StyledButton
+          as={StyledNavLink}
+          to="/upcoming"
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/upcoming')
+          }>Staking
+        </StyledButton>
+        <StyledButton
+          as={StyledNavLink}
+          to="/bonds"
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/bonds')
+          }
+        >Bonds
+        </StyledButton>
+        <StyledButton
+          as={StyledNavLink}
+          to="/upcoming"
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/upcoming')
+          }>Airdrop
+        </StyledButton>
       </ButtonGroup>
+
+
 
       <ButtonGroup>
         {account != null && account.length > 1 ?
-          <ConnectedButton
-            style={{ justifyContent: "space-between" }}
-            as={StyledNavLink}
-            to="/dashboard"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/airdrop')
-            }>
-            <Flex alignItems="center">
-              <object type="image/svg+xml" data="/images/hmny.svg" width="0px">&nbsp;</object>
-              <div style={{ marginLeft: '5px', marginRight: '10px' }}>{account.substring(0, 6)} </div>
-              <ActivePulse  style={{ marginRight: '0px' }}/>
-            </Flex>
-          </ConnectedButton>
+          <Flex style={{alignItems:'center'}}>
+            <ChainButton style={{marginRight:'5px'}}>
+              <Flex alignItems="center">
+                <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+              </Flex>
+            </ChainButton>
+            <ConnectedButton
+              style={{ justifyContent: "space-between" }}
+              as={StyledNavLink}
+              to="/upcoming"
+              isActive={(match, { pathname }) =>
+                Boolean(match) ||
+                pathname.startsWith('/upcoming')
+              }>
+              <Flex alignItems="center">
+                <object type="image/svg+xml" data="/images/hmny.svg" width="0px">&nbsp;</object>
+                <div style={{ marginLeft: '0px', marginRight: '7px' }}>{account.substring(0, 6)} </div>
+                <ActivePulse style={{ marginRight: '0px' }} />
+              </Flex>
+            </ConnectedButton>
+          </Flex>
           :
-          <ConnectButton
+          <Flex style={{alignItems:'center'}}>
+            <ChainButton style={{marginRight:'5px'}}>
+              <Flex alignItems="center">
+                <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+              </Flex>
+            </ChainButton>
+          <ConnectedButton
             as={StyledNavLink}
-            to="/dashboard"
+            to="/upcoming"
             isActive={(match, { pathname }) =>
               Boolean(match) ||
-              pathname.startsWith('/dashboard')
+              pathname.startsWith('/upcoming')
             }
             disabled={rvrs.isLocked.unlockWalletButton}
             onClick={onPresentConnectModal} {...props}>
             <Flex alignItems="center">
-              <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
-              <div style={{ marginLeft: '17px', marginRight: '25px' }}>Connect</div>
+              <div>Connect</div>
             </Flex>
-          </ConnectButton>
+          </ConnectedButton>
+          </Flex>
         }
       </ButtonGroup>
     </MenuContainer>
@@ -83,10 +104,10 @@ const Nav = (props) => {
 }
 
 const MenuContainer = styled(Container)`
-  padding-top: 50px;
-  text-align: end;
+  padding-top: 20px;
+  text-align: center;
   flex-wrap: wrap;
-  max-width: 650px;
+  max-width: 590px;
   background: transparent;
 `
 
@@ -94,19 +115,30 @@ const ConnectedButton = styled.div`
   background: transparent;
   font-size: 16px;
   font-weight: 500;
+  border-width: 1px;
+  border-color: #313131;
+  border-style: solid;
+  border-radius: 9px;
+  padding: 10px;
+  transition: 0.3s ease-in-out;
+  &:hover  {
+    box-shadow: 20px 0px 40px -20px #55747D;
+    border-color: #FFFF !important;
+    transform: translate(-2px)
+  }
+`
+
+const ChainButton = styled.div`
+  background: transparent;
+  font-size: 16px;
+  font-weight: 500;
   text-align: center;
   border-width: 1px;
   border-color: #313131;
   border-style: solid;
-  border-radius: 10px;
-  padding: 18.5px;
+  border-radius: 8px;
+  padding: 8px;
   transition: 0.3s ease-in-out;
-  &:hover  {
-    // background-color: #374052;
-    box-shadow: 20px 0px 40px -20px #55747D, -20px 0px 20px -20px #4B5674;
-    border-color: #FFFF !important;
-    transform: translate(-3px)
-  }
 `
 
 const activePulse = keyframes`
@@ -146,7 +178,6 @@ const ConnectButton = styled.div`
   border: 1.5px;
   border-style: solid !important;
   border-color: #CBCBCB !important;
-  border-radius: 35px;
   padding: 5px;
   transition: 0.3s ease-in-out;
   box-shadow: -20px 0px 30px -10px #55747D, 20px 0px 30px -10px #4B5674;
@@ -159,51 +190,13 @@ const ConnectButton = styled.div`
   }
 `
 
-const pulse = keyframes`
-  0% {
-    box-shadow: 0 0 5px 0px;
-  }
-
-  50% {
-    box-shadow: 0 0 10px 0px;
-  }
-
-  100% {
-    box-shadow: 0 0 5px 0px;
-`
-
-const ButtonContainer = styled.div`
-  background: transparent;
-  border-radius: 10px;
-  padding-top: 19px;
-  padding-bottom: 19px;
-  border-width: 1px;
-  border-color: #313131;
-  border-style: solid;
-  transition: 0.3s ease-in-out;
-
-  &:hover  {
-    // box-shadow: 25px 0px 40px -10px #55747D, -25px 0px 40px -10px #4B5674;
-  }
-`
-const StyledButton = styled.div`
-  background: transparent;
+const StyledButton = styled.p`
   font-size: 16px;
   font-weight: 500;
-
-  text-align: center;
-  border-radius: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 25px;
-  padding-right: 25px;
-  border: 0px;
-  border-style: solid !important;
-  border-color: transparent;
+  margin-right: 20px;
   transition: 0.3s ease-in-out;
   &:hover  {
-    // border-color: #FFFF !important;
-    // background: #313131;
+    color: #F1F1F1;
   }
 `
 

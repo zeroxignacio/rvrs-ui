@@ -10,10 +10,11 @@ const Style = createGlobalStyle`
     #2B3647, 
     #121212 0%,
     #121212 65%, 
-    #151515 75%, 
+    #141414 75%, 
     #313131 75.1%,
-    #121212 75%);
-    border-width: 1px;
+    #121212 75%
+    );
+    border-width: 2px;
     border-color: #313131;
     border-style: solid;
 }
