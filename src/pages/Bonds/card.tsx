@@ -12,7 +12,7 @@ import { Pool2 } from 'state/types'
 import { Skeleton } from 'components/Skeleton'
 import Ripples from 'react-ripples'
 import styled from 'styled-components'
-import { FaExternalLinkSquareAlt } from 'react-icons/fa'
+import { FaExternalLinkSquareAlt, FaHandHolding } from 'react-icons/fa'
 import BondsContainer from '../../components/layout/containers/bondsContainer'
 import ContentCard from '../../components/layout/cards/bonds/contentCard'
 import HeaderCard from '../../components/layout/cards/bonds/headerCard'
@@ -32,7 +32,7 @@ const Typography = styled.p`
 
 const TypographySmall = styled.p`
     font-size: 14px;
-    color: #CFCFCF;
+    color: #9B9B9B;
     font-weight: 400;
     min-width: 60px;
     max-width: 60px;
@@ -144,8 +144,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
               <object type="image/svg+xml" data='/images/ust3.svg' width="35px" style={{ marginRight: '8px' }}>&nbsp;</object>
               <Flex flexDirection="column">
                 <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
-                <a href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`}
-                  className="nav-icon">
+                <a target="_blanK" rel="noreferrer" href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`} className="nav-links">
                   <TypographySmall>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
                 </a>
               </Flex>
@@ -189,34 +188,50 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
               <Typography style={{ color: 'white' }}>Bonded</Typography>
               <TypographySmall>${bondedBalanceStr}</TypographySmall>
             </Flex>
-            {hasEnded ?
-              <BondButton disabled>Ended</BondButton>
-            :
-            <div>
-            {fivePercentRoi ?
-              <Flex>
-                {needsApproval ?
-                  <BondButton
-                    disabled={hasEnded}
-                    onClick={handleApprove}>
-                    Enable
-                  </BondButton>
-                  :
-                  <BondButton
-                    disabled={hasEnded}
-                    onClick={onPresentDeposit}>
-                    Bond
-                  </BondButton>
-                }
-              </Flex>
-              :
-              <BondButton>Sold Out</BondButton>
-            }
-            </div>
-}
 
+            <Flex>
+              {hasEnded ?
+                <BondButton disabled>Ended</BondButton>
+                :
+                <div>
+                  {fivePercentRoi ?
+                    <Flex >
+                      {needsApproval ?
+                        <BondButton
+                          disabled={hasEnded}
+                          onClick={handleApprove}>
+                          Enable
+                        </BondButton>
+                        :
+                        <BondButton
+                          disabled={hasEnded}
+                          onClick={onPresentDeposit}>
+                          Bond
+                        </BondButton>
+                      }
+                    </Flex>
+                    :
+                    <BondButton>Sold Out</BondButton>
+                  }
+                </div>
+              }
+
+              {rewardsNo > 0 ?
+                <ClaimButton
+                  style={{ marginLeft: '5px' }}
+                  onClick={async () => {
+                    setPendingTx(true)
+                    await onReward()
+                    setPendingTx(false)
+                  }}>
+                  <FaHandHolding style={{ color: '#9B9B9B' }} /></ClaimButton>
+                :
+                <></>
+              }
+            </Flex>
 
           </Flex>
+
         </BondsContainer>
         :
         <Skeleton height={40} />
