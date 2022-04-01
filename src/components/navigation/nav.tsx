@@ -26,20 +26,20 @@ const Nav = (props) => {
         </StyledButton>
         <StyledButton
           as={StyledNavLink}
-          to="/upcoming"
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/upcoming')
-          }>Staking
-        </StyledButton>
-        <StyledButton
-          as={StyledNavLink}
           to="/bonds"
           isActive={(match, { pathname }) =>
             Boolean(match) ||
             pathname.startsWith('/bonds')
           }
         >Bonds
+        </StyledButton>
+        <StyledButton
+          as={StyledNavLink}
+          to="/staking"
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/staking')
+          }>Staking
         </StyledButton>
         <StyledButton
           as={StyledNavLink}

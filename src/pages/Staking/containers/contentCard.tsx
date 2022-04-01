@@ -2,13 +2,13 @@ import { Container } from 'react-bootstrap'
 import styled from 'styled-components'
 
 const contentCard = styled(Container)`
-  background-image: linear-gradient(to right, #333B4C, #37404E);
-  border-radius: 20px;
-  flex-direction: column;
-  justify-content: space-around;
-  position: center;
   text-align: center;
-  padding: 20px;
+  border-radius: 0px;
+  background: #161616;
+  padding: 15px;
+  border-width: 0px;
+  border-color: #313131;
+  border-style: solid;
 `
 
 export default contentCard

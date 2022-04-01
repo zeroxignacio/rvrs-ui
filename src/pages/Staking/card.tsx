@@ -9,6 +9,7 @@ import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { QuoteToken } from 'config/constants/types'
+import StakeContainer from 'components/layout/containers/airdropContainer'
 import { Pool } from 'state/types'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
@@ -24,7 +25,6 @@ import ContentCard from './containers/contentCard'
 import ContentCard2 from './containers/contentCard2'
 import ContentCardMain from './containers/contentCardMain'
 import TitleCard from './containers/titleCard'
-import Container from './containers/container'
 
 interface PoolWithApy extends Pool {
   apy: BigNumber
@@ -102,148 +102,167 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   )
 
   return (
-    <Container>
-      <TitleCard style={{ marginBottom: '10px' }}>
-        <TypographyTitle>RVRS Staking&nbsp;</TypographyTitle>
-        <a target="_blanK" rel="noreferrer" href="https://medium.com/@reverseprotocolONE/diamond-hands-through-vervrs-46dad3106d3" className="nav-links">
-          (<TypographyTitle style={{ marginTop: '15px', marginBottom: '15px', marginLeft: '0px', borderBottom: '1px dotted #FFFF' }}>Soon Deprecated</TypographyTitle>)
-        </a>
-      </TitleCard>
-      <Flex justifyContent="center" marginBottom="10px">
-        <ContentCard style={{ marginRight: '7px' }}>
-          {pool.apy ?
-            <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
-            :
-            <Typography><Skeleton height={10} width={60} marginBottom="5px" /></Typography>
-          }
-          <Typography>TVL</Typography>
-        </ContentCard>
-        <ContentCardMain>
-          {pool.apy ?
-            <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
-            :
-            <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
-          }
-          <Typography>Annual Yield</Typography>
-        </ContentCardMain>
-        <ContentCard style={{ marginLeft: '7px' }}>
-          {pool.apy ?
-            <TypographyBold style={{ marginBottom: '5px' }}>{monthlyRoiStr}%</TypographyBold>
-            :
-            <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
-          }
-          <Typography>Monthly ROI</Typography>
-        </ContentCard>
-      </Flex>
-      <Flex justifyContent="center">
-        <ContentCard2 style={{ marginRight: '7px' }}>
-          {pool.apy ?
-            <TypographyBold style={{ marginBottom: '5px' }}>{stakedStr}</TypographyBold>
-            :
-            <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
-          }
-          <Typography>Staked RVRS</Typography>
-        </ContentCard2>
-        <ContentCard2>
-          {pool.apy ?
-            <TypographyBold style={{ marginBottom: '5px' }}>${stakedUsdStr}</TypographyBold>
-            :
-            <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
-          }
-          <Typography>Staked (USD)</Typography>
-        </ContentCard2>
-      </Flex>
-      <Divider />
-      {account && (!needsApproval ? (
-        <Flex justifyContent="center" marginTop="0px" marginBottom="20px">
-          {stakedNo > 0 ?
-            <>
-              <UnstakeButton
-                style={{ marginRight: "12px" }}
-                disabled={staked.eq(new BigNumber(0)) || pendingTx}
-                onClick={isOldSyrup ? async () => {
-                  setPendingTx(true)
-                  await onUnstake('0')
-                  setPendingTx(false)
-                } : onPresentWithdraw}>
-                Unstake
-              </UnstakeButton>
-              <StakeButton
-                disabled={apyNull}
-                onClick={onPresentDeposit}>
-                &nbsp;Stake&nbsp;
-              </StakeButton>
-            </>
-            :
-            <>
-              <UnstakeButton
-                style={{ marginRight: "12px" }}
-                disabled
-                onClick={isOldSyrup ? async () => {
-                  setPendingTx(true)
-                  await onUnstake('0')
-                  setPendingTx(false)
-                } : onPresentWithdraw}>
-                Unstake
-              </UnstakeButton>
-              <StakeButton
-                disabled={apyNull}
-                onClick={onPresentDeposit}
-              >
-                &nbsp;Stake&nbsp;
-              </StakeButton>
-            </>
-          }
-        </Flex>
-      ) : (
-        <StakeButton
-          style={{ marginTop: "0px", marginBottom: "20px" }}
-          disabled={requestedApproval}
-          onClick={handleApprove}>
-          Enable
-        </StakeButton>
-      ))}
-    </Container>
+    <>
+      <StakeContainerWrap>
+        <StakeContainer>
+          <TitleCard style={{ marginBottom: '10px' }}>
+            <TypographyTitle>RVRS Staking&nbsp;</TypographyTitle>
+            <a target="_blanK" rel="noreferrer" href="https://medium.com/@reverseprotocolONE/diamond-hands-through-vervrs-46dad3106d3" className="nav-links">
+              (<TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>Soon Deprecated</TypographyTitle>)
+            </a>
+          </TitleCard>
+          <Flex justifyContent="center" marginBottom="10px">
+            <ContentCard style={{ marginRight: '10px' }}>
+              {pool.apy ?
+                <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
+                :
+                <Typography><Skeleton height={10} width={60} marginBottom="5px" /></Typography>
+              }
+              <Typography>TVL</Typography>
+            </ContentCard>
+            <ContentCardMain>
+              {pool.apy ?
+                <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
+                :
+                <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
+              }
+              <Typography>Annual Yield</Typography>
+            </ContentCardMain>
+            <ContentCard style={{ marginLeft: '10px' }}>
+              {pool.apy ?
+                <TypographyBold style={{ marginBottom: '5px' }}>{monthlyRoiStr}%</TypographyBold>
+                :
+                <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
+              }
+              <Typography>Monthly ROI</Typography>
+            </ContentCard>
+          </Flex>
+          <Flex justifyContent="center">
+            <ContentCard2 style={{ marginRight: '10px' }}>
+              {pool.apy ?
+                <TypographyBold style={{ marginBottom: '5px' }}>{stakedStr}</TypographyBold>
+                :
+                <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
+              }
+              <Typography>Staked RVRS</Typography>
+            </ContentCard2>
+            <ContentCard2>
+              {pool.apy ?
+                <TypographyBold style={{ marginBottom: '5px' }}>${stakedUsdStr}</TypographyBold>
+                :
+                <Typography><Skeleton height={10} marginBottom="5px" /></Typography>
+              }
+              <Typography>Staked (USD)</Typography>
+            </ContentCard2>
+          </Flex>
+          <Divider />
+          
+          {account && (!needsApproval ? (
+            <Flex justifyContent="end" marginTop="0px" marginBottom="0px">
+              {stakedNo > 0 ?
+                <>
+                  <UnstakeButton
+                    style={{ marginRight: "10px" }}
+                    disabled={staked.eq(new BigNumber(0)) || pendingTx}
+                    onClick={isOldSyrup ? async () => {
+                      setPendingTx(true)
+                      await onUnstake('0')
+                      setPendingTx(false)
+                    } : onPresentWithdraw}>
+                    Unstake
+                  </UnstakeButton>
+                  <StakeButton
+                    disabled={apyNull}
+                    onClick={onPresentDeposit}>
+                    &nbsp;Stake&nbsp;
+                  </StakeButton>
+                </>
+                :
+                <>
+                  <UnstakeButton
+                    style={{ marginRight: "10px" }}
+                    disabled
+                    onClick={isOldSyrup ? async () => {
+                      setPendingTx(true)
+                      await onUnstake('0')
+                      setPendingTx(false)
+                    } : onPresentWithdraw}>
+                    Unstake
+                  </UnstakeButton>
+                  <StakeButton
+                    disabled={apyNull}
+                    onClick={onPresentDeposit}
+                  >
+                    &nbsp;Stake&nbsp;
+                  </StakeButton>
+                </>
+              }
+            </Flex>
+          ) : (
+            <StakeButton
+              style={{ marginTop: "0px", marginBottom: "0px" }}
+              disabled={requestedApproval}
+              onClick={handleApprove}>
+              Enable
+            </StakeButton>
+          ))}
+        </StakeContainer>
+      </StakeContainerWrap>
+
+
+      <StakeContainerWrap style={{ marginTop: '20px' }}>
+          <StakeContainer style={{ padding: '15px' }}>
+            <Flex justifyContent="center">
+              <Typography>Stakers mint RVRS and expand its supply. This form of staking is being deprecated with the introduction of veRVRS.</Typography>
+            </Flex>
+          </StakeContainer>
+        </StakeContainerWrap>
+    </>
   )
 }
 
+
+const StakeContainerWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 2px;
+  border-width: 1px;
+  border-color: #313131;
+  border-style: solid;
+`
+
+
 const StakeButton = styled.button`
-  font-size: 18px;
-  font-weight: 600;
-  color: #E2E2E2;
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+  color: #EEEEEE;
+  min-width: 90px;
+  border-left: 5px solid #;
   justify-content: center;
-  background-image: linear-gradient(180deg, #506063, #909BBF);
-  border-radius: 15px;
-  border: 0px;
-  padding-left: 100px;
-  padding-right: 100px;
-  padding-top: 17px;
-  padding-bottom: 17px;
+  padding: 10px;
+  transition: 0.5s ease-in-out;
   :hover {
-    background-image: linear-gradient(180deg, #506063, #A1ACCD);
-    box-shadow: 0px 0px 10px 0px #5A6F73;
-    transition: 0.5s;
-    color: #FFFF;
-  }
+      opacity: 0.5;
+      background: transparent;
+  } 
 `
 
 const UnstakeButton = styled.button`
-  font-size: 18px;
-  font-weight: 600;
-  color: #C7CBD0;
-  justify-content: center;
-  background-color: #46505E;
-  border-radius: 15px;
-  border: 0px;
-  padding-left: 100px;
-  padding-right: 100px;
-  padding-top: 17px;
-  padding-bottom: 17px;
-  :hover {
-      background-color: #535E6F;
-      transition: 0.3s;
-      color: #FFFF;
-  } 
+font-size: 16px;
+font-weight: 400;
+background: transparent;
+color: #EEEEEE;
+min-width: 90px;
+border-left: 5px solid #;
+justify-content: center;
+padding: 10px;
+transition: 0.5s ease-in-out;
+:hover {
+    opacity: 0.5;
+    background: transparent;
+} 
 `
 
 const Divider = styled.div`

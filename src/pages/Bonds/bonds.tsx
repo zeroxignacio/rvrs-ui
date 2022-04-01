@@ -22,10 +22,10 @@ import PoolCard from './card'
 
 const BondsContainer = styled.div`
   background: #121212;
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 10px;
   transition: all 0.3s ease-in-out;
-  border-width: 0px;
+  border-width: 1px;
   border-color: #313131;
   border-style: solid;
 `
@@ -33,9 +33,11 @@ const BondsContainer = styled.div`
 const AirdropContainerWrap = styled.div`
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(45deg, #313131 , #4D4D4D);
   border-radius: 5px;
-  padding: 1.5px;
+  padding: 2px;
+  border-width: 1px;
+  border-color: #313131;
+  border-style: solid;
 `
 
 const TitleCard = styled(Container)`
@@ -96,7 +98,7 @@ const Bond: React.FC = () => {
         <BondsContainer>
           <TitleCard style={{ justifyContent: 'space-between' }}>
             <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
-              Inactive rvBonds
+              Inactive rvBonds  
             </TypographyTitle>
           </TitleCard>
           <Route path={`${path}`}>

@@ -23,9 +23,11 @@ import { getBalanceNumber } from "../../utils/formatBalance"
 const AirdropContainerWrap = styled.div`
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(45deg, #313131 , #4D4D4D);
   border-radius: 5px;
-  padding: 1.5px;
+  padding: 2px;
+  border-width: 1px;
+  border-color: #313131;
+  border-style: solid;
 `
 
 
