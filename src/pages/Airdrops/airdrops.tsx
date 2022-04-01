@@ -11,6 +11,7 @@ import AirdropContainer from 'components/layout/containers/airdropContainer'
 import ContentCard from 'components/layout/cards/airdrop/contentCard'
 import TitleCard from 'components/layout/cards/airdrop/titleCard'
 import ContentCardMain from 'components/layout/cards/airdrop/contentCardMain'
+import styled from 'styled-components'
 import Ripples, { createRipples } from 'react-ripples'
 import Divider from 'components/divider'
 import ClaimButtonDisabled from 'components/layout/buttons/claimAirdropButtonDisabled'
@@ -18,6 +19,15 @@ import ClaimButton from 'components/layout/buttons/claimAirdropButton'
 import { useAirdropData } from "../../state/hooks"
 import useAirdropClaim from "../../hooks/useAirdropClaim"
 import { getBalanceNumber } from "../../utils/formatBalance"
+
+const AirdropContainerWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(45deg, #313131 , #4D4D4D);
+  border-radius: 5px;
+  padding: 1.5px;
+`
+
 
 const Airdrop = () => {
   const { account } = useWallet()
@@ -54,76 +64,82 @@ const Airdrop = () => {
   return (
     <>
       <Page>
-        <AirdropContainer>
-          <TitleCard style={{ marginBottom: '10px' }}>
-            <TypographyTitle>Claim Your Weekly&nbsp;</TypographyTitle>
-            <a target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/the-protocol/reverseum-bonding-pools" className="nav-links">
-              <TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>UST Airdrop</TypographyTitle>
-            </a>
-          </TitleCard>
-          <Flex justifyContent="center">
-            <ContentCard style={{ marginRight: '7px' }}>
-              {totalDistributedNo > 0 ?
-                <TypographyBold style={{ marginBottom: '5px' }}>${totalDistributedStr}</TypographyBold>
-                :
-                <Typography><Skeleton height={20} marginBottom="5px" /></Typography>
-              }
-              <Typography>Total Distributed</Typography>
-            </ContentCard>
-            <ContentCardMain>
-              {expectedReturnsNo > 1 ?
-                <TypographyBold style={{ marginBottom: '5px' }}>{expectedReturnsStr} UST</TypographyBold>
-                :
-                <Typography><Skeleton height={20} marginBottom="5px" /></Typography>
-              }
-              <Typography>Yearly Returns</Typography>
-            </ContentCardMain>
-            <ContentCard style={{ marginLeft: '7px' }}>
-              {claimedNotZero ?
-                <div>
-                  <TypographyBold style={{ marginBottom: '5px' }}>{claimedStr} UST</TypographyBold>
-                  <Typography>Claimed</Typography>
-                </div>
-                :
-                <div>
-                  <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
-                  <Typography>UST Claimed</Typography>
-                </div>
-              }
-            </ContentCard>
-          </Flex>          
-          <Flex justifyContent="space-between" marginTop="10px">
-            <Flex style={{textAlign:'center', alignItems:'center'}}>
-            <ClaimButtonDisabled disabled>
-            <Typography>Claimed {lastClaimAmountStr} UST to Date</Typography>
-              </ClaimButtonDisabled>
+        <AirdropContainerWrap>
+          <AirdropContainer>
+            <TitleCard style={{ marginBottom: '10px' }}>
+              <TypographyTitle>Claim Your Weekly&nbsp;</TypographyTitle>
+              <a target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/the-protocol/reverseum-bonding-pools" className="nav-links">
+                <TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>UST Airdrop</TypographyTitle>
+              </a>
+            </TitleCard>
+            <Flex justifyContent="center">
+              <ContentCard style={{ marginRight: '10px' }}>
+                {totalDistributedNo > 0 ?
+                  <TypographyBold style={{ marginBottom: '5px' }}>${totalDistributedStr}</TypographyBold>
+                  :
+                  <Typography><Skeleton height={20} marginBottom="5px" /></Typography>
+                }
+                <Typography>Total Distributed</Typography>
+              </ContentCard>
+              <ContentCardMain>
+                {expectedReturnsNo > 1 ?
+                  <TypographyBold style={{ marginBottom: '5px' }}>{expectedReturnsStr} UST</TypographyBold>
+                  :
+                  <Typography><Skeleton height={20} marginBottom="5px" /></Typography>
+                }
+                <Typography>Yearly Returns</Typography>
+              </ContentCardMain>
+              <ContentCard style={{ marginLeft: '10px' }}>
+                {claimedNotZero ?
+                  <div>
+                    <TypographyBold style={{ marginBottom: '5px' }}>{claimedStr} UST</TypographyBold>
+                    <Typography>Claimed</Typography>
+                  </div>
+                  :
+                  <div>
+                    <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
+                    <Typography>UST Claimed</Typography>
+                  </div>
+                }
+              </ContentCard>
             </Flex>
-            {toClaim && toClaim > 0 ?
-              <div
-                style={{
-                  display: 'inline-flex',
-                  borderRadius: 0,
-                  overflow: 'hidden',
-                }}
-              >
-                <Ripples>
-                  <ClaimButton onClick={handleAirdropClaim} disabled={pendingTxn}>
-                    Collect
-                  </ClaimButton>
-                </Ripples>
-              </div>
-              :
-              <ClaimButtonDisabled disabled>
-                Come back next week!
-              </ClaimButtonDisabled>
-            }
-          </Flex>
-        </AirdropContainer>
-        <AirdropContainer style={{padding:'15px', marginTop:'20px'}}>
-          <Flex justifyContent="center">
+            <Flex justifyContent="space-between" marginTop="20px">
+              <Flex style={{ textAlign: 'center', alignItems: 'center' }}>
+                <ClaimButtonDisabled disabled>
+                  <Typography>Claimed ${lastClaimAmountStr} to Date</Typography>
+                </ClaimButtonDisabled>
+              </Flex>
+              {toClaim && toClaim > 0 ?
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    borderRadius: 0,
+                    overflow: 'hidden',
+                  }}
+                >
+                  <Ripples>
+                    <ClaimButton onClick={handleAirdropClaim} disabled={pendingTxn}>
+                      Collect ${toClaimStr}
+                    </ClaimButton>
+                  </Ripples>
+                </div>
+                :
+                <ClaimButtonDisabled disabled>
+                  Come back next week!
+                </ClaimButtonDisabled>
+              }
+            </Flex>
+          </AirdropContainer>
+        </AirdropContainerWrap>
+
+        <AirdropContainerWrap style={{ marginTop: '20px' }}>
+          <AirdropContainer style={{ padding: '15px' }}>
+            <Flex justifyContent="center">
               <Typography>Yield earned through the Reverseum Treasury positions is converted to UST and distributed to veRVRS and RVRS holders every monday.</Typography>
-          </Flex>
-        </AirdropContainer>
+            </Flex>
+          </AirdropContainer>
+        </AirdropContainerWrap>
+
       </Page>
     </>
   )

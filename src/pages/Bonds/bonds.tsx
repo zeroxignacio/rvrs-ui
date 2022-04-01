@@ -7,6 +7,7 @@ import Ripples, { createRipples } from 'react-ripples'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import TypographyTitle from 'components/layout/typography/typographyTitle'
+import Typography from 'components/layout/typography/typography'
 import styled from 'styled-components'
 import Flex from 'components/layout/flex/Flex'
 import ActiveInactiveButton from 'components/layout/buttons/activeInactiveButton'
@@ -21,16 +22,24 @@ import PoolCard from './card'
 
 const BondsContainer = styled.div`
   background: #121212;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px;
   transition: all 0.3s ease-in-out;
-  border-width: 1px;
+  border-width: 0px;
   border-color: #313131;
   border-style: solid;
 `
 
-const TitleCard = styled(Container)`
+const AirdropContainerWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(45deg, #313131 , #4D4D4D);
   border-radius: 5px;
+  padding: 1.5px;
+`
+
+const TitleCard = styled(Container)`
+  border-radius: 0px;
   justify-content: space-between;
   position: center;
   background: #161616;
@@ -71,43 +80,43 @@ const Bond: React.FC = () => {
 
   return (
     <Page>
-      <BondsContainer>
+         <AirdropContainerWrap>
 
-        <TitleCard style={{ justifyContent: 'space-between' }}>
-          <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
-            rvBonds
-          </TypographyTitle>
-          { /* Active/Inactive button */}
-          
-        </TitleCard>
+        <BondsContainer>
+          <TitleCard style={{ justifyContent: 'space-between' }}>
+            <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
+              rvBonds
+            </TypographyTitle>
+          </TitleCard>
+          <Route path={`${path}`}>
+            {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+          </Route>
+        </BondsContainer>
+      </AirdropContainerWrap>
+      <AirdropContainerWrap style={{ marginTop: '20px' }}>
+        <BondsContainer>
+          <TitleCard style={{ justifyContent: 'space-between' }}>
+            <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
+              Inactive rvBonds
+            </TypographyTitle>
+            { /* Active/Inactive button */}
+          </TitleCard>
 
-        { /* Bonds card layout */}
-        <Route path={`${path}`}>
-          {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
-        </Route>
+          { /* Bonds card layout */}
+          <Route path={`${path}`}>
+            {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+          </Route>
+        </BondsContainer>
+      </AirdropContainerWrap>
 
-
-
+      <AirdropContainerWrap style={{ marginTop: '20px' }}>
+      <BondsContainer style={{ padding: '15px' }}>
+        <Flex justifyContent="center">
+          <Typography>Reverse offers linearly vested bonds by variable returns that use an algorithm to calculate the amount of RVRS to sell for UST.</Typography>
+        </Flex>
       </BondsContainer>
-
-
-      <BondsContainer style={{marginTop:'20px'}}>
-
-        <TitleCard style={{ justifyContent: 'space-between' }}>
-          <TypographyTitle style={{ marginTop: '0px', marginBottom: '0px' }}>
-            Inactive rvBonds
-          </TypographyTitle>
-          { /* Active/Inactive button */}
-        </TitleCard>
-
-        { /* Bonds card layout */}
-        <Route path={`${path}`}>
-          {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
-        </Route>
-
-
-      </BondsContainer>
-
+    </AirdropContainerWrap>
+    
     </Page>
   )
 }
