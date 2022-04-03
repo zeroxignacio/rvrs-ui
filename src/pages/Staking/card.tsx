@@ -80,6 +80,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const apyStr = apy && apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const monthlyRoiStr = apr && apr.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
+
   // approve, withdraw, deposit
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={staked} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
@@ -170,8 +171,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                   <ActionButton
                     disabled={apyNull}
                     onClick={onPresentDeposit}>
-                    Stake
-                    <Typography>23 RVRS</Typography>
+                    Stake {rvrsBalanceStr} RVRS
                   </ActionButton>
                 </>
                 :

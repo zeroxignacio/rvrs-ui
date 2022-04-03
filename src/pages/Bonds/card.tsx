@@ -98,7 +98,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const vestingStr = vesting.toLocaleString('en-us', { maximumFractionDigits: 1 })
 
   // returns
-  const roiNo = (apy && apy.div(365).times(vesting).minus(0)).toNumber();
+  const roiNo = (apy && apy.div(365).times(vesting).minus(100)).toNumber();
   const fivePercentRoi = roiNo > 5;
   const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(100)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
