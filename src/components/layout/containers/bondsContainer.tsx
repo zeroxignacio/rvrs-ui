@@ -1,6 +1,7 @@
+import { Container } from 'react-bootstrap'
 import styled from 'styled-components'
 
-const bondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
+const BondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
   border-radius: 5px;
   padding: 6px;
   margin-top: 8px;
@@ -14,4 +15,4 @@ const bondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
   }
 `
 
-export default bondsContainer 
+export default BondsContainer 

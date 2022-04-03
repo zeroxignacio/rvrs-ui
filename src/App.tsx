@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
 import MenuBottom from 'components/navigation/footer'
 import Style from 'components/Style'
-import Page from 'components/layout/containers/page'
+import Page from 'components/layout/containers/Page'
 import Nav from './components/navigation/nav'
 
 BigNumber.config({

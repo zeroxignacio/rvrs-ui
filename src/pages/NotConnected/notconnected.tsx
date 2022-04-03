@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
-import Page from 'components/layout/containers/page'
+import Page from 'components/layout/containers/Page'
 import { useWallet } from "@binance-chain/bsc-use-wallet"
 import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'

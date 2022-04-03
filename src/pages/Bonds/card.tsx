@@ -13,13 +13,9 @@ import { Skeleton } from 'components/Skeleton'
 import Ripples from 'react-ripples'
 import styled from 'styled-components'
 import { FaExternalLinkSquareAlt, FaHandHolding } from 'react-icons/fa'
-import BondsContainer from '../../components/layout/containers/bondsContainer'
-import ContentCard from '../../components/layout/cards/bonds/contentCard'
-import HeaderCard from '../../components/layout/cards/bonds/headerCard'
+import BondsContainer from '../../components/layout/containers/BondsContainer'
 import DepositModal from '../../components/modals/bondModal'
-import ClaimButtonDisabled from '../../components/layout/buttons/claimButtonDisabled'
 import BondButton from '../../components/layout/buttons/bondButton'
-import BondButtonDisabled from '../../components/layout/buttons/bondButtonDisabled'
 import ClaimButton from '../../components/layout/buttons/claimButton'
 
 const Typography = styled.p`
@@ -149,7 +145,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 </a>
               </Flex>
             </Flex>
-
             {/* ROI */}
             {hasEnded ?
               <Flex flexDirection="column">
@@ -171,7 +166,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 }
               </div>
             }
-
             {hasEnded ?
               <Flex flexDirection="column">
                 <Typography style={{ color: 'white' }}>Vesting</Typography>
@@ -183,12 +177,10 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 <TypographySmall>{vestingStr}&nbsp;Days</TypographySmall>
               </Flex>
             }
-
             <Flex flexDirection="column">
               <Typography style={{ color: 'white' }}>Bonded</Typography>
               <TypographySmall>${bondedBalanceStr}</TypographySmall>
             </Flex>
-
             <Flex>
               {hasEnded ?
                 <BondButton disabled>Ended</BondButton>
@@ -215,7 +207,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   }
                 </div>
               }
-
               {rewardsNo > 0 ?
                 <ClaimButton
                   style={{ marginLeft: '5px' }}
@@ -229,9 +220,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 <></>
               }
             </Flex>
-
           </Flex>
-
         </BondsContainer>
         :
         <Skeleton height={40} />

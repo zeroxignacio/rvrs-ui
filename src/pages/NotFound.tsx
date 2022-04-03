@@ -1,5 +1,5 @@
 import React from 'react'
-import Page from 'components/layout/containers/page'
+import Page from 'components/layout/containers/Page'
 
 const notFound = () => {
   return (
