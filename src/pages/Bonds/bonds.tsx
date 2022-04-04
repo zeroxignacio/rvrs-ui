@@ -43,8 +43,8 @@ const Bond: React.FC = () => {
   return (
     <Page>
       <Wrap>
-        <LayoutContainer style={{padding: '5px'}}>
-          <TitleCard>
+        <LayoutContainer>
+          <TitleCard style={{padding: '10px'}}>
             <TypographyTitle>
               rvBonds
             </TypographyTitle>
@@ -55,8 +55,8 @@ const Bond: React.FC = () => {
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
-        <LayoutContainer style={{padding: '5px'}}>
-          <TitleCard>
+        <LayoutContainer>
+          <TitleCard style={{padding: '10px'}}>
             <TypographyTitle>
               Inactive rvBonds  
             </TypographyTitle>
@@ -69,7 +69,7 @@ const Bond: React.FC = () => {
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '15px' }}>
           <Flex>
-            <Typography>Every monday, Reverse offers linearly vested bonds with variable returns that use an algorithm to calculate the amount of RVRS to sell.</Typography>
+            <Typography>Every week, Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand its yields.</Typography>
           </Flex>
         </LayoutContainer>
       </Wrap>

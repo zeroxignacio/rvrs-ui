@@ -27,8 +27,6 @@ import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import { usePriceCakeBusd } from "../../state/hooks";
 import StakeModal from '../../components/modals/stakeModal'
 
-
-
 interface PoolWithApy extends Pool {
   apy: BigNumber
   apr: BigNumber
