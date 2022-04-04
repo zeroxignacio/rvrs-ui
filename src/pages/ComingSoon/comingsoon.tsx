@@ -7,14 +7,14 @@ import Typography from 'components/layout/typography/typography'
 import { Container } from 'react-bootstrap'
 
 
-const NOTCONNECTED = () => {
+const COMINGSOON = () => {
   const { account } = useWallet()
 
   return (
     <Page>
       <CardContainer>
         <Card>
-          <TypographyTitle>Connect First</TypographyTitle>
+          <TypographyTitle>Coming Soon</TypographyTitle>
         </Card>
       </CardContainer>
     </Page>
@@ -72,4 +72,4 @@ const TypographyTitle = styled.h1`
 `
 
 
-export default NOTCONNECTED
+export default COMINGSOON

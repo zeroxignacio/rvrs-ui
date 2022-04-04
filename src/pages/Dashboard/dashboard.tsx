@@ -6,46 +6,17 @@ import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
 import { Skeleton } from 'components/Skeleton'
-import DashboardContainer from 'components/layout/containers/airdropContainer'
+import TitleCard from 'components/layout/cards/TitleCard'
+import ContentCard from 'components/layout/cards/ContentCard'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
-import { FaAward, FaClipboard, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaAward, FaExternalLinkAlt } from 'react-icons/fa';
 import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
+import LayoutContainer from 'components/layout/containers/LayoutContainer'
+import Wrap from 'components/layout/containers/Wrap'
+import TierCard from 'components/layout/cards/TierCard'
 import { getBalanceNumber } from "../../utils/formatBalance"
-
-const ContentCard = styled(Container)`
-  background-image: linear-gradient(to right, #333B4C, #37404E);
-  border-radius: 20px;
-  flex-direction: column;
-  justify-content: space-around;
-  position: center;
-  text-align: center;
-  padding: 15px;
-`
-
-const TierCard = styled(Container)`
-  background-image: linear-gradient(to right, #353E50, #3D4853);
-  border-radius: 20px;
-  flex-direction: column;
-  justify-content: space-around;
-  position: center;
-  text-align: center;
-  padding: 15px;
-  border: 2px;
-  border-style: solid !important;
-  border-color: #808080 !important;
-`
-
-const TitleCard = styled(Container)`
-  background-image: linear-gradient(to right, #353E50, #3D4853);
-  border-radius: 20px;
-  flex-direction: column;
-  justify-content: space-around;
-  position: center;
-  text-align: center;
-  padding: 20px;
-`
 
 const Dashboard = () => {
   const { account } = useWallet()
@@ -68,70 +39,79 @@ const Dashboard = () => {
 
   return (
     <Page>
-      <DashboardContainer>
-        <TitleCard style={{ marginBottom: '10px', marginTop: '0px' }}>
-          <TypographyTitle style={{ marginTop: '15px', marginBottom: '15px' }}>
-            <div>Dashboard&nbsp;</div>
-            <a
-              href={`https://explorer.harmony.one/address/${account}`}
-              className="nav-icon"
-              onClick={() => navigator.clipboard.writeText(`${account}`)}>
+      <Wrap>
+        <LayoutContainer>
+          <TitleCard style={{ marginBottom: '5px', marginTop: '0px' }}>
+            <TypographyTitle style={{ marginTop: '15px', marginBottom: '15px' }}>
+              <div>Dashboard&nbsp;</div>
+              <a
+                href={`https://explorer.harmony.one/address/${account}`}
+                className="nav-icon"
+                onClick={() => navigator.clipboard.writeText(`${account}`)}>
 
-              <Typography>{account.substring(0, 16)}...&nbsp;<FaExternalLinkAlt /></Typography>
-            </a>
-          </TypographyTitle>
+                <Typography>{account.substring(0, 16)}...&nbsp;<FaExternalLinkAlt /></Typography>
+              </a>
+            </TypographyTitle>
 
-        </TitleCard>
-        <Flex justifyContent="center">
-          <ContentCard style={{ marginRight: '7px' }}>
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>veRVRS Balance</Typography>
-          </ContentCard>
-          <TierCard style={{ marginRight: '7px' }}>
-            <TypographyBold style={{ marginBottom: '5px' }}>Current Tier</TypographyBold>
-            <Typography>Silver Reversor <FaAward /></Typography>
-          </TierCard>
-          <ContentCard>
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>RVRS Balance</Typography>
-          </ContentCard>
-        </Flex>
-        <Flex justifyContent="center" marginTop="10px">
-          <ContentCard style={{ marginRight: '7px' }}>
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>veRVRS Cap</Typography>
-          </ContentCard>
-          <ContentCard style={{ marginRight: '7px' }} >
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>Portfolio Value</Typography>
-          </ContentCard>
-          <ContentCard >
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>Staked RVRS</Typography>
-          </ContentCard>
-        </Flex>
-        <Flex justifyContent="center" marginTop="10px">
-          <ContentCard style={{ marginRight: '7px' }}>
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>Expected Yearly Returns</Typography>
-          </ContentCard>
-          <ContentCard>
-            <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-            <Typography>Market Cap/Treasury Ratio</Typography>
-          </ContentCard>
-        </Flex>
-        <Flex justifyContent="center" marginTop="10px">
-          <ContentCard>
-            <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
-            <a
-              href="https://docs.google.com/spreadsheets/d/1fNsmVWqtPrtZr7z4i2n1ZgRNAEZdX3coPzMbZNPCZ34/edit#gid=1364928066"
-              className="nav-icon"
-            >
-              <LinkTypography>Reverseum Treasury&nbsp;<FaExternalLinkAlt /></LinkTypography>
-            </a>
-          </ContentCard>
-        </Flex>
-      </DashboardContainer>
+          </TitleCard>
+          <Flex justifyContent="center">
+            <ContentCard style={{ marginRight: '5px', padding: '10px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Typography>veRVRS Balance</Typography>
+            </ContentCard>
+            <TierCard style={{ marginRight: '5px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>Current Tier</TypographyBold>
+              <Typography>Silver Reversor <FaAward /></Typography>
+            </TierCard>
+            <ContentCard>
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Typography>RVRS Balance</Typography>
+            </ContentCard>
+          </Flex>
+          <Flex justifyContent="center" marginTop="5px">
+            <ContentCard style={{ marginRight: '5px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Typography>veRVRS Cap</Typography>
+            </ContentCard>
+            <ContentCard style={{ marginRight: '5px' }} >
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Typography>Portfolio Value</Typography>
+            </ContentCard>
+            <ContentCard >
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Typography>Staked RVRS</Typography>
+            </ContentCard>
+          </Flex>
+          <Flex justifyContent="center" marginTop="5px">
+            <ContentCard style={{ marginRight: '5px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Typography>Expected Yearly Returns</Typography>
+            </ContentCard>
+            <ContentCard>
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Typography>Market Cap/Treasury Ratio</Typography>
+            </ContentCard>
+          </Flex>
+          <Flex justifyContent="center" marginTop="5px">
+            <ContentCard>
+              <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
+              <a
+                href="https://docs.google.com/spreadsheets/d/1fNsmVWqtPrtZr7z4i2n1ZgRNAEZdX3coPzMbZNPCZ34/edit#gid=1364928066"
+                className="nav-icon"
+              >
+                <LinkTypography>Reverseum Treasury&nbsp;<FaExternalLinkAlt /></LinkTypography>
+              </a>
+            </ContentCard>
+          </Flex>
+        </LayoutContainer>
+      </Wrap>
+      <Wrap style={{ marginTop: '20px' }}>
+          <LayoutContainer style={{ padding: '15px' }}>
+            <Flex justifyContent="center">
+              <Typography>The Reverse dashboard and charts help you keep track of what matters most, your RVRS positions.</Typography>
+            </Flex>
+          </LayoutContainer>
+        </Wrap>
     </Page>
   )
 }

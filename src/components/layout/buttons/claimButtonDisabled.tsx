@@ -6,7 +6,7 @@ const claimButtonDisabled = styled.button`
     background-image: linear-gradient(#506063, #909BBF);
     border-radius: 18px;
     border: 0px;
-    opacity: 0.4;
+    opacity: 0.9;
     transition: 0.3s ease-in-out;
 `
 

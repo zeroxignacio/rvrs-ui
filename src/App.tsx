@@ -1,12 +1,11 @@
 import React, { useEffect, Suspense, lazy } from 'react'
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from '@reverse/uikit'
 import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
 import MenuBottom from 'components/navigation/footer'
 import Style from 'components/Style'
-import Page from 'components/layout/containers/page'
 import Nav from './components/navigation/nav'
 
 BigNumber.config({
@@ -17,6 +16,7 @@ BigNumber.config({
 const BONDS = lazy(() => import('./pages/Bonds'))
 const STAKEDEPRECATED = lazy(() => import('./pages/Staking'))
 const NOTCONNECTED = lazy(() => import('./pages/NotConnected'))
+const COMINGSOON = lazy(() => import('./pages/ComingSoon'))
 const DASHBOARD = lazy(() => import('./pages/Dashboard'))
 const AIRDROP = lazy(() => import('./pages/Airdrops'))
 
@@ -48,6 +48,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/airdrop">
               <AIRDROP />
+            </Route>
+            <Route path="/upcoming">
+              <COMINGSOON />
             </Route>
         </Suspense>
         :

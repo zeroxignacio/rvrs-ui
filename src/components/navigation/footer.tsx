@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, Toggle, useModal } from '@reverse/uikit'
-import { Link } from "react-router-dom";
+import { Flex } from '@reverse/uikit'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap';
 
@@ -11,60 +10,73 @@ const MenuBottom = (props) => {
   return (
     <MenuContainer>
       <NavContainer>
-        <Flex justifyContent="space-between" marginTop="10px">
-          <Flex flexDirection="column" alignItems="start" >
-            <a style={{ marginBottom: "14px" }} target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/" className="nav-links">
-              <TypographyBold>Docs&nbsp;</TypographyBold>
+        <Flex justifyContent="center" marginTop="0px">
+          <Flex alignItems="start" >
+            <a style={{marginLeft:'-5px'}} target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/" className="nav-links">
+              <TypographyBold>Docs</TypographyBold>
             </a>
+            ∙
             <a target="_blanK" rel="noreferrer" href="https://discord.com/invite/rvrsprotocol" className="nav-links">
               <TypographyBold>Discord</TypographyBold>
             </a>
-          </Flex>
-          <Flex flexDirection="column" alignItems="start" marginLeft="-80px">
-            <a style={{ marginBottom: "14px" }} target="_blanK" rel="noreferrer" href="https://snapshot.org/#/rvrsprotocol.eth" className="nav-links">
+            ∙
+            <a target="_blanK" rel="noreferrer" href="https://snapshot.org/#/rvrsprotocol.eth" className="nav-links">
               <TypographyBold>Govern</TypographyBold>
             </a>
+            ∙
             <a target="_blanK" rel="noreferrer" href="https://twitter.com/RVRSProtocol" className="nav-links">
               <TypographyBold>Twitter</TypographyBold>
             </a>
-          </Flex>
-          <Flex flexDirection="column" alignItems="start" marginLeft="-80px">
-            <a style={{ marginBottom: "14px" }} target="_blanK" rel="noreferrer" href="https://medium.com/@reverseprotocolONE" className="nav-links">
-              <TypographyBold>Medium</TypographyBold>
-            </a>
-            <a target="_blanK" rel="noreferrer" href="https://t.me/ReverseProtocolOne" className="nav-links">
-              <TypographyBold>Telegram</TypographyBold>
+            ∙
+            <a target="_blanK" rel="noreferrer" href="/" className="nav-links">
+              <TypographyBold>Audit</TypographyBold>
             </a>
           </Flex>
-          <Link to="/">
-            <object type="image/svg+xml" data="/images/reverse.svg" width="150px" style={{ marginTop: "-5px" }}>&nbsp;</object>
-          </Link>
+            { /* <object type="image/svg+xml" data="/images/reverse.svg" width="120px" style={{ marginTop: "-20px" }}>&nbsp;</object> */ }
         </Flex>
+        <Typography>2022 Reverse Protocol. MIT License.</Typography>
       </NavContainer>
     </MenuContainer >
   )
 }
 
 const TypographyBold = styled.p`
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   margin-bottom: 0px;
   transition: 0.3s;
+  text-decoration: underline;
+  margin-right: 5px;
+  margin-left: 5px;
 `
+
+const Typography = styled.p`
+    font-size: 12px;
+    color: #CFCFCF;
+    font-weight: 400;
+    margin-top: 15px;
+`
+
 
 const NavContainer = styled(Container)`
   text-align: center;
-  padding: 20px;
-  max-width: 590px;
+  padding: 10px;
+  max-width: 580px;
 `
 const MenuContainer = styled(Container)`
-  padding-bottom: 10px;
+  max-width: 10000px;
+  padding: 20px;
+  background-color: #181818;
+  border-width: 1px 0px 0px 0px;
+  border-color: #313131;
+  border-style: solid;
+  margin-top: 30px;
   background-color: rgba(42, 52, 67, 0.6);
+  background-color: #121212;
   transition: all 0.3s ease-in-out;
   :hover {
-    background-color: #2B3443;
+    opacity: 1;
   }
-  max-width: 4000px;
 `
 
 export default MenuBottom
