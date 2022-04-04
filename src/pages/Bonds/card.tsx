@@ -13,12 +13,12 @@ import { Skeleton } from 'components/Skeleton'
 import Ripples from 'react-ripples'
 import styled from 'styled-components'
 import { FaExternalLinkSquareAlt, FaHandHolding } from 'react-icons/fa'
-import BondsContainer from '../../components/layout/containers/BondsContainer'
-import DepositModal from '../../components/modals/bondModal'
-import BondButton from '../../components/layout/buttons/bondButton'
-import ClaimButton from '../../components/layout/buttons/claimButton'
+import BondsContainer from 'components/layout/containers/bondsContainer'
+import DepositModal from 'components/modals/bondModal'
+import BondButton from 'components/layout/buttons/bondButton'
+import ClaimButton from 'components/layout/buttons/claimButton'
 
-const Typography = styled.p`
+const Typography = styled.p`s
     font-size: 16px;
     color: #CFCFCF;
     font-weight: 400;

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import Page from 'components/layout/containers/Page'
+import Page from 'components/layout/containers/page'
 import { Flex } from '@reverse/uikit'
 import { useWallet } from "@binance-chain/bsc-use-wallet"
 import TypographyTitle from 'components/layout/typography/typographyTitle'
@@ -13,8 +13,8 @@ import { getCakeAddress } from 'utils/addressHelpers'
 import { FaAward, FaExternalLinkAlt } from 'react-icons/fa';
 import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
-import LayoutContainer from 'components/layout/containers/LayoutContainer'
-import Wrap from 'components/layout/containers/Wrap'
+import LayoutContainer from 'components/layout/containers/layoutContainer'
+import Wrap from 'components/layout/containers/wrap'
 import TierCard from 'components/layout/cards/TierCard'
 import { getBalanceNumber } from "../../utils/formatBalance"
 

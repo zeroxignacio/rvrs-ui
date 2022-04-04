@@ -7,7 +7,7 @@ import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import useBlock from 'hooks/useBlock'
 import { usePools, usePrices, getTotalValueFromQuoteTokens, lookupPrice, useFarmFromPid, } from 'state/hooks'
-import Page from 'components/layout/containers/Page'
+import Page from 'components/layout/containers/page'
 import PoolCard from './card'
 
 export const aprToApy = (apr: number): BigNumber => {

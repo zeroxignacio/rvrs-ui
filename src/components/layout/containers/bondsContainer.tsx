@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const BondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
+const bondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
   border-radius: 5px;
   padding: 5px;
   margin-top: 8px;
@@ -14,4 +14,4 @@ const BondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
   }
 `
 
-export default BondsContainer 
+export default bondsContainer 
