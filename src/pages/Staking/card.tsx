@@ -22,8 +22,8 @@ import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
 import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import WithdrawModal from 'components/modals/withdrawModal'
-import Wrap from 'components/layout/containers/wrap'
-import LayoutContainer from 'components/layout/containers/layoutContainer'
+import Wrap from 'components/layout/containers/Wrap'
+import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import { usePriceCakeBusd } from "../../state/hooks";
 import StakeModal from '../../components/modals/stakeModal'
 

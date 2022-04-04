@@ -13,8 +13,8 @@ import { getCakeAddress } from 'utils/addressHelpers'
 import { FaAward, FaExternalLinkAlt } from 'react-icons/fa';
 import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
-import LayoutContainer from 'components/layout/containers/layoutContainer'
-import Wrap from 'components/layout/containers/wrap'
+import LayoutContainer from 'components/layout/containers/LayoutContainer'
+import Wrap from 'components/layout/containers/Wrap'
 import TierCard from 'components/layout/cards/TierCard'
 import { getBalanceNumber } from "../../utils/formatBalance"
 
