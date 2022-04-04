@@ -1871,16 +1871,6 @@
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.0.0"
 
-"@pancakeswap-libs/uikit@https://github.com/0xIgnacio/reverse-uikit#c88d80ccf53a713accf20bbc003643aeee32ca4a", "@reverse/uikit@https://github.com/0xIgnacio/reverse-uikit#c88d80ccf53a713accf20bbc003643aeee32ca4a":
-  version "0.10.2"
-  resolved "https://github.com/0xIgnacio/reverse-uikit#c88d80ccf53a713accf20bbc003643aeee32ca4a"
-  dependencies:
-    "@types/lodash" "^4.14.162"
-    "@types/styled-system" "^5.1.10"
-    lodash "^4.17.20"
-    react-transition-group "^4.4.1"
-    styled-system "^5.1.5"
-
 "@pedrouid/iso-crypto@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@pedrouid/iso-crypto/-/iso-crypto-1.1.0.tgz"
@@ -1976,6 +1966,16 @@
   dependencies:
     lodash "^4.17.20"
     lodash-es "^4.17.20"
+
+"@reverse/uikit@https://github.com/0xIgnacio/reverse-uikit#c88d80ccf53a713accf20bbc003643aeee32ca4a":
+  version "0.10.2"
+  resolved "https://github.com/0xIgnacio/reverse-uikit#c88d80ccf53a713accf20bbc003643aeee32ca4a"
+  dependencies:
+    "@types/lodash" "^4.14.162"
+    "@types/styled-system" "^5.1.10"
+    lodash "^4.17.20"
+    react-transition-group "^4.4.1"
+    styled-system "^5.1.5"
 
 "@rollup/plugin-node-resolve@^7.1.1":
   version "7.1.3"

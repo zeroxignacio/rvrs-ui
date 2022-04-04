@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, useRouteMatch, Link } from 'react-router-dom'
+import { Route, useRouteMatch } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { BLOCKS_PER_YEAR } from 'config'

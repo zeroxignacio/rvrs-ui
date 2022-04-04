@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, Toggle, useModal } from '@reverse/uikit'
-import { Link } from "react-router-dom";
+import { Flex } from '@reverse/uikit'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap';
 
@@ -29,14 +28,13 @@ const MenuBottom = (props) => {
               <TypographyBold>Twitter</TypographyBold>
             </a>
             ∙
-            <a target="_blanK" rel="noreferrer" href="https://twitter.com/RVRSProtocol" className="nav-links">
+            <a target="_blanK" rel="noreferrer" href="/" className="nav-links">
               <TypographyBold>Audit</TypographyBold>
             </a>
           </Flex>
             { /* <object type="image/svg+xml" data="/images/reverse.svg" width="120px" style={{ marginTop: "-20px" }}>&nbsp;</object> */ }
         </Flex>
         <Typography>2022 Reverse Protocol. MIT License.</Typography>
-
       </NavContainer>
     </MenuContainer >
   )
@@ -50,7 +48,6 @@ const TypographyBold = styled.p`
   text-decoration: underline;
   margin-right: 5px;
   margin-left: 5px;
-
 `
 
 const Typography = styled.p`

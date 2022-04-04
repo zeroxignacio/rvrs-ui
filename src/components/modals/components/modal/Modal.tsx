@@ -35,7 +35,7 @@ const Modal: React.FC<Props> = ({
 
 const Divider = styled.div`
   height: 0px;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 20px;
   width: 0%;
 `
@@ -52,13 +52,8 @@ const ModalContainer = styled.div`
 
 const ModalContainerWrap = styled.div`
   background-image: linear-gradient(45deg, #161616, #121212);
-  border-radius: 5px;
   padding: 10000px;
-  border-width: 1px;
-  border-color: #313131;
-  border-style: solid;
   z-index: 100;
-
 `
 
 const TitleContainer = styled(Container)`
@@ -67,9 +62,7 @@ const TitleContainer = styled(Container)`
   border-width: 1px;
   border-color: #313131;
   border-style: solid;
-  font-size: 16px;
-  font-weight: 600;
-  `
+`
 
 const DismissButton = styled.button`
   font-size: 16px;
@@ -82,7 +75,7 @@ const DismissButton = styled.button`
   :hover {
       background: white;
       color: black;
-      border-radius: 0px;
+      border-radius: 8px;
   } 
 `
 

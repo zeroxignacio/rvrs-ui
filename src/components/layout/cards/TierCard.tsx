@@ -6,7 +6,7 @@ const TierCard = styled(Container)`
   border-radius: 0px;
   background: #161616;
   padding: 15px;
-  border-width: 1px;
+  border-width: 0px;
   border-color: #313131;
   border-style: solid;
 `

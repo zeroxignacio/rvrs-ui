@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import rvrs from 'config/constants/rvrs'
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useRefresh from 'hooks/useRefresh'
 import {
   fetchFarmsPublicDataAsync,
@@ -10,8 +10,8 @@ import {
   fetchPoolsUserDataAsync,
   fetchPools2UserDataAsync, fetchAirdropUserDataAsync
 } from './actions'
-import {Airdrop, Farm, Pool, Pool2, State, State2} from './types'
-import {QuoteToken} from '../config/constants/types'
+import { Airdrop, Farm, Pool, Pool2, State } from './types'
+import { QuoteToken } from '../config/constants/types'
 
 const ZERO = new BigNumber(0)
 export const useFetchPublicData = () => {
@@ -139,8 +139,8 @@ export const usePrices = () => {
   const onePrice = usePriceBnbBusd()
 
   return [
-      {name: QuoteToken.RVRS, price: rvrsPrice},
-      {name: QuoteToken.ONE, price: onePrice},
+    { name: QuoteToken.RVRS, price: rvrsPrice },
+    { name: QuoteToken.ONE, price: onePrice },
   ]
 }
 
@@ -194,7 +194,7 @@ export const useTotalValue = (): BigNumber => {
       value = value.plus(val);
     }
   }
-  
+
   // Do incubator pools
   for (let i = 0; i < pools.length; i++) {
     const pool = pools[i]
@@ -209,7 +209,7 @@ export const useTotalValue = (): BigNumber => {
 
   }
 
-   // Do burn pools
+  // Do burn pools
   for (let i = 0; i < pools2.length; i++) {
     const pool2 = pools2[i]
 

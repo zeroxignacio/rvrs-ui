@@ -1,4 +1,3 @@
-import { Container } from 'react-bootstrap'
 import styled from 'styled-components'
 
 const BondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`

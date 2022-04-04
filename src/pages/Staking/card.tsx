@@ -108,10 +108,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ marginBottom: '10px' }}>
-            <TypographyTitle>RVRS Staking&nbsp;</TypographyTitle>
-            <a target="_blanK" rel="noreferrer" href="https://medium.com/@reverseprotocolONE/diamond-hands-through-vervrs-46dad3106d3" className="nav-links">
-              (<TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>Migrating</TypographyTitle>)
-            </a>
+            <TypographyTitle>RVRS Staking</TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
             <ContentCard style={{ marginRight: '10px' }}>
@@ -149,41 +146,48 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               <Typography>Staked RVRS</Typography>
             </ContentCardAlt>
           </Flex>
-          <Divider />
           {needsApproval ?
-            <ActionButton
-              disabled={requestedApproval}
-              onClick={handleApprove}>
-              Enable Staking
-            </ActionButton>
+            <Flex justifyContent="end" style={{ marginTop: '10px' }}>
+              <Ripples>
+                <ActionButton
+                  onClick={handleApprove}>
+                  Enable Staking
+                </ActionButton>
+              </Ripples>
+            </Flex>
             :
-            <Flex justifyContent="end">
+            <Flex justifyContent="end" style={{ marginTop: '10px' }}>
               {stakedNo > 0 ?
                 <>
-                  <ActionButton
-                    style={{ marginRight: '10px' }}
-                    disabled={pendingTx}
-                    onClick={onPresentWithdraw}>
-                    Unstake
-                  </ActionButton>
-                  <ActionButton
-                    disabled={apyNull}
-                    onClick={onPresentDeposit}>
-                    Stake {rvrsBalanceStr} RVRS
-                  </ActionButton>
+                  <Ripples>
+                    <ActionButton
+                      style={{ marginRight: '10px' }}
+                      onClick={onPresentWithdraw}>
+                      Unstake
+                    </ActionButton>
+                  </Ripples>
+                  <Ripples>
+                    <ActionButton
+                      disabled={apyNull}
+                      onClick={onPresentDeposit}>
+                      Stake {rvrsBalanceStr} RVRS
+                    </ActionButton>
+                  </Ripples>
                 </>
                 :
                 <>
                   <ActionButton
-                    style={{ marginRight: '10px' }}
+                    style={{ marginRight: '10px', opacity: '0.3' }}
                     disabled>
                     Unstake
                   </ActionButton>
-                  <ActionButton
-                    disabled={apyNull}
-                    onClick={onPresentDeposit}>
-                    &nbsp;Stake&nbsp;
-                  </ActionButton>
+                  <Ripples>
+                    <ActionButton
+                      disabled={apyNull}
+                      onClick={onPresentDeposit}>
+                      &nbsp;Stake&nbsp;
+                    </ActionButton>
+                  </Ripples>
                 </>
               }
             </Flex>
@@ -192,7 +196,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography>Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the introduction of veRVRS.</Typography>
+          <Typography>Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the introduction of (ve)RVRS.</Typography>
         </LayoutContainer>
       </Wrap>
     </>
@@ -213,10 +217,6 @@ const ActionButton = styled.button`
       opacity: 0.5;
       background: transparent;
   } 
-`
-
-const Divider = styled.div`
-  margin-top: 20px;
 `
 
 export default Card

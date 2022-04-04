@@ -15,80 +15,83 @@ const Nav = (props) => {
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: "20px" }}>
-        <NavButton
-          as={StyledNavLink}
-          to="/upcoming"
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/upcoming')
-          }>veRVRS
-        </NavButton>
-        <NavButton
-          as={StyledNavLink}
-          to="/bonds"
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/bonds')
-          }
-        >Bonds
-        </NavButton>
-        <NavButton
-          as={StyledNavLink}
-          to="/staking"
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/staking')
-          }>Staking
-        </NavButton>
-        <NavButton
-          as={StyledNavLink}
-          to="/airdrop"
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/airdrop')
-          }>Airdrop
-        </NavButton>
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/upcoming"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/upcoming')
+            }>veRVRS
+          </NavButton>
+        </Ripples>
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/bonds"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/bonds')
+            }>
+            Bonds
+          </NavButton>
+        </Ripples>
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/staking"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/staking')
+            }>Staking
+          </NavButton>
+        </Ripples>
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/airdrop"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/airdrop')
+            }>Airdrop
+          </NavButton>
+        </Ripples>
       </ButtonGroup>
       <ButtonGroup>
         {account != null && account.length > 1 ?
           <Flex style={{ alignItems: 'center' }}>
-            <div style={{ display: 'inline-flex', borderRadius: 0, overflow: 'hidden', marginRight: '5px' }}>
-              <Ripples>
-                <ChainButton>
-                  <Flex alignItems="center">
-                    <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
-                  </Flex>
-                </ChainButton>
-              </Ripples>
+            <div style={{ display: 'inline-flex', borderRadius: 8, overflow: 'hidden', marginRight: '5px' }}>
+              <ChainButton>
+                <Flex alignItems="center">
+                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+                </Flex>
+              </ChainButton>
             </div>
             <WalletButton
-              style={{ justifyContent: "space-between" }}
-              as={StyledNavLink}
+              style={{ justifyContent: "space-between", alignItems: 'center' }}
+              as={WalletNavLink}
               to="/dashboard"
               isActive={(match, { pathname }) =>
                 Boolean(match) ||
                 pathname.startsWith('/dashboard')
               }>
               <Flex alignItems="center">
-                <object type="image/svg+xml" data="/images/hmny.svg" width="0px">&nbsp;</object>
-                <div style={{ marginLeft: '0px', marginRight: '7px' }}>{account.substring(0, 6)} </div>
-                <ActivePulse style={{ marginRight: '0px' }} />
+                {account.substring(0, 6)}
+                <ActivePulse style={{ marginLeft: '5px' }} />
               </Flex>
             </WalletButton>
           </Flex>
           :
           <Flex style={{ alignItems: 'center' }}>
-            <div style={{ display: 'inline-flex', borderRadius: 0, overflow: 'hidden', marginRight: '5px' }}>
-              <Ripples>
-                <ChainButton>
-                  <Flex alignItems="center">
-                    <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
-                  </Flex>
-                </ChainButton>
-              </Ripples>
+            <div style={{ display: 'inline-flex', borderRadius: 10, overflow: 'hidden', marginRight: '5px' }}>
+              <ChainButton>
+                <Flex alignItems="center">
+                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+                </Flex>
+              </ChainButton>
             </div>
             <WalletButton
-              as={StyledNavLink}
+              as={WalletNavLink}
               to="/dashboard"
               isActive={(match, { pathname }) =>
                 Boolean(match) ||
@@ -96,9 +99,7 @@ const Nav = (props) => {
               }
               disabled={rvrs.isLocked.unlockWalletButton}
               onClick={onPresentConnectModal} {...props}>
-              <Flex alignItems="center">
-                <div>Connect</div>
-              </Flex>
+              Connect
             </WalletButton>
           </Flex>
         }
@@ -181,7 +182,7 @@ const NavButton = styled.p`
   margin-right: 2px;
   &:hover  {
     background: white;
-    color: black;
+    color: #121212;
   }
 `
 
@@ -189,11 +190,19 @@ const activeClassName = 'ACTIVE'
 
 const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
   &:focus  {
-    transform: translate(0px);
+    // transform: translate(-1px);
     // text-decoration: underline;
     background: white;
-    color: black;
+    color: #121212;
     border-radius: 5px;
+  }
+`
+
+const WalletNavLink = styled(NavLink).attrs({ activeClassName })`
+  &:focus  {
+    box-shadow: 20px 0px 40px -20px #55747D;
+    border-color: #FFFF !important;
+    transform: translate(0px)
   }
 `
 

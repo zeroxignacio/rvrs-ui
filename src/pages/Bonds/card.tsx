@@ -183,7 +183,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             </Flex>
             <Flex>
               {hasEnded ?
-                <BondButton disabled>Ended</BondButton>
+                <BondButton disabled style={{ opacity: '0.3' }}>Ended</BondButton>
                 :
                 <div>
                   {fivePercentRoi ?
@@ -215,9 +215,14 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                     await onReward()
                     setPendingTx(false)
                   }}>
-                  <FaHandHolding style={{ color: '#9B9B9B' }} /></ClaimButton>
+                  <FaHandHolding style={{ color: '#9B9B9B' }} />
+                </ClaimButton>
                 :
-                <></>
+                <ClaimButton
+                  style={{ marginLeft: '5px', opacity: '0.3' }}
+                  disabled>
+                  <FaHandHolding style={{ color: '#9B9B9B' }} />
+                </ClaimButton>
               }
             </Flex>
           </Flex>
@@ -228,7 +233,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
     </>
   )
 }
-
 
 const Div = styled.div`
   display: inline-flex;

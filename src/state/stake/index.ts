@@ -1,16 +1,11 @@
 /* eslint-disable no-param-reassign */
-import BigNumber from "bignumber.js";
 import { createSlice } from '@reduxjs/toolkit'
 import autoRvrsAbi from "config/abi/autorvrs.json";
 import poolsConfig from 'config/constants/stake'
-import {
-  fetchPoolsAllowance,
-  fetchUserBalances,
-  fetchUserStakeBalances,
-} from './fetchPoolsUser'
+import { fetchPoolsAllowance, fetchUserBalances, fetchUserStakeBalances } from './fetchPoolsUser'
 import { PoolsState, Pool } from '../types'
-import {fetchPoolsTotalStaking} from "./fetchPools";
-import {getAutoRvrsAddress} from "../../utils/addressHelpers";
+import { fetchPoolsTotalStaking } from "./fetchPools";
+import { getAutoRvrsAddress } from "../../utils/addressHelpers";
 import multicall from "../../utils/multicall";
 
 const initialState: PoolsState = { data: [...poolsConfig] }

@@ -110,9 +110,9 @@ const Airdrop = () => {
                   </Ripples>
                 </div>
                 :
-                <ClaimButtonDisabled disabled>
+                <ClaimButton disabled style={{opacity: '0.3'}}>
                   Come back next week!
-                </ClaimButtonDisabled>
+                </ClaimButton>
               }
             </Flex>
           </LayoutContainer>

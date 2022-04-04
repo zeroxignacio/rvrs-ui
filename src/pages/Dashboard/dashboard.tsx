@@ -55,7 +55,7 @@ const Dashboard = () => {
 
           </TitleCard>
           <Flex justifyContent="center">
-            <ContentCard style={{ marginRight: '5px' }}>
+            <ContentCard style={{ marginRight: '5px', padding: '10px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
               <Typography>veRVRS Balance</Typography>
             </ContentCard>
