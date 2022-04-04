@@ -10,10 +10,11 @@ import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
 import LayoutContainer from 'components/layout/containers/layoutContainer'
-import Wrap from 'components/layout/containers/wrap'
 import Ripples, { createRipples } from 'react-ripples'
 import ClaimButtonDisabled from 'components/layout/buttons/claimAirdropButtonDisabled'
 import ClaimButton from 'components/layout/buttons/claimAirdropButton'
+import { Container } from 'react-bootstrap'
+import styled from 'styled-components'
 import { useAirdropData } from "../../state/hooks"
 import useAirdropClaim from "../../hooks/useAirdropClaim"
 import { getBalanceNumber } from "../../utils/formatBalance"
@@ -128,5 +129,13 @@ const Airdrop = () => {
     </>
   )
 }
+
+const Wrap = styled(Container)`
+    border-radius: 5px;
+    padding: 2px;
+    border-width: 1px;
+    border-color: #313131;
+    border-style: solid;
+`
 
 export default Airdrop
