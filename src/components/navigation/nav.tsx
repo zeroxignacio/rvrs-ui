@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Container, ButtonGroup, Button } from 'react-bootstrap'
+import { Container, ButtonGroup } from 'react-bootstrap'
 import useWalletModal from 'components/modals/WalletModal'
 import { NavLink } from 'react-router-dom'
+import Ripples from 'react-ripples'
 import rvrs from 'config/constants/rvrs'
 import { Flex } from '../layout/flex'
 
@@ -15,65 +15,93 @@ const Nav = (props) => {
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: "20px" }}>
-        <ButtonContainer>
-          <StyledButton
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/upcoming"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/upcoming')
+            }>veRVRS
+          </NavButton>
+        </Ripples>
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/bonds"
+            isActive={(match, { pathname }) =>
+              Boolean(match) ||
+              pathname.startsWith('/bonds')
+            }>
+            Bonds
+          </NavButton>
+        </Ripples>
+        <Ripples>
+          <NavButton
             as={StyledNavLink}
             to="/staking"
             isActive={(match, { pathname }) =>
               Boolean(match) ||
               pathname.startsWith('/staking')
             }>Staking
-          </StyledButton>
-          <StyledButton
-            as={StyledNavLink}
-            to="/bonds"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/bonds')
-            }
-          >&nbsp;Bonds&nbsp;
-          </StyledButton>
-          <StyledButton
+          </NavButton>
+        </Ripples>
+        <Ripples>
+          <NavButton
             as={StyledNavLink}
             to="/airdrop"
             isActive={(match, { pathname }) =>
               Boolean(match) ||
               pathname.startsWith('/airdrop')
             }>Airdrop
-          </StyledButton>
-        </ButtonContainer>
+          </NavButton>
+        </Ripples>
       </ButtonGroup>
       <ButtonGroup>
         {account != null && account.length > 1 ?
-          <ConnectedButton
-            style={{ justifyContent: "space-between" }}
-            as={StyledNavLink}
-            to="/dashboard"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/airdrop')
-            }>
-            <Flex alignItems="center">
-              <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
-              <div style={{ marginLeft: '10px', marginRight: '10px' }}>{account.substring(0, 6)} </div>
-              <ActivePulse  style={{ marginRight: '15px' }}/>
-            </Flex>
-          </ConnectedButton>
+          <Flex style={{ alignItems: 'center' }}>
+            <div style={{ display: 'inline-flex', borderRadius: 8, overflow: 'hidden', marginRight: '5px' }}>
+              <ChainButton>
+                <Flex alignItems="center">
+                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+                </Flex>
+              </ChainButton>
+            </div>
+            <WalletButton
+              style={{ justifyContent: "space-between", alignItems: 'center' }}
+              as={WalletNavLink}
+              to="/dashboard"
+              isActive={(match, { pathname }) =>
+                Boolean(match) ||
+                pathname.startsWith('/dashboard')
+              }>
+              <Flex alignItems="center">
+                {account.substring(0, 6)}
+                <ActivePulse style={{ marginLeft: '5px' }} />
+              </Flex>
+            </WalletButton>
+          </Flex>
           :
-          <ConnectButton
-            as={StyledNavLink}
-            to="/dashboard"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/dashboard')
-            }
-            disabled={rvrs.isLocked.unlockWalletButton}
-            onClick={onPresentConnectModal} {...props}>
-            <Flex alignItems="center">
-              <object type="image/svg+xml" data="/images/hmny.svg" width="50px">&nbsp;</object>
-              <div style={{ marginLeft: '10px', marginRight: '15px' }}>Connect</div>
-            </Flex>
-          </ConnectButton>
+          <Flex style={{ alignItems: 'center' }}>
+            <div style={{ display: 'inline-flex', borderRadius: 10, overflow: 'hidden', marginRight: '5px' }}>
+              <ChainButton>
+                <Flex alignItems="center">
+                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+                </Flex>
+              </ChainButton>
+            </div>
+            <WalletButton
+              as={WalletNavLink}
+              to="/dashboard"
+              isActive={(match, { pathname }) =>
+                Boolean(match) ||
+                pathname.startsWith('/dashboard')
+              }
+              disabled={rvrs.isLocked.unlockWalletButton}
+              onClick={onPresentConnectModal} {...props}>
+              Connect
+            </WalletButton>
+          </Flex>
         }
       </ButtonGroup>
     </MenuContainer>
@@ -81,123 +109,80 @@ const Nav = (props) => {
 }
 
 const MenuContainer = styled(Container)`
-  padding-top: 50px;
-  text-align: end;
+  padding-top: 20px;
+  text-align: center;
   flex-wrap: wrap;
-  max-width: 770px;
+  max-width: 590px;
+  background: transparent;
 `
 
-const StyledButton = styled.div`
-  background: transparent;
-  font-size: 18px;
+const WalletButton = styled.div`
+  font-size: 16px;
   font-weight: 500;
-  text-align: center;
-  border: #FFFF solid 0px;
-  border-radius: 35px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 27px;
-  padding-right: 27px;
+  background: transparent;
+  border-width: 1px;
+  border-color: #313131;
+  border-style: solid;
+  border-radius: 9px;
+  padding: 10px;
   transition: 0.3s ease-in-out;
   &:hover  {
-    background-color: #374052;
+    box-shadow: 20px 0px 40px -20px #55747D;
+    border-color: #FFFF !important;
+    transform: translate(-2px)
   }
 `
 
-const ConnectedButton = styled.div`
-  background: transparent;
-  font-size: 18px;
+const ChainButton = styled.button`
+  font-size: 16px;
   font-weight: 500;
-  text-align: center;
-  border: 1.5px;
-  border-style: solid !important;
-  border-color: #CBCBCB !important;
-  border-radius: 35px;
-  padding: 5px;
+  border-color: #313131;
+  border-style: solid;
+  border-radius: 8px;
+  background: transparent;
+  border-width: 1px;
+  padding: 8px;
   transition: 0.3s ease-in-out;
-  &:hover  {
-    background-color: #374052;
-    box-shadow: 20px 0px 40px -20px #55747D, -20px 0px 20px -20px #4B5674;
-    border-color: #FFFF !important;
-    transform: translate(-6px)
+  :hover {
+    background: transparent;
   }
 `
 
 const pulse = keyframes`
   0% {
-    box-shadow: -50px 0 40px -30px #55747D, 50px 0 40px -30px #4B5674;
+    transform: scale(0.90);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
   }
   50% {
-    box-shadow: 20px 0 40px -20 #55747D, -20px 0 40px -20 #4B5674;
-  }
-  100% {
-    box-shadow: -50px 0 40px -30px #55747D, 50px 0 40px -30px #4B5674;
-  }
-`
-
-
-const activePulse = keyframes`
-  0% {
-    transform: scale(0.90);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-  }
-
-  70% {
     transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
   }
-
   100% {
     transform: scale(0.90);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
 `
 
 const ActivePulse = styled.div`
-  background: #9ACECE;
+  background: #FFFFFF;
   border-radius: 50%;
   margin: 0px;
-  height: 10px;
-  width: 10px;
+  height: 8px;
+  width: 8px;
+  opacity: 0.8;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
   transform: scale(1);
-  animation: ${activePulse} 2s infinite;
+  animation: ${pulse} 2s infinite;
 `
 
-
-const ConnectButton = styled.div`
-  background: transparent;
-  font-size: 18px;
+const NavButton = styled.p`
+  font-size: 16px;
   font-weight: 500;
-  text-align: center;
-  border: 1.5px;
-  border-style: solid !important;
-  border-color: #CBCBCB !important;
-  border-radius: 35px;
-  padding: 5px;
+  padding: 8px;
   transition: 0.3s ease-in-out;
-  box-shadow: -20px 0px 30px -10px #55747D, 20px 0px 30px -10px #4B5674;
+  margin-right: 2px;
   &:hover  {
-    font-weight: 700;
-    border-color: #FFFF !important;
-    box-shadow: 20px 0px 30px -5px #55747D, -20px 0px 30px -5px #4B5674;
-    background-color: #374052;
-    transform: translate(-6px)
-  }
-`
-
-const ButtonContainer = styled.div`
-  background: transparent;
-  border-radius: 35px;
-  padding-top: 23px;
-  padding-bottom: 23px;
-  border: 1.5px;
-  border-color: #CBCBCB !important;
-  border-style: solid !important;
-  box-shadow: -20px 0px 40px -15px #55747D, 20px 0px 40px -15px #4B5674;
-  transition: 0.3s ease-in-out;
-
-  &:hover  {
-    box-shadow: 25px 0px 40px -10px #55747D, -25px 0px 40px -10px #4B5674;
+    background: white;
+    color: #121212;
   }
 `
 
@@ -205,7 +190,18 @@ const activeClassName = 'ACTIVE'
 
 const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
   &:focus  {
-    background-image: linear-gradient(to right, #464F68, #516B73);
+    // transform: translate(-1px);
+    // text-decoration: underline;
+    background: white;
+    color: #121212;
+    border-radius: 5px;
+  }
+`
+
+const WalletNavLink = styled(NavLink).attrs({ activeClassName })`
+  &:focus  {
+    box-shadow: 20px 0px 40px -20px #55747D;
+    border-color: #FFFF !important;
     transform: translate(0px)
   }
 `

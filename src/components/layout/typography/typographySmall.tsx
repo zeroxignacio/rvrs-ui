@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-const typography = styled.p`
-    font-size: 16px;
+const typographySmall = styled.p`
+    font-size: 14px;
     color: #CFCFCF;
     font-weight: 400;
-
 `
 
-export default typography
+export default typographySmall

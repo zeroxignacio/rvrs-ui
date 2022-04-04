@@ -21,26 +21,23 @@ const InputContent: React.FC<TokenInputProps> = (
     <InputContentWrapper>
       <Text onClick={onSelectMax}>{maxAvailableStr}&nbsp;{symbol}&nbsp;Available</Text>
       <Input
-        endAdornment={
-          <div
-            style={{
-              display: 'inline-flex',
-              borderRadius: 15,
-              overflow: 'hidden',
-              marginLeft: '10px',
-            }}
-          >
-            <Ripples>
-              <MaxButton onClick={onSelectMax}>
-                Max
-              </MaxButton>
-            </Ripples>
-          </div>
-        }
+        endAdornment={<div
+          style={{
+            display: 'inline-flex',
+            borderRadius: 0,
+            overflow: 'hidden',
+            marginLeft: '10px',
+          }}
+        >
+          <Ripples>
+            <MaxButton onClick={onSelectMax}>
+              Max
+            </MaxButton>
+          </Ripples>
+        </div>}
         onChange={onChange}
-        placeholder="0"
-        value={value}
-      />
+        placeholder={maxAvailableStr}
+        value={value}      />
     </InputContentWrapper>
   )
 }
@@ -51,25 +48,21 @@ const Text = styled.div`
   display: flex;
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 6px;
-  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-left: 0px;
   justify-content: flex-start;
 `
 
 const MaxButton = styled.button`
-  padding: 15px;
-  padding-left: 20px;
-  color: #D6D6D6;
-  padding-right: 20px;
-  font-weight: 700;
-  margin-left: 5px;
-  background-image: linear-gradient(#506063, #909BBF);
-  border-radius: 17px;
-  border: 0px;
+  font-size: 16px;
+  font-weight: 400;
+  background: #121212;
+  color: #EEEEEE;
+  justify-content: center;
+  padding: 10px;
+  transition: 0.5s ease-in-out;
   :hover {
-      background-image: linear-gradient(#506063, #A1ACCD);
-      color: #FFFF;
-      transition: 0.5s;
+    background: #121212;
   } 
 `
 

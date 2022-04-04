@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import pools2 from 'config/constants/bonds'
 import { pools2Config } from 'config/constants'
 import {fetchPoolsBlockLimits, fetchPoolsQuoteTokenPerLp, fetchPoolsTotalStatking} from './fetchPools'
 import {

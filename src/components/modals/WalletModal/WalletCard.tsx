@@ -1,5 +1,4 @@
 import React from "react";
-import Ripples, { createRipples } from 'react-ripples'
 import styled from "styled-components";
 import { localStorageKey } from "./config";
 import { Login, Config } from "./types";
@@ -14,30 +13,22 @@ interface Props {
 const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss, mb }) => {
   const { title, icon: Icon } = walletConfig;
   return (
-    <div
-      style={{
-        display: 'inline-flex',
-        borderRadius: 15,
-        overflow: 'hidden',
-        marginLeft: '0px',
+    <ConnectButton
+      onClick={() => {
+        login(walletConfig.connectorId);
+        window.localStorage.setItem(localStorageKey, "1");
+        onDismiss();
       }}
+      style={{ justifyContent: "space-between" }}
+      id={`wallet-connect-${title.toLocaleLowerCase()}`}
     >
-      <Ripples>
-        <ConnectButton
-          onClick={() => {
-            login(walletConfig.connectorId);
-            window.localStorage.setItem(localStorageKey, "1");
-          }}
-          style={{ justifyContent: "space-between" }}
-          id={`wallet-connect-${title.toLocaleLowerCase()}`}
-        >
-          <Txt style={{ justifyContent: "space-between" }}>
-            {title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Icon width="40px" />
-          </Txt>
-        </ConnectButton>
-      </Ripples>
-    </div>
+      <Txt style={{ justifyContent: "space-between" }}>
+        {title}
+        <Icon width="40px" marginLeft="150px" />
+      </Txt>
+      
+    </ConnectButton>
+
   );
 };
 
@@ -50,18 +41,15 @@ const Txt = styled.p`
 const ConnectButton = styled.button`
     font-size: 18px;
     font-weight: 600;
-    padding: 10px;
-    justify-content: center;
-    background-image: linear-gradient(to right, #FFFF, #FFFF);
-    border-radius: 20px;
+    padding: 6px;
+    background: #FFFF;
     border: 0px;
-    box-shadow: 0px 0px 15px #506063;
+    transition: 0.3s ease-in-out;
     :hover {
-        background-image: linear-gradient(to right, #E9E9E9, #FFFF);
+      opacity: 0.8;
+      border-radius: 10px;
     }
-
-    min-width: 340px;
-    
+    min-width: 300px;
 `
 
 export default WalletCard;

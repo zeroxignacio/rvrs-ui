@@ -6,11 +6,21 @@ const Style = createGlobalStyle`
 }
 
 #root {
-  background: radial-gradient(circle at 100%, #2B3647, 
-    #414E63 0%,
-    #2B3647 50%, 
-    #39475C 75%, 
-    #2B3443 75%);
+  background: radial-gradient(circle at 100%, 
+    #2B3647, 
+    #121212 0%,
+    #121212 65%, 
+    #141414 75%, 
+    #313131 75.1%,
+    #121212 75%
+    );
+    border-width: 2px;
+    border-color: #313131;
+    border-style: solid;
+}
+
+body {
+  background-color: #121212;
 }
 
 div {

@@ -12,17 +12,29 @@ import { Pool2 } from 'state/types'
 import { Skeleton } from 'components/Skeleton'
 import Ripples from 'react-ripples'
 import styled from 'styled-components'
-import BondsContainer from '../../components/layout/containers/bondsContainer'
-import ContentCard from '../../components/layout/cards/bonds/contentCard'
-import HeaderCard from '../../components/layout/cards/bonds/headerCard'
-import DepositModal from '../../components/modals/bondModal'
-import ClaimButtonDisabled from '../../components/layout/buttons/claimButtonDisabled'
-import BondButton from '../../components/layout/buttons/bondButton'
-import BondButtonDisabled from '../../components/layout/buttons/bondButtonDisabled'
-import ClaimButton from '../../components/layout/buttons/claimButton'
-import Typography from '../../components/layout/typography/typography'
-import TypographyBold from '../../components/layout/typography/typographyBold'
-import TypographyTitle from '../../components/layout/typography/typographyTitle'
+import { FaExternalLinkSquareAlt, FaHandHolding } from 'react-icons/fa'
+import BondsContainer from 'components/layout/containers/bondsContainer'
+import DepositModal from 'components/modals/bondModal'
+import BondButton from 'components/layout/buttons/bondButton'
+import ClaimButton from 'components/layout/buttons/claimButton'
+
+const Typography = styled.p`s
+    font-size: 16px;
+    color: #CFCFCF;
+    font-weight: 400;
+    min-width: 70px;
+    max-width: 70px;
+`
+
+const TypographySmall = styled.p`
+    font-size: 14px;
+    color: #9B9B9B;
+    font-weight: 400;
+    min-width: 60px;
+    max-width: 60px;
+    margin-top: 3px;
+`
+
 
 interface PoolWithApy extends Pool2 {
   apy: BigNumber
@@ -87,9 +99,8 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
 
   // returns
   const roiNo = (apy && apy.div(365).times(vesting).minus(100)).toNumber();
-  const positiveRoi = roiNo > 0;
   const fivePercentRoi = roiNo > 5;
-  const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
+  const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(100)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
   // tvl
@@ -120,197 +131,106 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   }, [onApprove, setRequestedApproval])
 
   return (
-    <BondsContainer>
-      <HeaderCard>
-        {hasStarted ?
-          <Flex justifyContent="space-between">
-            <Flex justifyContent="space-between">
-              <TypographyTitle>
-                <Flex justifyContent="space-between">
-                  <TypographyTitle style={{ marginLeft: "17px" }}>{tokenName}&nbsp;</TypographyTitle>
-                  <a target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/the-protocol/reverseum-bonding-pools" className="nav-links">
-                    <TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>rvBond</TypographyTitle>
-                  </a>
-                </Flex>
-              </TypographyTitle>
-            </Flex>
-            {fivePercentRoi ?
-              <Flex alignItems="end">
-                {needsApproval ?
-                  <BondButton
-                    style={{ justifyContent: "center" }}
-                    disabled={hasEnded}
-                    onClick={handleApprove}>
-                    Enable
-                  </BondButton>
-                  :
-                  <BondButton style={{ justifyContent: "center" }}
-                    disabled={hasEnded}
-                    onClick={onPresentDeposit}>
-                    Bond
-                  </BondButton>
-                }
-              </Flex>
-              :
-              <Flex alignItems="end">
-                <BondButtonDisabled disabled>Sold Out</BondButtonDisabled>
-              </Flex>
-            }
-          </Flex>
-          :
-          <Flex justifyContent="space-between">
-            <TypographyTitle>
-              <Flex justifyContent="space-between">
-                <TypographyTitle style={{ marginLeft: "17px" }}>{tokenName}&nbsp;</TypographyTitle>
-                <a target="_blanK" rel="noreferrer" href="https://reverse.gitbook.io/docs/the-protocol/reverseum-bonding-pools" className="nav-links">
-                  <TypographyTitle style={{ borderBottom: '1px dotted #FFFF' }}>rvBond</TypographyTitle>
+    <>
+      {hasStarted ?
+        <BondsContainer>
+          <Flex alignItems="center" justifyContent='space-between'>
+            {/* Bond */}
+            <Flex alignItems="center">
+              <object type="image/svg+xml" data='/images/ust3.svg' width="35px" style={{ marginRight: '8px' }}>&nbsp;</object>
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
+                <a target="_blanK" rel="noreferrer" href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`} className="nav-links">
+                  <TypographySmall>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
                 </a>
               </Flex>
-            </TypographyTitle>
-            <Flex alignItems="end">
-              <div>
-                {hoursToStartNo > 1000 ?
-                  <BondButtonDisabled disabled style={{ justifyContent: "center" }}>
-                    <Skeleton height={10} />
-                  </BondButtonDisabled>
-                  :
-                  <BondButtonDisabled disabled style={{ justifyContent: "center" }}>
-                    {hoursToStartStr}h Left
-                  </BondButtonDisabled>
-                }
-              </div>
             </Flex>
-          </Flex>
-        }
-      </HeaderCard>
-      <Flex justifyContent="space-between">
-        <ContentCard>
-          <Flex justifyContent="space-between">
             {/* ROI */}
-            <Flex flexDirection="column" alignItems="start">
-              {fivePercentRoi ?
-                <div>
-                  <TypographyBold style={{ marginBottom: "5px" }}>vROI</TypographyBold>
-                  {hasStarted ?
-                    <Typography>{roiStr}%</Typography>
-                    :
-                    <Skeleton height={10} width={60} />
-                  }
-                </div>
-                :
-                <div>
-                  {hasStarted ?
-                    <div>
-                      {hasEnded ?
-                        <div>
-                          <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
-                          <Typography>Ended</Typography>
-                        </div>
-                        :
-                        <div>
-                          <TypographyBold style={{ marginBottom: "5px" }}>Net ROI</TypographyBold>
-                          <Typography>{estRoiAfterSoldOutStr}%</Typography>
-                        </div>
-                      }
-                    </div>
-                    :
-                    <div>
-                      <TypographyBold style={{ marginBottom: "5px" }}>vROI</TypographyBold>
-                      <Skeleton height={10} width={60} />
-                    </div>
-                  }
-                </div>
-              }
-            </Flex>
-            {/* Vesting */}
-            <Flex flexDirection="column" alignItems="start">
-              <TypographyBold style={{ marginBottom: "5px" }}>Vesting</TypographyBold>
-              {!hasEnded ?
-                <div>
-                  {hasStarted ?
-                    <Typography>{vestingStr}&nbsp;Days</Typography>
-                    :
-                    <Skeleton height={10} width={60} />}
-                </div>
-                :
-                <Typography>Ended</Typography>
-              }
-            </Flex>
-            {/* TVL */}
-            <Flex flexDirection="column" alignItems="start">
-              <TypographyBold style={{ marginBottom: "5px" }}>TVB</TypographyBold>
-              <div>
-                {hasStarted ?
-                  <Typography>${tbvStr}</Typography>
-                  :
-                  <Skeleton height={10} width={60} />}
-              </div>
-            </Flex>
-            {/* Bonded by user */}
-            {user && (
-              <Flex flexDirection="column" alignItems="start">
-                <TypographyBold style={{ marginBottom: "5px" }}>Bonded</TypographyBold>
-                {hasStarted ?
-                  <div>
-                    {bondedBalanceNo ?
-                      <Typography>{bondedBalanceStr}&nbsp;{tokenName}</Typography>
-                      :
-                      <Typography>N/A</Typography>
-                    }
-                  </div>
-                  :
-                  <Typography><Skeleton height={10} width={64} /></Typography>
-                }
+            {hasEnded ?
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>vROI</Typography>
+                <TypographySmall style={{ marginTop: "2px" }}>Ended</TypographySmall>
               </Flex>
-            )}
-          </Flex>
-        </ContentCard>
-        {/* Claim RVRS */}
-        <Flex>
-          {rewardsNo > 0 ?
-            <Div>
-              <Ripples>
+              :
+              <div>
+                {fivePercentRoi ?
+                  <Flex flexDirection="column">
+                    <Typography style={{ color: 'white' }}>vROI</Typography>
+                    <TypographySmall>{roiStr}%</TypographySmall>
+                  </Flex>
+                  :
+                  <Flex flexDirection="column">
+                    <Typography style={{ color: 'white' }}>vROI</Typography>
+                    <TypographySmall>Sold Out</TypographySmall>
+                  </Flex>
+                }
+              </div>
+            }
+            {hasEnded ?
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>Vesting</Typography>
+                <TypographySmall>Ended</TypographySmall>
+              </Flex>
+              :
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>Vesting</Typography>
+                <TypographySmall>{vestingStr}&nbsp;Days</TypographySmall>
+              </Flex>
+            }
+            <Flex flexDirection="column">
+              <Typography style={{ color: 'white' }}>Bonded</Typography>
+              <TypographySmall>${bondedBalanceStr}</TypographySmall>
+            </Flex>
+            <Flex>
+              {hasEnded ?
+                <BondButton disabled style={{ opacity: '0.3' }}>Ended</BondButton>
+                :
+                <div>
+                  {fivePercentRoi ?
+                    <Flex >
+                      {needsApproval ?
+                        <BondButton
+                          disabled={hasEnded}
+                          onClick={handleApprove}>
+                          Enable
+                        </BondButton>
+                        :
+                        <BondButton
+                          disabled={hasEnded}
+                          onClick={onPresentDeposit}>
+                          Bond
+                        </BondButton>
+                      }
+                    </Flex>
+                    :
+                    <BondButton>Sold Out</BondButton>
+                  }
+                </div>
+              }
+              {rewardsNo > 0 ?
                 <ClaimButton
-                  style={{ marginLeft: '0px', justifyContent: "center" }}
-                  disabled={!rewardsNo}
+                  style={{ marginLeft: '5px' }}
                   onClick={async () => {
                     setPendingTx(true)
                     await onReward()
                     setPendingTx(false)
                   }}>
-                  <Flex flexDirection="column" alignItems="center">
-                    <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
-                    {hasStarted ?
-                      <Typography>{rewardsStr}&nbsp;RVRS</Typography>
-                      :
-                      <Skeleton height={10} width={60} />
-                    }
-                  </Flex>
+                  <FaHandHolding style={{ color: '#9B9B9B' }} />
                 </ClaimButton>
-              </Ripples>
-            </Div>
-            :
-            <ClaimButtonDisabled
-              style={{ marginLeft: '7px', justifyContent: "center" }}
-              disabled={!rewardsNo}
-              onClick={async () => {
-                setPendingTx(true)
-                await onReward()
-                setPendingTx(false)
-              }}>
-              <Flex flexDirection="column" alignItems="center">
-                <TypographyBold style={{ marginBottom: "4px" }}>Claim</TypographyBold>
-                {hasStarted ?
-                  <Typography>0 RVRS</Typography>
-                  :
-                  <Skeleton height={10} width={60} />
-                }
-              </Flex>
-            </ClaimButtonDisabled>
-          }
-        </Flex>
-      </Flex>
-    </BondsContainer>
+                :
+                <ClaimButton
+                  style={{ marginLeft: '5px', opacity: '0.3' }}
+                  disabled>
+                  <FaHandHolding style={{ color: '#9B9B9B' }} />
+                </ClaimButton>
+              }
+            </Flex>
+          </Flex>
+        </BondsContainer>
+        :
+        <Skeleton height={40} />
+      }
+    </>
   )
 }
 
