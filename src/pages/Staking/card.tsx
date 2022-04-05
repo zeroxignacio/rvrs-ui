@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { useModal } from '@reverse/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useERC20 } from 'hooks/useContract'
@@ -76,8 +76,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const apyNo = apy && apy.toNumber();
   const apyNull = apyNo < 5;
   const apyStr = apy && apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const monthlyRoiStr = apr && apr.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-
+  const monthlyRoiStr = apr.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const roiYearStr = new BigNumber(apy).times(stakedNo).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const roiMonthStr = apr.div(12).times(stakedNo).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
   // approve, withdraw, deposit
   const [onPresentWithdraw] = useModal(
@@ -136,18 +137,27 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               <Typography>Monthly ROI</Typography>
             </ContentCard>
           </Flex>
-          <Flex justifyContent="center">
-            <ContentCardAlt>
-              {pool.apy ?
-                <TypographyBold style={{ marginBottom: '5px' }}>{stakedStr} (${stakedUsdStr})</TypographyBold>
+          <Flex justifyContent="center" marginTop="0px">
+            <ContentCardAlt style={{ marginRight: '5px' }}>
+              {stakedNo > 0 ?
+                <TypographyBold>+{roiYearStr} RVRS</TypographyBold>
                 :
                 <Skeleton marginBottom="5px" />
               }
-              <Typography>Staked RVRS</Typography>
+              <Typography>Expected Yearly Interest</Typography>
+
+            </ContentCardAlt>
+            <ContentCardAlt>
+              {stakedNo > 0 ?
+                <TypographyBold>+{roiMonthStr} RVRS</TypographyBold>
+                :
+                <Skeleton marginBottom="5px" />
+              }
+              <Typography>Expected Monthly Interest</Typography>
             </ContentCardAlt>
           </Flex>
           {needsApproval ?
-            <Flex justifyContent="end" style={{ marginTop: '10px' }}>
+            <Flex justifyContent="end" style={{ marginTop: '20px' }}>
               <Ripples>
                 <ActionButton
                   onClick={handleApprove}>
@@ -156,9 +166,14 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               </Ripples>
             </Flex>
             :
-            <Flex justifyContent="end" style={{ marginTop: '10px' }}>
+            <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
+              <div>
+                <ContentCardAlt>
+                  <TypographyBold>{stakedStr}&nbsp;<Typography>RVRS Staked</Typography></TypographyBold>
+                </ContentCardAlt>
+              </div>
               {stakedNo > 0 ?
-                <>
+                <div style={{ justifyContent: 'space-between' }}>
                   <Ripples>
                     <ActionButton
                       style={{ marginRight: '10px' }}
@@ -173,9 +188,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                       Stake {rvrsBalanceStr} RVRS
                     </ActionButton>
                   </Ripples>
-                </>
+                </div>
                 :
-                <>
+                <div>
                   <ActionButton
                     style={{ marginRight: '10px', opacity: '0.3' }}
                     disabled>
@@ -188,7 +203,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                       &nbsp;Stake&nbsp;
                     </ActionButton>
                   </Ripples>
-                </>
+                </div>
               }
             </Flex>
           }
@@ -203,18 +218,29 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   )
 }
 
+const pulse = keyframes`
+  0% {
+    text-shadow: 1px 1px 0px #6699A3;
+  }
+  50% {
+    text-shadow: 2px 2px 0px #5F6F92 inline;
+  }
+  100% {
+    text-shadow: 1px 1px 0px #6699A3;
+  }
+`
+
 const ActionButton = styled.button`
   font-size: 16px;
   font-weight: 400;
   background: transparent;
   color: #EEEEEE;
-  min-width: 90px;
-  border-left: 5px solid #;
-  justify-content: center;
+  border-left: 5px solid #6699A3;
   padding: 10px;
   transition: 0.5s ease-in-out;
   :hover {
       opacity: 0.5;
+      animation: ${pulse} 2s infinite;
       background: transparent;
   } 
 `

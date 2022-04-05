@@ -101,8 +101,8 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const roiNo = (apy && apy.div(365).times(vesting).minus(100)).toNumber();
   const fivePercentRoi = roiNo > 5;
   const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(100)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-
+  const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(95)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const apyStr = apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   // tvl
   const tbvNo = pool2.tvl && pool2.tvl.toNumber();
   const tbvStr = tbvNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
@@ -148,23 +148,23 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             {/* ROI */}
             {hasEnded ?
               <Flex flexDirection="column">
-                <Typography style={{ color: 'white' }}>vROI</Typography>
-                <TypographySmall style={{ marginTop: "2px" }}>Ended</TypographySmall>
+                <Typography style={{ color: 'white' }}>Net ROI</Typography>
+                <TypographySmall style={{ marginTop: "2px" }}>{estRoiAfterSoldOutStr}%</TypographySmall>
               </Flex>
               :
-              <div>
+              <>
                 {fivePercentRoi ?
                   <Flex flexDirection="column">
                     <Typography style={{ color: 'white' }}>vROI</Typography>
-                    <TypographySmall>{roiStr}%</TypographySmall>
+                    <TypographySmall>{apyStr}%</TypographySmall>
                   </Flex>
                   :
                   <Flex flexDirection="column">
-                    <Typography style={{ color: 'white' }}>vROI</Typography>
-                    <TypographySmall>Sold Out</TypographySmall>
+                    <Typography style={{ color: 'white' }}>Return</Typography>
+                    <TypographySmall>{apyStr}%</TypographySmall>
                   </Flex>
                 }
-              </div>
+              </>
             }
             {hasEnded ?
               <Flex flexDirection="column">
@@ -185,7 +185,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
               {hasEnded ?
                 <BondButton disabled style={{ opacity: '0.3' }}>Ended</BondButton>
                 :
-                <div>
+                <>
                   {fivePercentRoi ?
                     <Flex >
                       {needsApproval ?
@@ -203,9 +203,9 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                       }
                     </Flex>
                     :
-                    <BondButton>Sold Out</BondButton>
+                    <BondButton disabled style={{ opacity: '0.3' }}>Sold Out</BondButton>
                   }
-                </div>
+                </>
               }
               {rewardsNo > 0 ?
                 <ClaimButton
@@ -228,24 +228,32 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           </Flex>
         </BondsContainer>
         :
-        <Skeleton height={40} />
+        <>
+          {hoursToStartNo < 100 ?
+            <BondsContainer>
+              <Flex alignItems="center" justifyContent='space-between'>
+                <Flex alignItems="center">
+                  <object type="image/svg+xml" data='/images/ust3.svg' width="35px" style={{ marginRight: '8px' }}>&nbsp;</object>
+                  <Flex flexDirection="column">
+                    <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
+                    <a target="_blanK" rel="noreferrer" href={`https://app.sushi.com/swap?outputCurrency=${stakingTokenAddress}`} className="nav-links">
+                      <TypographySmall>Buy&nbsp;<FaExternalLinkSquareAlt /></TypographySmall>
+                    </a>
+                  </Flex>
+                </Flex>
+                <Flex flexDirection="column">
+                  <Typography style={{ color: 'white', maxWidth: '100px' }}>Starting In</Typography>
+                  <TypographySmall style={{ maxWidth: '100px' }}>{hoursToStartStr} Hours</TypographySmall>
+                </Flex>
+              </Flex>
+            </BondsContainer>
+            :
+            <Skeleton height="40px" marginTop="10px" />
+          }
+        </>
       }
     </>
   )
 }
-
-const Div = styled.div`
-  display: inline-flex;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-left: 7px;
-  box-shadow: 0 0 10px 0px #506063;
-  transition: 0.3s ease-in-out;
-  :hover {
-    box-shadow: 0px 0px 15px 0px #5A6F73;
-    color: #FFFF;
-} 
-`
-
 
 export default Bonds

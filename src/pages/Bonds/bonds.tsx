@@ -30,7 +30,7 @@ const Bond: React.FC = () => {
     const tvl = getTotalValueFromQuoteTokens(quoteTokens, pool2.quoteTokenSymbol, prices)
     const rewardTokenPrice = lookupPrice(QuoteToken.RVRS, prices)
     const totalRewardPricePerYear = rewardTokenPrice.times(pool2.tokenPerBlock).times(BLOCKS_PER_YEAR)
-    const apy = totalRewardPricePerYear.div(tvl).times(100).minus(100)
+    const apy = totalRewardPricePerYear.div(tvl).times(100)
     return { ...pool2, isFinished: pool2.sousId === 0 ? false : pool2.isFinished && block > pool2.endBlock, apy, tvl }
   })
   const [finishedPools, openPools] = partition(poolsWithApy, (pool2) => pool2.isFinished)
@@ -39,7 +39,7 @@ const Bond: React.FC = () => {
   const handleModal = async () => {
     setModalOpen(!modalOpen)
   }
-
+  const rewardTokenPriceStr = lookupPrice(QuoteToken.RVRS, prices).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   return (
     <Page>
       <Wrap>
@@ -54,6 +54,7 @@ const Bond: React.FC = () => {
           </Route>
         </LayoutContainer>
       </Wrap>
+      <TitleCard>{rewardTokenPriceStr}</TitleCard>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
           <TitleCard style={{padding: '10px'}}>
@@ -69,7 +70,15 @@ const Bond: React.FC = () => {
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '15px' }}>
           <Flex>
-            <Typography>Every week, Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand its yields.</Typography>
+            <Typography>Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand its yields.
+            Bonds &apos;Sell Out&apos; when vROI* goes below 5.00%. In such event, a Net Return* is calculated.
+            </Typography>
+          </Flex>
+          <Flex marginTop="10px">
+            <Typography>*vROI: variable ROI (for as long as the bond is live)</Typography>
+          </Flex>
+          <Flex marginTop="0px">
+            <Typography>*Return: estimated returns of the bond (in percentage)</Typography>
           </Flex>
         </LayoutContainer>
       </Wrap>
