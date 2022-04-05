@@ -44,19 +44,31 @@ a:hover{
   color: #D6D6D6;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #323B4A;
-  border-radius: 0px;
-  height: 10px;
-}
-
 /* width */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
+/* Track */
+  ::-webkit-scrollbar-track {
+  background: frey;  
+  width: 5px;
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: #121212;
+  border-style: solid;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #CFCFCF;
+  border-radius: 0px;
+
+}
+
+/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #3C4557;
+  opacity: 0.5;
 }
 
 `

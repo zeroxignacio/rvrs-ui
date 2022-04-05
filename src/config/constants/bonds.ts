@@ -4,7 +4,6 @@ const UST_ADDRESS = '0x224e64ec1BDce3870a6a6c777eDd450454068FEC'
 const JEWEL_ADDRESS = '0x72Cb10C6bfA5624dD07Ef608027E366bd690048F'
 
 const pools2: Pool2Config[] = [
-    /*
     {
         sousId: 1,
         tokenName: 'UST',
@@ -536,7 +535,7 @@ const pools2: Pool2Config[] = [
         isSingleAsset: true,
         tokenDecimals: 18,
         tokenPerBlock: '0.047',
-    },    */
+    },   
 
     {
         sousId: 22,
