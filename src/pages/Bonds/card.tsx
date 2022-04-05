@@ -102,7 +102,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const fivePercentRoi = roiNo > 5;
   const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(95)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const apyStr = apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   // tvl
   const tbvNo = pool2.tvl && pool2.tvl.toNumber();
   const tbvStr = tbvNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
@@ -148,20 +147,20 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             {/* ROI */}
             {hasEnded ?
               <Flex flexDirection="column">
-                <Typography style={{ color: 'white' }}>Net ROI</Typography>
-                <TypographySmall style={{ marginTop: "2px" }}>{estRoiAfterSoldOutStr}%</TypographySmall>
+                <Typography style={{ color: 'white' }}>vROI</Typography>
+                <TypographySmall style={{ marginTop: "2px" }}>Ended</TypographySmall>
               </Flex>
               :
               <>
                 {fivePercentRoi ?
                   <Flex flexDirection="column">
                     <Typography style={{ color: 'white' }}>vROI</Typography>
-                    <TypographySmall>{apyStr}%</TypographySmall>
+                    <TypographySmall>{roiStr}%</TypographySmall>
                   </Flex>
                   :
                   <Flex flexDirection="column">
                     <Typography style={{ color: 'white' }}>Return</Typography>
-                    <TypographySmall>{apyStr}%</TypographySmall>
+                    <TypographySmall>{estRoiAfterSoldOutStr}%</TypographySmall>
                   </Flex>
                 }
               </>
