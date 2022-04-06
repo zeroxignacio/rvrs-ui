@@ -44,10 +44,10 @@ const TypographyBold = styled.p`
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 0px;
-  transition: 0.3s;
   text-decoration: underline;
   margin-right: 5px;
   margin-left: 5px;
+  transition: 0.3s ease-in-out;
 `
 
 const Typography = styled.p`

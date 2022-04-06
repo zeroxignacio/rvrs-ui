@@ -3,7 +3,7 @@ import { Route, useRouteMatch } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { BLOCKS_PER_YEAR } from 'config'
-import Ripples from 'react-ripples'
+import styled from 'styled-components'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import TypographyTitle from 'components/layout/typography/typographyTitle'
@@ -30,7 +30,7 @@ const Bond: React.FC = () => {
     const tvl = getTotalValueFromQuoteTokens(quoteTokens, pool2.quoteTokenSymbol, prices)
     const rewardTokenPrice = lookupPrice(QuoteToken.RVRS, prices)
     const totalRewardPricePerYear = rewardTokenPrice.times(pool2.tokenPerBlock).times(BLOCKS_PER_YEAR)
-    const apy = totalRewardPricePerYear.div(tvl).times(100).minus(100)
+    const apy = totalRewardPricePerYear.div(tvl).times(100)
     return { ...pool2, isFinished: pool2.sousId === 0 ? false : pool2.isFinished && block > pool2.endBlock, apy, tvl }
   })
   const [finishedPools, openPools] = partition(poolsWithApy, (pool2) => pool2.isFinished)
@@ -39,43 +39,62 @@ const Bond: React.FC = () => {
   const handleModal = async () => {
     setModalOpen(!modalOpen)
   }
-
+  const rewardTokenPriceStr = lookupPrice(QuoteToken.RVRS, prices).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   return (
     <Page>
       <Wrap>
         <LayoutContainer>
-          <TitleCard style={{padding: '10px'}}>
+          <TitleCard style={{ padding: '10px' }}>
             <TypographyTitle>
               rvBonds
             </TypographyTitle>
           </TitleCard>
-          <Route path={`${path}`}>
-            {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
-          </Route>
+          <Divider/>
+          <ScrollDiv>
+            <Route path={`${path}`}>
+              {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+            </Route>
+          </ScrollDiv>
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <TitleCard style={{padding: '10px'}}>
+          <TitleCard style={{ padding: '10px' }}>
             <TypographyTitle>
-              Inactive rvBonds  
+              Inactive rvBonds
             </TypographyTitle>
           </TitleCard>
-          <Route path={`${path}`}>
-            {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
-          </Route>
+          <Divider/>
+          <ScrollDiv>
+            <Route path={`${path}`}>
+              {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+            </Route>
+          </ScrollDiv>
         </LayoutContainer>
+
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '15px' }}>
           <Flex>
-            <Typography>Every week, Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand its yields.</Typography>
+            <Typography>Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand its yields.
+              Bonds &apos;Sell Out&apos; when vROI goes below 5.00% and a Net Return is calculated.
+            </Typography>
           </Flex>
         </LayoutContainer>
       </Wrap>
     </Page>
   )
 }
+
+const ScrollDiv = styled.div`
+    overflow-y: scroll;
+    max-height: 170px
+    
+`
+
+const Divider = styled.div`
+    height: 10px
+`
 
 export default Bond
 
