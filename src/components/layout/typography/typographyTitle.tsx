@@ -17,7 +17,7 @@ const typographyTitle = styled.p`
     font-weight: 800;
     align-items: center;
     display: inline-flex;
-    animation: ${pulse} 5s infinite;
+    //animation: ${pulse} 5s infinite;
 
 `
 export default typographyTitle
