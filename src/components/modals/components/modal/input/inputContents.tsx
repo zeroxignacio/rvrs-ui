@@ -49,18 +49,19 @@ const Text = styled.div`
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 5px;
-  margin-left: 0px;
   justify-content: flex-start;
+  cursor: pointer;
 `
 
 const MaxButton = styled.button`
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   background: #121212;
   color: #EEEEEE;
   justify-content: center;
-  padding: 10px;
-  transition: 0.5s ease-in-out;
+  padding: 11px;
+  transition: 0.3s ease-in-out;
+  border-left: 3px solid #6699A3;
   :hover {
     background: #121212;
   } 

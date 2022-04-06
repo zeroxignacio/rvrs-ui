@@ -73,9 +73,8 @@ const DismissButton = styled.button`
   border: 0px;
   transition: all 0.3s ease-in-out;
   :hover {
-      background: white;
-      color: black;
-      border-radius: 8px;
+      background: none;
+      opacity: 0.6;
   } 
 `
 
