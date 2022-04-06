@@ -77,8 +77,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const apyNull = apyNo < 5;
   const apyStr = apy && apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   const monthlyRoiStr = apr.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const roiYearStr = new BigNumber(apy).times(stakedNo).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const roiMonthStr = apr.div(12).times(stakedNo).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const roiYearStr = new BigNumber(apy).times(stakedNo).times(0.01).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const roiMonthStr = apr.div(12).times(stakedNo).times(0.01).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
   // approve, withdraw, deposit
   const [onPresentWithdraw] = useModal(
