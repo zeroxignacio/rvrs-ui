@@ -139,20 +139,11 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </Flex>
           <Flex justifyContent="center" marginTop="0px">
             <ContentCardAlt style={{ marginRight: '5px' }}>
-              {stakedNo > 0 ?
-                <TypographyBold>+{roiYearStr} RVRS</TypographyBold>
-                :
-                <Skeleton marginBottom="5px" />
-              }
+              <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight:'500' }}>+{roiYearStr} RVRS</TypographyBold>
               <Typography>Expected Yearly Interest</Typography>
-
             </ContentCardAlt>
             <ContentCardAlt>
-              {stakedNo > 0 ?
-                <TypographyBold>+{roiMonthStr} RVRS</TypographyBold>
-                :
-                <Skeleton marginBottom="5px" />
-              }
+              <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight:'500' }}>+{roiMonthStr} RVRS</TypographyBold>
               <Typography>Expected Monthly Interest</Typography>
             </ContentCardAlt>
           </Flex>

@@ -77,7 +77,7 @@ const Bond: React.FC = () => {
         <LayoutContainer style={{ padding: '15px' }}>
           <Flex>
             <Typography>Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand its yields.
-              Bonds &apos;Sell Out&apos; when vROI goes below 5.00% and a Net Return is calculated.
+              Bonds &apos;Sell Out&apos; when vROI goes below 5.00% and a Net Return is calculated. Both vROI and Return depend on the price of RVRS.
             </Typography>
           </Flex>
         </LayoutContainer>
@@ -89,7 +89,6 @@ const Bond: React.FC = () => {
 const ScrollDiv = styled.div`
     overflow-y: scroll;
     max-height: 170px
-    
 `
 
 const Divider = styled.div`
