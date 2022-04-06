@@ -69,22 +69,15 @@ const Airdrop = () => {
                 {expectedReturnsNo > 1 ?
                   <TypographyBold style={{ marginBottom: '5px' }}>{expectedReturnsStr} UST</TypographyBold>
                   :
-                  <Typography><Skeleton height={20} marginBottom="5px" /></Typography>
+                  <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
                 }
                 <Typography>Yearly Returns</Typography>
               </ContentCard>
               <ContentCard style={{ marginLeft: '10px' }}>
-                {claimedNotZero ?
-                  <div>
-                    <TypographyBold style={{ marginBottom: '5px' }}>{claimedStr} UST</TypographyBold>
-                    <Typography>Claimed</Typography>
-                  </div>
-                  :
-                  <div>
-                    <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
-                    <Typography>Net Allocation</Typography>
-                  </div>
-                }
+                <div>
+                  <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
+                  <Typography>Net Allocation</Typography>
+                </div>
               </ContentCard>
             </Flex>
             <Flex justifyContent="space-between" marginTop="20px">
@@ -108,7 +101,7 @@ const Airdrop = () => {
                   </Ripples>
                 </div>
                 :
-                <ClaimButton disabled style={{opacity: '0.3'}}>
+                <ClaimButton disabled style={{ opacity: '0.3' }}>
                   Come back next week!
                 </ClaimButton>
               }

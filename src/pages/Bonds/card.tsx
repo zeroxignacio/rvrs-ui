@@ -101,7 +101,8 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const roiNo = (apy && apy.div(365).times(vesting).minus(100)).toNumber();
   const fivePercentRoi = roiNo > 5;
   const roiStr = roiNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const estRoiAfterSoldOutStr = (apy && apy.div(365).times(5).minus(95)).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const estRoiAfterSoldOutNo = (apy && apy.div(365).times(5).minus(95)).toNumber();
+  const estRoiAfterSoldOutStr = estRoiAfterSoldOutNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
   // tvl
   const tbvNo = pool2.tvl && pool2.tvl.toNumber();
   const tbvStr = tbvNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
@@ -159,8 +160,17 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   </Flex>
                   :
                   <Flex flexDirection="column">
-                    <Typography style={{ color: 'white' }}>Return</Typography>
-                    <TypographySmall>{estRoiAfterSoldOutStr}%</TypographySmall>
+                    {estRoiAfterSoldOutNo > 0 ?
+                      <>
+                        <Typography style={{ color: 'white' }}>Return</Typography>
+                        <TypographySmall style={{ color: '#6ccca5' }}>{estRoiAfterSoldOutStr}%</TypographySmall>
+                      </>
+                      :
+                      <>
+                        <Typography style={{ color: 'white' }}>Return</Typography>
+                        <TypographySmall style={{ color: '#B33F40' }}>{estRoiAfterSoldOutStr}%</TypographySmall>
+                      </>
+                    }
                   </Flex>
                 }
               </>
@@ -207,15 +217,17 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 </>
               }
               {rewardsNo > 0 ?
-                <ClaimButton
-                  style={{ marginLeft: '5px' }}
-                  onClick={async () => {
-                    setPendingTx(true)
-                    await onReward()
-                    setPendingTx(false)
-                  }}>
-                  <FaHandHolding style={{ color: '#9B9B9B' }} />
-                </ClaimButton>
+                <Ripples>
+                  <ClaimButton
+                    style={{ marginLeft: '5px' }}
+                    onClick={async () => {
+                      setPendingTx(true)
+                      await onReward()
+                      setPendingTx(false)
+                    }}>
+                    <FaHandHolding style={{ color: '#9B9B9B' }} />
+                  </ClaimButton>
+                </Ripples>
                 :
                 <ClaimButton
                   style={{ marginLeft: '5px', opacity: '0.3' }}

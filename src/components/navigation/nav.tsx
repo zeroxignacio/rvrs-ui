@@ -155,7 +155,7 @@ const pulse = keyframes`
   }
   50% {
     transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
   }
   100% {
     transform: scale(0.90);
