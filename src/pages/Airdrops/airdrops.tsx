@@ -101,7 +101,7 @@ const Airdrop = () => {
                   </Ripples>
                 </div>
                 :
-                <ClaimButton disabled style={{ opacity: '0.3' }}>
+                <ClaimButton disabled style={{ opacity: '0.3', cursor:'not-allowed' }}>
                   Come back next week!
                 </ClaimButton>
               }

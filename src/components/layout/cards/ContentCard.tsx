@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const ContentCard = styled(Container)`
   text-align: center;
   border-radius: 0px;
-  background: #161616;
+  background: #191919;
   padding: 15px;
   border-width: 0px;
   border-color: #313131;

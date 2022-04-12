@@ -13,6 +13,7 @@ const bondButtonDisabled = styled.button`
     opacity: 0.5;
     :hover {
         background: transparent;
+        cursor: not-allowed;
     }
 `
 

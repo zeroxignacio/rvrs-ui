@@ -8,6 +8,9 @@ const claimButtonDisabled = styled.button`
     border: 0px;
     opacity: 0.9;
     transition: 0.3s ease-in-out;
+    :hover {
+        cursor: not-allowed;
+    }
 `
 
 export default claimButtonDisabled

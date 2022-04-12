@@ -46,29 +46,26 @@ a:hover{
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
+  height: 3px; 
 }
 
 /* Track */
   ::-webkit-scrollbar-track {
-  background: frey;  
-  width: 5px;
-  border-radius: 0px;
-  border-width: 1px;
-  border-color: #121212;
+  border-width: 3px;
+  border-color: transparent;
   border-style: solid;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #CFCFCF;
-  border-radius: 0px;
-
+  border-radius: 2px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  opacity: 0.5;
+  cursor: grab;
 }
 
 `

@@ -14444,6 +14444,22 @@ style-loader@1.3.0:
     loader-utils "^2.0.0"
     schema-utils "^2.7.0"
 
+styled-base-components@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/styled-base-components/-/styled-base-components-4.0.0.tgz#a5f0e1c4b2558926793aa59a4ff60616a1198e65"
+  integrity sha512-1Ikyk279YnwyKnh5+Vlb6q1qfXZ+43xzAqMc4iB+LN7uM/ePJXlGME6gUw2P6DNq9lxRmQrYaWdKsfoiUN3oSQ==
+  dependencies:
+    styled-base-components "^4.0.0"
+    styled-config "^4.0.0"
+
+styled-button-component@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/styled-button-component/-/styled-button-component-4.0.0.tgz#aa59060bde6f2a9536317e27bb71de585ec5b16d"
+  integrity sha512-6I5kLFKhN4pU31fkDTCAZnLoS3gJJFVlDRnXMVFIDto+BEuSS7c6LT6oADhS9m8Fl+62atV9bYkOS2HDcTNMhg==
+  dependencies:
+    styled-base-components "^4.0.0"
+    styled-config "^4.0.0"
+
 styled-components@^5.1.1:
   version "5.2.1"
   resolved "https://registry.npmjs.org/styled-components/-/styled-components-5.2.1.tgz"
@@ -14459,6 +14475,11 @@ styled-components@^5.1.1:
     hoist-non-react-statics "^3.0.0"
     shallowequal "^1.1.0"
     supports-color "^5.5.0"
+
+styled-config@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/styled-config/-/styled-config-4.0.0.tgz#42530f37d1a33205a28a1cc058020aca4c5f131b"
+  integrity sha512-sQq5C1t5KtN0iMpF7lAuzh3fSpk8T0vFIh8XH7l+pOzD+w9+Wow6OPcgnZ+Q/ay6jtyhgUk6E8jMopv+dmUsVw==
 
 styled-system@^5.1.5:
   version "5.1.5"
@@ -14478,6 +14499,14 @@ styled-system@^5.1.5:
     "@styled-system/typography" "^5.1.2"
     "@styled-system/variant" "^5.1.5"
     object-assign "^4.1.1"
+
+styled-tooltip-component@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/styled-tooltip-component/-/styled-tooltip-component-4.0.0.tgz#800838a3ea54e2bac9c51733d5b4d439d8453855"
+  integrity sha512-anxtrNXShr0GXILg7HplQd7AcT5dxBoQpTFGBmmcSRqFBlCA5bhuy2Q4zp5l0ChEcfKntohSVgw+4LJx3JQtwQ==
+  dependencies:
+    styled-base-components "^4.0.0"
+    styled-config "^4.0.0"
 
 stylehacks@^4.0.0:
   version "4.0.3"

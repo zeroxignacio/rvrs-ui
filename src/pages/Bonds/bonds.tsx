@@ -40,6 +40,9 @@ const Bond: React.FC = () => {
     setModalOpen(!modalOpen)
   }
   const rewardTokenPriceStr = lookupPrice(QuoteToken.RVRS, prices).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+
+
+
   return (
     <Page>
       <Wrap>
@@ -71,7 +74,6 @@ const Bond: React.FC = () => {
             </Route>
           </ScrollDiv>
         </LayoutContainer>
-
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '15px' }}>
@@ -94,6 +96,7 @@ const ScrollDiv = styled.div`
 const Divider = styled.div`
     height: 10px
 `
+
 
 export default Bond
 

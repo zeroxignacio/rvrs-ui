@@ -134,7 +134,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 :
                 <Skeleton marginBottom="5px" />
               }
-              <Typography>Monthly ROI</Typography>
+              <Typography>Monthly Yield</Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginTop="0px">
@@ -183,7 +183,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 :
                 <div>
                   <ActionButton
-                    style={{ marginRight: '10px', opacity: '0.3' }}
+                    style={{ marginRight: '10px', opacity: '0.3', cursor:'not-allowed' }}
                     disabled>
                     Unstake
                   </ActionButton>
