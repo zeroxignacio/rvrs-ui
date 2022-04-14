@@ -16,15 +16,9 @@ const Nav = (props) => {
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: '20px' }}>
-        <Ripples>
-          <NavButton
-            as={StyledNavLink}
-            to="/upcoming"
-            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/upcoming')}
-          >
+          <NavButton2>
             veRVRS
-          </NavButton>
-        </Ripples>
+          </NavButton2>
         <Ripples>
           <NavButton
             as={StyledNavLink}
@@ -185,6 +179,15 @@ const NavButton = styled.p`
     color: #121212;
   }
 `
+const NavButton2 = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px;
+  color: grey;
+  margin-right: 2px;
+  cursor: not-allowed
+`
+
 
 const activeClassName = 'ACTIVE'
 
