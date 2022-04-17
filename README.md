@@ -2,7 +2,6 @@
 Open interface for the Reverse Protocol.
 
 # Deployments
-- Production: https://rvrs.app/
 - Develop: https://dev.rvrs.app/
 
 # Getting Started
