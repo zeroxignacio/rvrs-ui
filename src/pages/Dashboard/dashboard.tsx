@@ -7,7 +7,6 @@ import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
 import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
-import ContentCard from 'components/layout/cards/ContentCard'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
 import { FaAward, FaExternalLinkAlt } from 'react-icons/fa';
@@ -41,60 +40,57 @@ const Dashboard = () => {
     <Page>
       <Wrap>
         <LayoutContainer>
-          <TitleCard style={{ marginBottom: '5px', marginTop: '0px' }}>
-            <TypographyTitle style={{ marginTop: '15px', marginBottom: '15px' }}>
-              <div>Dashboard&nbsp;</div>
-              <a
-                href={`https://explorer.harmony.one/address/${account}`}
-                className="nav-icon"
-                onClick={() => navigator.clipboard.writeText(`${account}`)}>
-
+          <TitleCard style={{ padding: '20px', marginBottom: '5px' }}>
+            <TypographyTitle>
+              <div>Dashboard</div>
+              {/* 
+              <a href={`https://explorer.harmony.one/address/${account}`} className="nav-icon" onClick={() => navigator.clipboard.writeText(`${account}`)}>
                 <Typography>{account.substring(0, 16)}...&nbsp;<FaExternalLinkAlt /></Typography>
-              </a>
+              </a> */ }
             </TypographyTitle>
-
           </TitleCard>
           <Flex justifyContent="center">
-            <ContentCard style={{ marginRight: '5px', padding: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+            <ContentCard style={{ marginRight: '5px' }}>
+            <Skeleton marginBottom="5px"/>
               <Typography>veRVRS Balance</Typography>
             </ContentCard>
-            <TierCard style={{ marginRight: '5px' }}>
+            <ContentCard style={{ marginRight: '5px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Current Tier</TypographyBold>
               <Typography>Silver Reversor <FaAward /></Typography>
-            </TierCard>
+            </ContentCard>
             <ContentCard>
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+            <Skeleton marginBottom="5px"/>
               <Typography>RVRS Balance</Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginTop="5px">
             <ContentCard style={{ marginRight: '5px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+              <Skeleton marginBottom="5px"/>
               <Typography>veRVRS Cap</Typography>
             </ContentCard>
             <ContentCard style={{ marginRight: '5px' }} >
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+            <Skeleton marginBottom="5px"/>
               <Typography>Portfolio Value</Typography>
             </ContentCard>
             <ContentCard >
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+            <Skeleton marginBottom="5px"/>
               <Typography>Staked RVRS</Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginTop="5px">
             <ContentCard style={{ marginRight: '5px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+            <Skeleton marginBottom="5px"/>
               <Typography>Expected Yearly Returns</Typography>
             </ContentCard>
             <ContentCard>
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
+            <Skeleton marginBottom="5px"/>
               <Typography>Market Cap/Treasury Ratio</Typography>
             </ContentCard>
           </Flex>
+          {/*
           <Flex justifyContent="center" marginTop="5px">
             <ContentCard>
-              <TypographyBold style={{ marginBottom: '7px' }}><Skeleton /></TypographyBold>
+              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
               <a
                 href="https://docs.google.com/spreadsheets/d/1fNsmVWqtPrtZr7z4i2n1ZgRNAEZdX3coPzMbZNPCZ34/edit#gid=1364928066"
                 className="nav-icon"
@@ -103,15 +99,35 @@ const Dashboard = () => {
               </a>
             </ContentCard>
           </Flex>
+          */ }
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
-          <LayoutContainer style={{ padding: '15px' }}>
-            <Flex justifyContent="center">
-              <Typography>The Reverse dashboard and charts help you keep track of what matters most, your RVRS positions.</Typography>
-            </Flex>
-          </LayoutContainer>
-        </Wrap>
+        <LayoutContainer>
+          <TitleCard style={{ padding: '20px', marginBottom: '5px', marginTop: '0px' }}>
+            <Typography>
+              Buybacks and Airdrops
+            </Typography>
+          </TitleCard>
+          <Flex justifyContent="center">
+            <ContentCard style={{ textAlign: 'start', marginBottom: '5px' }}>
+              <Typography>
+                At current rates (and in average), <TypographyBold>TBD&nbsp;</TypographyBold>RVRS
+                is bought by the treasury every week. This is equivalent to <TypographyBold>TBD&nbsp;</TypographyBold>
+                with RVRS at <TypographyBold>TBD</TypographyBold>.
+              </Typography>
+            </ContentCard>
+          </Flex>
+          <Flex justifyContent="center">
+            <ContentCard style={{textAlign: 'start'}}>
+              <Typography>
+                Airdrops can be claimed every monday. A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol participants.
+                Average airdrop size is <TypographyBold>TBD</TypographyBold>
+              </Typography>
+            </ContentCard>
+          </Flex>
+        </LayoutContainer>
+      </Wrap>
     </Page>
   )
 }
@@ -125,6 +141,16 @@ const LinkTypography = styled.p`
     color: #FFFF !important;
     font-weight: 500;
   } 
+`
+
+const ContentCard = styled(Container)`
+  text-align: center;
+  border-radius: 0px;
+  background: #161616;
+  padding: 10px;
+  border-width: 0px;
+  border-color: #313131;
+  border-style: solid;
 `
 
 export default Dashboard

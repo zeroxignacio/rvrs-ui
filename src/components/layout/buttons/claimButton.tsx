@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 
 const claimButton = styled.button`
     font-size: 16px;
@@ -7,7 +7,8 @@ const claimButton = styled.button`
     color: #EEEEEE;
     justify-content: center;
     padding: 10px;
-    transition: 0.5s ease-in-out;
+    transition: 0.3s ease-in-out;
+    border-left: 3px solid #6699A3;
     :hover {
         opacity: 0.5;
         background: transparent;

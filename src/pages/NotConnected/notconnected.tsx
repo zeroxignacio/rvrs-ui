@@ -5,16 +5,22 @@ import { useWallet } from "@binance-chain/bsc-use-wallet"
 import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
 import { Container } from 'react-bootstrap'
+import useWalletModal from 'components/modals/WalletModal'
+import rvrs from 'config/constants/rvrs'
 
 
-const NOTCONNECTED = () => {
-  const { account } = useWallet()
-
+const NOTCONNECTED = (props) => {
+  const { account, connect, reset } = useWallet()
+  const { onPresentConnectModal } = useWalletModal(connect, reset)
+  
   return (
     <Page>
       <CardContainer>
         <Card>
-          <TypographyTitle>Connect First</TypographyTitle>
+          <TypographyTitle
+           disabled={rvrs.isLocked.unlockWalletButton}
+           onClick={onPresentConnectModal} {...props}
+           >Connect First</TypographyTitle>
         </Card>
       </CardContainer>
     </Page>
@@ -68,6 +74,8 @@ const TypographyTitle = styled.h1`
     animation: ${pulse} 5s infinite;
     :hover {
       color: #F3F3F3;
+      cursor: pointer;
+      text-decoration: underline;
     }
 `
 

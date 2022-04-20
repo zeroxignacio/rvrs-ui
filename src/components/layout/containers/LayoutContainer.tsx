@@ -9,7 +9,7 @@ const LayoutContainer = styled(Container)`
     border-width: 1px;
     border-color: #313131;
     border-style: solid;
-    border-radius: 4px;
+    border-radius: 5px;
     transition: all 0.3s ease-in-out;
 `
 

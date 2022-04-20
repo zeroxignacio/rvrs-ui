@@ -44,19 +44,28 @@ a:hover{
   color: #D6D6D6;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #323B4A;
-  border-radius: 0px;
-  height: 10px;
-}
-
 /* width */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
+  height: 3px; 
 }
 
+/* Track */
+  ::-webkit-scrollbar-track {
+  border-width: 3px;
+  border-color: transparent;
+  border-style: solid;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #CFCFCF;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #3C4557;
+  cursor: grab;
 }
 
 `

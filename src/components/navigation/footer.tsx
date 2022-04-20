@@ -28,8 +28,12 @@ const MenuBottom = (props) => {
               <TypographyBold>Twitter</TypographyBold>
             </a>
             ∙
-            <a target="_blanK" rel="noreferrer" href="/" className="nav-links">
+            <a target="_blanK" rel="noreferrer" href="https://paladinsec.co/assets/audits/20211110_Paladin_Artemis_Final_Report.pdf" className="nav-links">
               <TypographyBold>Audit</TypographyBold>
+            </a>
+            ∙
+            <a target="_blanK" rel="noreferrer" href="https://app.sushi.com/swap?outputCurrency=0xed0b4b0f0e2c17646682fc98ace09feb99af3ade" className="nav-links">
+              <TypographyBold>Buy RVRS</TypographyBold>
             </a>
           </Flex>
             { /* <object type="image/svg+xml" data="/images/reverse.svg" width="120px" style={{ marginTop: "-20px" }}>&nbsp;</object> */ }
@@ -44,10 +48,10 @@ const TypographyBold = styled.p`
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 0px;
-  transition: 0.3s;
   text-decoration: underline;
   margin-right: 5px;
   margin-left: 5px;
+  transition: 0.3s ease-in-out;
 `
 
 const Typography = styled.p`

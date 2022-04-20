@@ -6,6 +6,7 @@ import useWalletModal from 'components/modals/WalletModal'
 import { NavLink } from 'react-router-dom'
 import Ripples from 'react-ripples'
 import rvrs from 'config/constants/rvrs'
+import TypographyTitle from 'components/layout/typography/typographyTitle'
 import { Flex } from '../layout/flex'
 
 const Nav = (props) => {
@@ -14,25 +15,16 @@ const Nav = (props) => {
 
   return (
     <MenuContainer>
-      <ButtonGroup style={{ marginRight: "20px" }}>
-        <Ripples>
-          <NavButton
-            as={StyledNavLink}
-            to="/upcoming"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/upcoming')
-            }>veRVRS
-          </NavButton>
-        </Ripples>
+      <ButtonGroup style={{ marginRight: '20px' }}>
+          <NavButton2>
+            veRVRS
+          </NavButton2>
         <Ripples>
           <NavButton
             as={StyledNavLink}
             to="/bonds"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/bonds')
-            }>
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/bonds')}
+          >
             Bonds
           </NavButton>
         </Ripples>
@@ -40,69 +32,71 @@ const Nav = (props) => {
           <NavButton
             as={StyledNavLink}
             to="/staking"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/staking')
-            }>Staking
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/staking')}
+          >
+            Staking
           </NavButton>
         </Ripples>
         <Ripples>
           <NavButton
             as={StyledNavLink}
             to="/airdrop"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/airdrop')
-            }>Airdrop
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/airdrop')}
+          >
+            Airdrop
           </NavButton>
         </Ripples>
       </ButtonGroup>
+      
       <ButtonGroup>
-        {account != null && account.length > 1 ?
+        {account != null && account.length > 1 ? (
           <Flex style={{ alignItems: 'center' }}>
             <div style={{ display: 'inline-flex', borderRadius: 8, overflow: 'hidden', marginRight: '5px' }}>
               <ChainButton>
                 <Flex alignItems="center">
-                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">
+                    &nbsp;
+                  </object>
+                  &nbsp;Harmony
                 </Flex>
               </ChainButton>
             </div>
             <WalletButton
-              style={{ justifyContent: "space-between", alignItems: 'center' }}
+              style={{ justifyContent: 'space-between', alignItems: 'center' }}
               as={WalletNavLink}
               to="/dashboard"
-              isActive={(match, { pathname }) =>
-                Boolean(match) ||
-                pathname.startsWith('/dashboard')
-              }>
+              isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/dashboard')}
+            >
               <Flex alignItems="center">
                 {account.substring(0, 6)}
                 <ActivePulse style={{ marginLeft: '5px' }} />
               </Flex>
             </WalletButton>
           </Flex>
-          :
+        ) : (
           <Flex style={{ alignItems: 'center' }}>
-            <div style={{ display: 'inline-flex', borderRadius: 10, overflow: 'hidden', marginRight: '5px' }}>
+            <div style={{ display: 'inline-flex', borderRadius: 8, overflow: 'hidden', marginRight: '5px' }}>
               <ChainButton>
                 <Flex alignItems="center">
-                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">&nbsp;</object>&nbsp;Harmony
+                  <object type="image/svg+xml" data="/images/hmny.svg" width="20px">
+                    &nbsp;
+                  </object>
+                  &nbsp;Harmony
                 </Flex>
               </ChainButton>
             </div>
             <WalletButton
               as={WalletNavLink}
               to="/dashboard"
-              isActive={(match, { pathname }) =>
-                Boolean(match) ||
-                pathname.startsWith('/dashboard')
-              }
+              isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/dashboard')}
               disabled={rvrs.isLocked.unlockWalletButton}
-              onClick={onPresentConnectModal} {...props}>
+              onClick={onPresentConnectModal}
+              {...props}
+            >
               Connect
             </WalletButton>
           </Flex>
-        }
+        )}
       </ButtonGroup>
     </MenuContainer>
   )
@@ -112,7 +106,7 @@ const MenuContainer = styled(Container)`
   padding-top: 20px;
   text-align: center;
   flex-wrap: wrap;
-  max-width: 590px;
+  max-width: 1000px;
   background: transparent;
 `
 
@@ -126,10 +120,10 @@ const WalletButton = styled.div`
   border-radius: 9px;
   padding: 10px;
   transition: 0.3s ease-in-out;
-  &:hover  {
-    box-shadow: 20px 0px 40px -20px #55747D;
-    border-color: #FFFF !important;
-    transform: translate(-2px)
+  &:hover {
+    box-shadow: 20px 0px 40px -20px #55747d;
+    border-color: #ffff !important;
+    transform: translate(-2px);
   }
 `
 
@@ -155,7 +149,7 @@ const pulse = keyframes`
   }
   50% {
     transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
   }
   100% {
     transform: scale(0.90);
@@ -163,7 +157,7 @@ const pulse = keyframes`
 `
 
 const ActivePulse = styled.div`
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 50%;
   margin: 0px;
   height: 8px;
@@ -180,16 +174,25 @@ const NavButton = styled.p`
   padding: 8px;
   transition: 0.3s ease-in-out;
   margin-right: 2px;
-  &:hover  {
+  &:hover {
     background: white;
     color: #121212;
   }
 `
+const NavButton2 = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px;
+  color: grey;
+  margin-right: 2px;
+  cursor: not-allowed
+`
+
 
 const activeClassName = 'ACTIVE'
 
 const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
-  &:focus  {
+  &:focus {
     // transform: translate(-1px);
     // text-decoration: underline;
     background: white;
@@ -199,10 +202,10 @@ const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
 `
 
 const WalletNavLink = styled(NavLink).attrs({ activeClassName })`
-  &:focus  {
-    box-shadow: 20px 0px 40px -20px #55747D;
-    border-color: #FFFF !important;
-    transform: translate(0px)
+  &:focus {
+    box-shadow: 20px 0px 40px -20px #55747d;
+    border-color: #ffff !important;
+    transform: translate(0px);
   }
 `
 

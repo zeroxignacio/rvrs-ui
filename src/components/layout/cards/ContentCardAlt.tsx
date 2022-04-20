@@ -8,6 +8,7 @@ const ContentCardAlt = styled(Container)`
   border-width: 1px;
   border-color: #313131;
   border-style: solid;
+
 `
 
 export default ContentCardAlt

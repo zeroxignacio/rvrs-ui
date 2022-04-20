@@ -52,7 +52,7 @@ const pulse = keyframes`
     text-shadow: 2px 2px #6699A3;
   }
   50% {
-    text-shadow: 2px 2px 10px #5F6F92;
+    text-shadow: 2px 2px 0px #5F6F92;
   }
   100% {
     text-shadow: 2px 2px #6699A3;
