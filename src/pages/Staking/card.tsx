@@ -65,6 +65,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   // staked
   const staked = new BigNumber(userData?.stakedBalance || 0)
+
   const stakedUsdStr = new BigNumber(getBalanceNumber(staked))
     .times(rvrsPrice)
     .toNumber()
@@ -100,22 +101,10 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
-  // approve, withdraw, deposit
+  // approve, withdraw modals
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={staked} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
   )
-  const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      const txHash = await onApprove()
-      // user rejected tx or didn't go through
-      if (!txHash) {
-        setRequestedApproval(false)
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onApprove, setRequestedApproval])
   const [onPresentDeposit] = useModal(
     <StakeModal max={stakingTokenBalance} onConfirm={onStake} tokenName={stakingTokenName} />,
   )
@@ -131,7 +120,6 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       progress: undefined,
       theme: 'dark',
     })
-
   const notifyPending = () =>
     toast.info('Confirm transaction...', {
       position: 'top-left',
@@ -143,9 +131,11 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       progress: undefined,
       theme: 'dark',
     })
-
+    const Staked = ()=> new BigNumber(userData?.stakedBalance || 0) 
+    
   return (
     <>
+    {Staked}
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ marginBottom: '10px' }}>
@@ -270,27 +260,14 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography style={{ lineHeight: '1.1' }}>
-            Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the
-            introduction of (ve)RVRS.
+          <Typography style={{ lineHeight: '1.1'}}>
+            Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the introduction of (ve)RVRS.
           </Typography>
         </LayoutContainer>
       </Wrap>
     </>
   )
 }
-
-const pulse = keyframes`
-  0% {
-    text-shadow: 1px 1px 0px #6699A3;
-  }
-  50% {
-    text-shadow: 2px 2px 0px #5F6F92 inline;
-  }
-  100% {
-    text-shadow: 1px 1px 0px #6699A3;
-  }
-`
 
 const ActionButton = styled.button`
   font-size: 16px;
@@ -306,4 +283,5 @@ const ActionButton = styled.button`
   }
 `
 
-export default Card
+// eslint-disable-next-line import/prefer-default-export
+export { Card }

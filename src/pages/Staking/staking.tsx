@@ -8,7 +8,7 @@ import partition from 'lodash/partition'
 import useBlock from 'hooks/useBlock'
 import { usePools, usePrices, getTotalValueFromQuoteTokens, lookupPrice, useFarmFromPid, } from 'state/hooks'
 import Page from 'components/layout/containers/page'
-import PoolCard from './card'
+import { Card as PoolCard } from './card'
 
 export const aprToApy = (apr: number): BigNumber => {
   const apy = new BigNumber(apr).div(100).div(365).plus(1).pow(365).minus(1).times(100);
