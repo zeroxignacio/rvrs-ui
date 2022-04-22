@@ -12,6 +12,8 @@ import { Pool2 } from 'state/types'
 import { Skeleton } from 'components/Skeleton'
 import Ripples from 'react-ripples'
 import styled from 'styled-components'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
 import { FaExternalLinkSquareAlt, FaHandHolding } from 'react-icons/fa'
 import BondsContainer from 'components/layout/containers/bondsContainer'
 import DepositModal from 'components/modals/bondModal'
@@ -120,7 +122,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
 
   // rewards to claim
   const rewardsNo = getBalanceNumber(earnings, tokenDecimals)
-  const rewardsStr = rewardsNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 0 })
+  const rewardsStr = rewardsNo.toLocaleString('en-us', { maximumFractionDigits: 6, minimumFractionDigits: 2 })
 
   // bond modal
   const [onPresentDeposit] = useModal(
@@ -151,9 +153,28 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           <Flex alignItems="center" justifyContent="space-between">
             {/* Bond */}
             <Flex alignItems="center">
+              {/* 
               <object type="image/svg+xml" data="/images/ust3.svg" width="35px" style={{ marginRight: '8px' }}>
                 &nbsp;
               </object>
+              */}
+              {stakingTokenName === 'JEWEL' ? (
+                <img
+                  width="35px"
+                  style={{ marginRight: '8px' }}
+                  className="img-fluid"
+                  src={`${process.env.PUBLIC_URL}/jewel.svg`}
+                  alt="logo"
+                />
+              ) : (
+                <img
+                  width="35px"
+                  style={{ marginRight: '8px' }}
+                  className="img-fluid"
+                  src={`${process.env.PUBLIC_URL}/ust.svg`}
+                  alt="logo"
+                />
+              )}
               <Flex flexDirection="column">
                 <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
                 <a
@@ -171,49 +192,61 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             </Flex>
             {/* ROI */}
             {hasEnded ? (
-              <Flex flexDirection="column">
-                <Typography style={{ color: 'white' }}>vROI</Typography>
-                <TypographySmall style={{ marginTop: '2px' }}>Ended</TypographySmall>
-              </Flex>
+              <Tippy content="This bond has ended">
+                <Flex flexDirection="column">
+                  <Typography style={{ color: 'white' }}>vROI</Typography>
+                  <TypographySmall style={{ marginTop: '2px' }}>Ended</TypographySmall>
+                </Flex>
+              </Tippy>
             ) : (
               <>
                 {fivePercentRoi ? (
-                  <Flex flexDirection="column">
-                    <Typography style={{ color: 'white' }}>vROI</Typography>
-                    <TypographySmall>{roiStr}%</TypographySmall>
-                  </Flex>
+                  <Tippy content="Estimated variable ROI of an open bond">
+                    <Flex flexDirection="column">
+                      <Typography style={{ color: 'white' }}>vROI</Typography>
+                      <TypographySmall>{roiStr}%</TypographySmall>
+                    </Flex>
+                  </Tippy>
                 ) : (
-                  <Flex flexDirection="column">
-                    {estRoiAfterSoldOutNo > 0 ? (
-                      <>
-                        <Typography style={{ color: 'white' }}>Return</Typography>
-                        <TypographySmall style={{ color: '#6ccca5' }}>{estRoiAfterSoldOutStr}%</TypographySmall>
-                      </>
-                    ) : (
-                      <>
-                        <Typography style={{ color: 'white' }}>Return</Typography>
-                        <TypographySmall style={{ color: '#B33F40' }}>{estRoiAfterSoldOutStr}%</TypographySmall>
-                      </>
-                    )}
-                  </Flex>
+                  <Tippy content="Net ROI of a closed bond">
+                    <Flex flexDirection="column">
+                      {estRoiAfterSoldOutNo > 0 ? (
+                        <>
+                          <Typography style={{ color: 'white' }}>Return</Typography>
+                          <TypographySmall style={{ color: '#6ccca5' }}>{estRoiAfterSoldOutStr}%</TypographySmall>
+                        </>
+                      ) : (
+                        <>
+                          <Typography style={{ color: 'white' }}>Return</Typography>
+                          <TypographySmall style={{ color: '#B33F40' }}>{estRoiAfterSoldOutStr}%</TypographySmall>
+                        </>
+                      )}
+                    </Flex>
+                  </Tippy>
                 )}
               </>
             )}
             {hasEnded ? (
-              <Flex flexDirection="column">
-                <Typography style={{ color: 'white' }}>Vesting</Typography>
-                <TypographySmall>Ended</TypographySmall>
-              </Flex>
+              <Tippy content="This bond has ended">
+                <Flex flexDirection="column">
+                  <Typography style={{ color: 'white' }}>Vesting</Typography>
+                  <TypographySmall>Ended</TypographySmall>
+                </Flex>
+              </Tippy>
             ) : (
-              <Flex flexDirection="column">
-                <Typography style={{ color: 'white' }}>Vesting</Typography>
-                <TypographySmall>{vestingStr}&nbsp;Days</TypographySmall>
-              </Flex>
+              <Tippy content="Vesting period for the rewards of a bond">
+                <Flex flexDirection="column">
+                  <Typography style={{ color: 'white' }}>Vesting</Typography>
+                  <TypographySmall>{vestingStr}&nbsp;Days</TypographySmall>
+                </Flex>
+              </Tippy>
             )}
-            <Flex flexDirection="column">
-              <Typography style={{ color: 'white' }}>Bonded</Typography>
-              <TypographySmall>${bondedBalanceStr}</TypographySmall>
-            </Flex>
+            <Tippy content="Your bonded tokens USD value">
+              <Flex flexDirection="column">
+                <Typography style={{ color: 'white' }}>Bonded</Typography>
+                <TypographySmall>${bondedBalanceStr}</TypographySmall>
+              </Flex>
+            </Tippy>
             <Flex>
               {hasEnded ? (
                 <BondButton disabled style={{ opacity: '0.3', cursor: 'not-allowed' }}>
@@ -242,16 +275,18 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
               )}
               {rewardsNo > 0 ? (
                 <Ripples>
-                  <ClaimButton
-                    style={{ marginLeft: '5px' }}
-                    onClick={async () => {
-                      setPendingTx(true)
-                      await onReward()
-                      setPendingTx(false)
-                    }}
-                  >
-                    <FaHandHolding style={{ color: '#9B9B9B' }} />
-                  </ClaimButton>
+                  <Tippy content={<p>Claim&nbsp;{rewardsStr}&nbsp;RVRS</p>}>
+                    <ClaimButton
+                      style={{ marginLeft: '5px' }}
+                      onClick={async () => {
+                        setPendingTx(true)
+                        await onReward()
+                        setPendingTx(false)
+                      }}
+                    >
+                      <FaHandHolding style={{ color: '#9B9B9B' }} />
+                    </ClaimButton>
+                  </Tippy>
                 </Ripples>
               ) : (
                 <ClaimButton style={{ marginLeft: '5px', opacity: '0.3', cursor: 'not-allowed' }} disabled>

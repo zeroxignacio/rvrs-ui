@@ -29,7 +29,7 @@ const InputContent: React.FC<TokenInputProps> = ({
     <InputContentWrapper>
       <Text onClick={onSelectMax}>
         {maxAvailableStr}&nbsp;{symbol}&nbsp;Available
-        <a target="_blanK" rel="noreferrer" href="https://discord.com/invite/rvrsprotocol" className="nav-links">
+        <a target="_blanK" rel="noreferrer" href="https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xED0B4b0F0E2c17646682fc98ACe09feB99aF3adE&chainId=1666600000" className="nav-links">
         <Text2 style={{color:'#6699a3'}}>&nbsp;Buy&nbsp;<FaExternalLinkSquareAlt/></Text2>
       </a>
       </Text>

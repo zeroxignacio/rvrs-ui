@@ -23,8 +23,10 @@ import ContentCard from 'components/layout/cards/ContentCard'
 import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import WithdrawModal from 'components/modals/withdrawModal'
 import Wrap from 'components/layout/containers/Wrap'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
-import { usePriceCakeBusd } from "../../state/hooks";
+import { usePriceCakeBusd } from '../../state/hooks'
 import StakeModal from '../../components/modals/stakeModal'
 
 interface PoolWithApy extends Pool {
@@ -40,8 +42,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const { sousId, stakingTokenName, stakingTokenAddress, apy, userData, pricePerShare, apr } = pool
 
   // rvrs
-  const rvrsBalance = getBalanceNumber(useTokenBalance(getCakeAddress()));
-  const rvrsBalanceStr = rvrsBalance.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const rvrsBalance = getBalanceNumber(useTokenBalance(getCakeAddress()))
+  const rvrsBalanceStr = rvrsBalance.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const rvrsPrice = usePriceCakeBusd()
   const stakingTokenContract = useERC20(stakingTokenAddress)
 
@@ -59,26 +61,41 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const isOldSyrup = stakingTokenName === QuoteToken.SYRUP
 
   // staked
-  const staked = new BigNumber(userData?.stakedBalance || 0);
-  const stakedUsdStr = new BigNumber(getBalanceNumber(staked)).times(rvrsPrice).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const stakedNo = getBalanceNumber(staked);
-  const stakedStr = stakedNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const staked = new BigNumber(userData?.stakedBalance || 0)
+  const stakedUsdStr = new BigNumber(getBalanceNumber(staked))
+    .times(rvrsPrice)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const stakedNo = getBalanceNumber(staked)
+  const stakedStr = stakedNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   // misc
-  const accountHasStakedBalance = staked?.toNumber() > 0;
-  const needsApproval = !accountHasStakedBalance && !allowance.toNumber();
+  const accountHasStakedBalance = staked?.toNumber() > 0
+  const needsApproval = !accountHasStakedBalance && !allowance.toNumber()
 
   // tvl
-  const tvlNo = pool.tvl && pool.tvl.toNumber();
-  const tvlStr = tvlNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 });
+  const tvlNo = pool.tvl && pool.tvl.toNumber()
+  const tvlStr = tvlNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
 
   // apy
-  const apyNo = apy && apy.toNumber();
-  const apyNull = apyNo < 5;
-  const apyStr = apy && apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const monthlyRoiStr = apr.div(12).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const roiYearStr = new BigNumber(apy).times(stakedNo).times(0.01).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-  const roiMonthStr = apr.div(12).times(stakedNo).times(0.01).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+  const apyNo = apy && apy.toNumber()
+  const apyNull = apyNo < 5
+  const apyStr = apy && apy.toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const monthlyRoiStr = apr
+    .div(12)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const roiYearStr = new BigNumber(apy)
+    .times(stakedNo)
+    .times(0.01)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const roiMonthStr = apr
+    .div(12)
+    .times(stakedNo)
+    .times(0.01)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   // approve, withdraw, deposit
   const [onPresentWithdraw] = useModal(
@@ -97,11 +114,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
     }
   }, [onApprove, setRequestedApproval])
   const [onPresentDeposit] = useModal(
-    <StakeModal
-      max={stakingTokenBalance}
-      onConfirm={onStake}
-      tokenName={stakingTokenName}
-    />,
+    <StakeModal max={stakingTokenBalance} onConfirm={onStake} tokenName={stakingTokenName} />,
   )
 
   return (
@@ -112,97 +125,107 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
             <TypographyTitle>RVRS Staking</TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
-            <ContentCard style={{ marginRight: '10px' }}>
-              {pool.apy ?
-                <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
-                :
-                <Skeleton marginBottom="5px" />
-              }
-              <Typography>Total Staked</Typography>
-            </ContentCard>
-            <ContentCard>
-              {pool.apy ?
-                <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
-                :
-                <Skeleton marginBottom="5px" />
-              }
-              <Typography>Annual Yield</Typography>
-            </ContentCard>
-            <ContentCard style={{ marginLeft: '10px' }}>
-              {pool.apy ?
-                <TypographyBold style={{ marginBottom: '5px' }}>{monthlyRoiStr}%</TypographyBold>
-                :
-                <Skeleton marginBottom="5px" />
-              }
-              <Typography>Monthly Yield</Typography>
-            </ContentCard>
+            <Tippy content="The USD value of all RVRS staked">
+              <ContentCard style={{ marginRight: '10px' }}>
+                {pool.apy ? (
+                  <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
+                ) : (
+                  <Skeleton marginBottom="5px" />
+                )}
+                <Typography>Total Staked</Typography>
+              </ContentCard>
+            </Tippy>
+            <Tippy content="The expected APY of staking RVRS">
+              <ContentCard>
+                {pool.apy ? (
+                  <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
+                ) : (
+                  <Skeleton marginBottom="5px" />
+                )}
+                <Typography>Annual Yield</Typography>
+              </ContentCard>
+            </Tippy>
+            <Tippy content="Annual Yield / 12">
+              <ContentCard style={{ marginLeft: '10px' }}>
+                {pool.apy ? (
+                  <TypographyBold style={{ marginBottom: '5px' }}>{monthlyRoiStr}%</TypographyBold>
+                ) : (
+                  <Skeleton marginBottom="5px" />
+                )}
+                <Typography>Monthly Yield</Typography>
+              </ContentCard>
+            </Tippy>
           </Flex>
           <Flex justifyContent="center" marginTop="0px">
-            <ContentCardAlt style={{ marginRight: '5px' }}>
-              <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight:'500' }}>+{roiYearStr} RVRS</TypographyBold>
-              <Typography>Expected Yearly Interest</Typography>
-            </ContentCardAlt>
-            <ContentCardAlt>
-              <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight:'500' }}>+{roiMonthStr} RVRS</TypographyBold>
-              <Typography>Expected Monthly Interest</Typography>
-            </ContentCardAlt>
+            <Tippy content="Your expected claimable balance after staking RVRS for a year">
+              <ContentCardAlt style={{ marginRight: '5px' }}>
+                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight: '500' }}>
+                  +{roiYearStr} RVRS
+                </TypographyBold>
+                <Typography>Expected Yearly Interest</Typography>
+              </ContentCardAlt>
+            </Tippy>
+            <Tippy content="Your expected claimable balance after staking RVRS for a month">
+              <ContentCardAlt>
+                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight: '500' }}>
+                  +{roiMonthStr} RVRS
+                </TypographyBold>
+                <Typography>Expected Monthly Interest</Typography>
+              </ContentCardAlt>
+            </Tippy>
           </Flex>
-          {needsApproval ?
+          {needsApproval ? (
             <Flex justifyContent="end" style={{ marginTop: '20px' }}>
               <Ripples>
-                <ActionButton
-                  onClick={handleApprove}>
-                  Enable Staking
-                </ActionButton>
+                <ActionButton onClick={handleApprove}>Enable Staking</ActionButton>
               </Ripples>
             </Flex>
-            :
+          ) : (
             <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
               <div>
-                <ContentCardAlt>
-                  <TypographyBold>{stakedStr}&nbsp;<Typography>RVRS Staked</Typography></TypographyBold>
-                </ContentCardAlt>
+                <Tippy content="Your current staked balance">
+                  <ContentCardAlt>
+                    <TypographyBold>
+                      {stakedStr}&nbsp;<Typography>RVRS Staked</Typography>
+                    </TypographyBold>
+                  </ContentCardAlt>
+                </Tippy>
               </div>
-              {stakedNo > 0 ?
+              {stakedNo > 0 ? (
                 <div style={{ justifyContent: 'space-between' }}>
                   <Ripples>
-                    <ActionButton
-                      style={{ marginRight: '10px' }}
-                      onClick={onPresentWithdraw}>
+                    <ActionButton style={{ marginRight: '10px' }} onClick={onPresentWithdraw}>
                       Unstake
                     </ActionButton>
                   </Ripples>
                   <Ripples>
-                    <ActionButton
-                      disabled={apyNull}
-                      onClick={onPresentDeposit}>
+                    <ActionButton disabled={apyNull} onClick={onPresentDeposit}>
                       Stake {rvrsBalanceStr} RVRS
                     </ActionButton>
                   </Ripples>
                 </div>
-                :
+              ) : (
                 <div>
-                  <ActionButton
-                    style={{ marginRight: '10px', opacity: '0.3', cursor:'not-allowed' }}
-                    disabled>
+                  <ActionButton style={{ marginRight: '10px', opacity: '0.3', cursor: 'not-allowed' }} disabled>
                     Unstake
                   </ActionButton>
                   <Ripples>
-                    <ActionButton
-                      disabled={apyNull}
-                      onClick={onPresentDeposit}>
+                    <ActionButton disabled={apyNull} onClick={onPresentDeposit}>
                       &nbsp;Stake&nbsp;
                     </ActionButton>
                   </Ripples>
                 </div>
-              }
+              )}
             </Flex>
-          }
+          )}
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography>Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the introduction of (ve)RVRS.</Typography>
+          <Typography>
+            Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the
+            introduction of (ve)RVRS.
+          </Typography>
         </LayoutContainer>
       </Wrap>
     </>
@@ -225,15 +248,14 @@ const ActionButton = styled.button`
   font-size: 16px;
   font-weight: 400;
   background: transparent;
-  color: #EEEEEE;
-  border-left: 5px solid #6699A3;
+  color: #eeeeee;
+  border-left: 5px solid #6699a3;
   padding: 10px;
   transition: 0.5s ease-in-out;
   :hover {
-      opacity: 0.5;
-      animation: ${pulse} 2s infinite;
-      background: transparent;
-  } 
+    opacity: 0.5;
+    background: transparent;
+  }
 `
 
 export default Card

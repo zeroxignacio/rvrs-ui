@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import Page from 'components/layout/containers/page'
 import { Flex } from '@reverse/uikit'
-import { useWallet } from "@binance-chain/bsc-use-wallet"
+import { useWallet } from '@binance-chain/bsc-use-wallet'
 import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
@@ -9,31 +9,34 @@ import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
-import { FaAward, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaAward } from 'react-icons/fa'
 import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import Wrap from 'components/layout/containers/Wrap'
 import TierCard from 'components/layout/cards/TierCard'
-import { getBalanceNumber } from "../../utils/formatBalance"
+import ReactTooltip from 'react-tooltip'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
+import { getBalanceNumber } from '../../utils/formatBalance'
 
 const Dashboard = () => {
   const { account } = useWallet()
 
   const between = (x: any, min: number, max: number): boolean => {
-    return x >= min && x <= max;
+    return x >= min && x <= max
   }
 
   const evaluateTier = (balance: number): number => {
-    if (between(balance, 100, 1000)) return 1;
-    if (between(balance, 1000, 5000)) return 2;
-    if (between(balance, 5000, 10000)) return 3;
-    if (balance > 10000) return 4;
-    return 0;
+    if (between(balance, 100, 1000)) return 1
+    if (between(balance, 1000, 5000)) return 2
+    if (between(balance, 5000, 10000)) return 3
+    if (balance > 10000) return 4
+    return 0
   }
 
   // wallet balance rvrs/vervrs
-  const rvrsBalanceNo = getBalanceNumber(useTokenBalance(getCakeAddress()));
+  const rvrsBalanceNo = getBalanceNumber(useTokenBalance(getCakeAddress()))
   const rvrsBalanceStr = rvrsBalanceNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   return (
@@ -46,44 +49,46 @@ const Dashboard = () => {
               {/* 
               <a href={`https://explorer.harmony.one/address/${account}`} className="nav-icon" onClick={() => navigator.clipboard.writeText(`${account}`)}>
                 <Typography>{account.substring(0, 16)}...&nbsp;<FaExternalLinkAlt /></Typography>
-              </a> */ }
+              </a> */}
             </TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center">
             <ContentCard style={{ marginRight: '5px' }}>
-            <Skeleton marginBottom="5px"/>
+              <Skeleton marginBottom="5px" />
               <Typography>veRVRS Balance</Typography>
             </ContentCard>
             <ContentCard style={{ marginRight: '5px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Current Tier</TypographyBold>
-              <Typography>Silver Reversor <FaAward /></Typography>
+              <Typography>
+                Silver Reversor <FaAward />
+              </Typography>
             </ContentCard>
             <ContentCard>
-            <Skeleton marginBottom="5px"/>
+              <Skeleton marginBottom="5px" />
               <Typography>RVRS Balance</Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginTop="5px">
             <ContentCard style={{ marginRight: '5px' }}>
-              <Skeleton marginBottom="5px"/>
+              <Skeleton marginBottom="5px" />
               <Typography>veRVRS Cap</Typography>
             </ContentCard>
-            <ContentCard style={{ marginRight: '5px' }} >
-            <Skeleton marginBottom="5px"/>
+            <ContentCard style={{ marginRight: '5px' }}>
+              <Skeleton marginBottom="5px" />
               <Typography>Portfolio Value</Typography>
             </ContentCard>
-            <ContentCard >
-            <Skeleton marginBottom="5px"/>
+            <ContentCard>
+              <Skeleton marginBottom="5px" />
               <Typography>Staked RVRS</Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginTop="5px">
             <ContentCard style={{ marginRight: '5px' }}>
-            <Skeleton marginBottom="5px"/>
+              <Skeleton marginBottom="5px" />
               <Typography>Expected Yearly Returns</Typography>
             </ContentCard>
             <ContentCard>
-            <Skeleton marginBottom="5px"/>
+              <Skeleton marginBottom="5px" />
               <Typography>Market Cap/Treasury Ratio</Typography>
             </ContentCard>
           </Flex>
@@ -99,33 +104,50 @@ const Dashboard = () => {
               </a>
             </ContentCard>
           </Flex>
-          */ }
+          */}
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
           <TitleCard style={{ padding: '20px', marginBottom: '5px', marginTop: '0px' }}>
-            <Typography>
-              Buybacks and Airdrops
-            </Typography>
+            <Typography>Buybacks and Airdrops</Typography>
           </TitleCard>
           <Flex justifyContent="center">
             <ContentCard style={{ textAlign: 'start', marginBottom: '5px' }}>
               <Typography>
-                At current rates (and in average), <TypographyBold>TBD&nbsp;</TypographyBold>RVRS
-                is bought by the treasury every week. This is equivalent to <TypographyBold>TBD&nbsp;</TypographyBold>
+                At current rates (and in average), <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the
+                treasury every week. This is equivalent to <TypographyBold>TBD&nbsp;</TypographyBold>
                 with RVRS at <TypographyBold>TBD</TypographyBold>.
               </Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center">
-            <ContentCard style={{textAlign: 'start'}}>
+            <ContentCard style={{ textAlign: 'start' }}>
               <Typography>
-                Airdrops can be claimed every monday. A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol participants.
-                Average airdrop size is <TypographyBold>TBD</TypographyBold>
+                Airdrops can be claimed every monday. A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was
+                distributed to protocol participants. Average airdrop size is <TypographyBold>TBD</TypographyBold>
               </Typography>
             </ContentCard>
           </Flex>
+        </LayoutContainer>
+      </Wrap>
+      <Wrap style={{ marginTop: '20px' }}>
+        <LayoutContainer style={{ padding: '5px' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              borderRadius: 5,
+              overflow: 'hidden',
+            }}
+          >
+            {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
+            <iframe
+              style={{ width: '540px', height: '400px' }}
+              src="https://dexscreener.com/harmony/0xCDe0A00302CF22B3Ac367201FBD114cEFA1729b4?embed=1&theme=dark&trades=0&info=0"
+            >
+              &nbsp;
+            </iframe>
+          </div>
         </LayoutContainer>
       </Wrap>
     </Page>
@@ -135,12 +157,12 @@ const Dashboard = () => {
 const LinkTypography = styled.p`
   transition: all 0.3s ease-in-out;
   font-size: 16px;
-  color: #CFCFCF;
+  color: #cfcfcf;
   font-weight: 500;
   :hover {
-    color: #FFFF !important;
+    color: #ffff !important;
     font-weight: 500;
-  } 
+  }
 `
 
 const ContentCard = styled(Container)`

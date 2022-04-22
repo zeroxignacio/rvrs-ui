@@ -28,7 +28,7 @@ const MenuBottom = (props) => {
               <TypographyBold>Twitter</TypographyBold>
             </a>
             ∙
-            <a target="_blanK" rel="noreferrer" href="https://paladinsec.co/assets/audits/20211110_Paladin_Artemis_Final_Report.pdf" className="nav-links">
+            <a target="_blanK" rel="noreferrer" href="https://paladinsec.co/projects/reverse-protocol" className="nav-links">
               <TypographyBold>Audit</TypographyBold>
             </a>
             ∙
