@@ -17,10 +17,11 @@ import Wrap from 'components/layout/containers/Wrap'
 import TierCard from 'components/layout/cards/TierCard'
 import ReactTooltip from 'react-tooltip'
 import Tippy from '@tippyjs/react'
+import Card from 'pages/Staking'
 import 'tippy.js/dist/tippy.css'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
-const Landing = () => {
+const Dashboard = () => {
   const { account } = useWallet()
 
   const between = (x: any, min: number, max: number): boolean => {
@@ -35,6 +36,7 @@ const Landing = () => {
     return 0
   }
 
+  
   // wallet balance rvrs/vervrs
   const rvrsBalanceNo = getBalanceNumber(useTokenBalance(getCakeAddress()))
   const rvrsBalanceStr = rvrsBalanceNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
@@ -59,7 +61,7 @@ const Landing = () => {
           <Flex justifyContent="center">
             <Tippy content="Current veRVRS balance">
               <ContentCard style={{ marginRight: '8px' }}>
-                <Skeleton marginBottom="5px" />
+                <TypographyBold style={{ marginBottom: '5px' }}>0.00</TypographyBold>
                 <Typography>veRVRS Balance</Typography>
               </ContentCard>
             </Tippy>
@@ -73,7 +75,7 @@ const Landing = () => {
             </Tippy>
             <Tippy content="Current RVRS balance">
               <ContentCard>
-                <Skeleton marginBottom="5px" />
+                <TypographyBold style={{ marginBottom: '5px' }}>{rvrsBalanceStr}</TypographyBold>
                 <Typography>RVRS Balance</Typography>
               </ContentCard>
             </Tippy>
@@ -81,7 +83,7 @@ const Landing = () => {
           <Flex justifyContent="center" marginTop="8px">
             <Tippy content="Your current veRVRS cap. To increase it, stake RVRS for veRVRS">
               <ContentCard style={{ marginRight: '8px' }}>
-                <Skeleton marginBottom="5px" />
+                <TypographyBold style={{ marginBottom: '5px' }}>0.00</TypographyBold>
                 <Typography>veRVRS Cap</Typography>
               </ContentCard>
             </Tippy>
@@ -101,7 +103,7 @@ const Landing = () => {
           <Flex justifyContent="center" marginTop="8px">
             <Tippy content="Your current yield boost based on veRVRS balance">
               <ContentCard style={{ marginRight: '8px' }}>
-                <Skeleton marginBottom="5px" />
+                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+0.00%</TypographyBold>
                 <Typography>veRVRS Boost</Typography>
               </ContentCard>
             </Tippy>
@@ -113,8 +115,8 @@ const Landing = () => {
             </Tippy>
           </Flex>
           <Flex justifyContent="center">
-            <TitleCard style={{ textAlign: 'start', marginBottom: '0px', marginTop: '8px', padding:'10px' }}>
-              <Typography style={{lineHeight:'1.1'}}>
+            <TitleCard style={{ textAlign: 'start', marginBottom: '0px', marginTop: '8px', padding: '10px' }}>
+              <Typography style={{ lineHeight: '1.1' }}>
                 At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the treasury every week. A
                 total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol participants with an
                 average airdrop size of <TypographyBold>TBD</TypographyBold>.
@@ -175,4 +177,4 @@ const ContentCard = styled(Container)`
   border-style: solid;
 `
 
-export default Landing
+export default Dashboard

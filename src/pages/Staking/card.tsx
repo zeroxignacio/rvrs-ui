@@ -41,6 +41,8 @@ interface HarvestProps {
   pool: PoolWithApy
 }
 
+
+
 const Card: React.FC<HarvestProps> = ({ pool }) => {
   const { sousId, stakingTokenName, stakingTokenAddress, apy, userData, pricePerShare, apr } = pool
 
@@ -65,12 +67,16 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   // staked
   const staked = new BigNumber(userData?.stakedBalance || 0)
+
   const stakedUsdStr = new BigNumber(getBalanceNumber(staked))
     .times(rvrsPrice)
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const stakedNo = getBalanceNumber(staked)
   const stakedStr = stakedNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+
+
+
 
   // misc
   const accountHasStakedBalance = staked?.toNumber() > 0
@@ -306,4 +312,5 @@ const ActionButton = styled.button`
   }
 `
 
-export default Card
+// eslint-disable-next-line import/prefer-default-export
+export { Card }
