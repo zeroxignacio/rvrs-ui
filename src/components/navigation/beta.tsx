@@ -12,7 +12,7 @@ const MenuBottom = (props) => {
       <NavContainer>
         <Flex justifyContent="center" marginTop="0px">
           <Flex alignItems="center" >
-            <TypographyBold>This website is in beta, please use at your own risk</TypographyBold>
+            <TypographyBold>This website is in beta (v1.0), please use at your own risk</TypographyBold>
           </Flex>
         </Flex>
       </NavContainer>
