@@ -28,6 +28,7 @@
     "@binance-chain/bsc-use-wallet": "^0.8.1",
     "@crowdin/crowdin-api-client": "^1.10.1",
     "@ethersproject/abi": "^5.0.7",
+    "@ramp-network/ramp-instant-sdk": "^3.1.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@reverse/uikit": "https://github.com/0xIgnacio/reverse-uikit#c88d80ccf53a713accf20bbc003643aeee32ca4a",
     "@tippyjs/react": "^4.2.6",

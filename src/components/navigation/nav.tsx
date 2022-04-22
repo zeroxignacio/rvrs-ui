@@ -16,7 +16,7 @@ const Nav = (props) => {
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: '20px' }}>
-          <NavButton2 style={{marginLeft:'30px'}}>
+          <NavButton2 style={{marginLeft:'0px'}}>
             veRVRS
           </NavButton2>
         <Ripples>
