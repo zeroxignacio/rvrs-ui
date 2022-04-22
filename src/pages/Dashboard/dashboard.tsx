@@ -107,7 +107,7 @@ const Dashboard = () => {
           <Flex justifyContent="center" marginTop="8px">
             <Tippy content="Current RVRS price">
               <ContentCard style={{ marginRight: '8px' }}>
-                <TypographyBold style={{ marginBottom: '5px' }}>{rvrsPriceStr}</TypographyBold>
+                <TypographyBold style={{ marginBottom: '5px' }}>${rvrsPriceStr}</TypographyBold>
                 <Typography>Price</Typography>
               </ContentCard>
             </Tippy>
