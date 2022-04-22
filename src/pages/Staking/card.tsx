@@ -23,6 +23,7 @@ import ContentCard from 'components/layout/cards/ContentCard'
 import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import WithdrawModal from 'components/modals/withdrawModal'
 import Wrap from 'components/layout/containers/Wrap'
+import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
@@ -116,7 +117,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const [onPresentDeposit] = useModal(
     <StakeModal max={stakingTokenBalance} onConfirm={onStake} tokenName={stakingTokenName} />,
   )
-
+  
   return (
     <>
       <Wrap>
@@ -222,7 +223,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography>
+          <Typography style={{lineHeight:'1.1'}}>
             Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the
             introduction of (ve)RVRS.
           </Typography>

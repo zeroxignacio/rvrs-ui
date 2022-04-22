@@ -81,7 +81,7 @@ const Bond: React.FC = () => {
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '15px' }}>
           <Flex>
-            <Typography>
+            <Typography style={{lineHeight:'1.1'}}>
               Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand
               its yields. Bonds &apos;Sell Out&apos; when vROI goes below 5.00% and a Net Return is calculated. Both
               vROI and Return depend on the price of RVRS.

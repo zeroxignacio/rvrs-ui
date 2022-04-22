@@ -20,7 +20,7 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
-const Dashboard = () => {
+const Landing = () => {
   const { account } = useWallet()
 
   const between = (x: any, min: number, max: number): boolean => {
@@ -43,91 +43,83 @@ const Dashboard = () => {
     <Page>
       <Wrap>
         <LayoutContainer>
-          <TitleCard style={{ padding: '20px', marginBottom: '5px' }}>
+          <TitleCard style={{ padding: '20px', marginBottom: '8px' }}>
             <TypographyTitle>
-              <div>Dashboard</div>
-              {/* 
-              <a href={`https://explorer.harmony.one/address/${account}`} className="nav-icon" onClick={() => navigator.clipboard.writeText(`${account}`)}>
-                <Typography>{account.substring(0, 16)}...&nbsp;<FaExternalLinkAlt /></Typography>
-              </a> */}
+              <div>Dashboard</div>&nbsp;
+              <a
+                href={`https://explorer.harmony.one/address/${account}`}
+                className="nav-icon"
+                onClick={() => navigator.clipboard.writeText(`${account}`)}
+              >
+                <Typography>{account.substring(0, 16)}...&nbsp;</Typography>
+              </a>
             </TypographyTitle>
           </TitleCard>
+
           <Flex justifyContent="center">
-            <ContentCard style={{ marginRight: '5px' }}>
-              <Skeleton marginBottom="5px" />
-              <Typography>veRVRS Balance</Typography>
-            </ContentCard>
-            <ContentCard style={{ marginRight: '5px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Current Tier</TypographyBold>
-              <Typography>
-                Silver Reversor <FaAward />
-              </Typography>
-            </ContentCard>
-            <ContentCard>
-              <Skeleton marginBottom="5px" />
-              <Typography>RVRS Balance</Typography>
-            </ContentCard>
+            <Tippy content="Current veRVRS balance">
+              <ContentCard style={{ marginRight: '8px' }}>
+                <Skeleton marginBottom="5px" />
+                <Typography>veRVRS Balance</Typography>
+              </ContentCard>
+            </Tippy>
+            <Tippy content="Your Reversor tier (more information to be disclosed on the topic)">
+              <ContentCard style={{ marginRight: '8px' }}>
+                <TypographyBold style={{ marginBottom: '5px' }}>Current Tier</TypographyBold>
+                <Typography>
+                  Silver Reversor <FaAward />
+                </Typography>
+              </ContentCard>
+            </Tippy>
+            <Tippy content="Current RVRS balance">
+              <ContentCard>
+                <Skeleton marginBottom="5px" />
+                <Typography>RVRS Balance</Typography>
+              </ContentCard>
+            </Tippy>
           </Flex>
-          <Flex justifyContent="center" marginTop="5px">
-            <ContentCard style={{ marginRight: '5px' }}>
-              <Skeleton marginBottom="5px" />
-              <Typography>veRVRS Cap</Typography>
-            </ContentCard>
-            <ContentCard style={{ marginRight: '5px' }}>
-              <Skeleton marginBottom="5px" />
-              <Typography>Portfolio Value</Typography>
-            </ContentCard>
-            <ContentCard>
-              <Skeleton marginBottom="5px" />
-              <Typography>Staked RVRS</Typography>
-            </ContentCard>
+          <Flex justifyContent="center" marginTop="8px">
+            <Tippy content="Your current veRVRS cap. To increase it, stake RVRS for veRVRS">
+              <ContentCard style={{ marginRight: '8px' }}>
+                <Skeleton marginBottom="5px" />
+                <Typography>veRVRS Cap</Typography>
+              </ContentCard>
+            </Tippy>
+            <Tippy content="Your RVRS portfolio value">
+              <ContentCard style={{ marginRight: '8px' }}>
+                <Skeleton marginBottom="5px" />
+                <Typography>Portfolio Value</Typography>
+              </ContentCard>
+            </Tippy>
+            <Tippy content="Current amount of RVRS staked for veRVRS">
+              <ContentCard>
+                <Skeleton marginBottom="5px" />
+                <Typography>Staked RVRS</Typography>
+              </ContentCard>
+            </Tippy>
           </Flex>
-          <Flex justifyContent="center" marginTop="5px">
-            <ContentCard style={{ marginRight: '5px' }}>
-              <Skeleton marginBottom="5px" />
-              <Typography>Expected Yearly Returns</Typography>
-            </ContentCard>
-            <ContentCard>
-              <Skeleton marginBottom="5px" />
-              <Typography>Market Cap/Treasury Ratio</Typography>
-            </ContentCard>
-          </Flex>
-          {/*
-          <Flex justifyContent="center" marginTop="5px">
-            <ContentCard>
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-              <a
-                href="https://docs.google.com/spreadsheets/d/1fNsmVWqtPrtZr7z4i2n1ZgRNAEZdX3coPzMbZNPCZ34/edit#gid=1364928066"
-                className="nav-icon"
-              >
-                <LinkTypography>Reverseum Treasury&nbsp;<FaExternalLinkAlt /></LinkTypography>
-              </a>
-            </ContentCard>
-          </Flex>
-          */}
-        </LayoutContainer>
-      </Wrap>
-      <Wrap style={{ marginTop: '20px' }}>
-        <LayoutContainer>
-          <TitleCard style={{ padding: '20px', marginBottom: '5px', marginTop: '0px' }}>
-            <Typography>Buybacks and Airdrops</Typography>
-          </TitleCard>
-          <Flex justifyContent="center">
-            <ContentCard style={{ textAlign: 'start', marginBottom: '5px' }}>
-              <Typography>
-                At current rates (and in average), <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the
-                treasury every week. This is equivalent to <TypographyBold>TBD&nbsp;</TypographyBold>
-                with RVRS at <TypographyBold>TBD</TypographyBold>.
-              </Typography>
-            </ContentCard>
+          <Flex justifyContent="center" marginTop="8px">
+            <Tippy content="Your current yield boost based on veRVRS balance">
+              <ContentCard style={{ marginRight: '8px' }}>
+                <Skeleton marginBottom="5px" />
+                <Typography>veRVRS Boost</Typography>
+              </ContentCard>
+            </Tippy>
+            <Tippy content="The treasury portion you are acquiring by buying $1 worth of RVRS">
+              <ContentCard>
+                <Skeleton marginBottom="5px" />
+                <Typography>Market Cap/Treasury Ratio</Typography>
+              </ContentCard>
+            </Tippy>
           </Flex>
           <Flex justifyContent="center">
-            <ContentCard style={{ textAlign: 'start' }}>
-              <Typography>
-                Airdrops can be claimed every monday. A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was
-                distributed to protocol participants. Average airdrop size is <TypographyBold>TBD</TypographyBold>
+            <TitleCard style={{ textAlign: 'start', marginBottom: '0px', marginTop: '8px', padding:'10px' }}>
+              <Typography style={{lineHeight:'1.1'}}>
+                At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the treasury every week. A
+                total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol participants with an
+                average airdrop size of <TypographyBold>TBD</TypographyBold>.
               </Typography>
-            </ContentCard>
+            </TitleCard>
           </Flex>
         </LayoutContainer>
       </Wrap>
@@ -142,37 +134,45 @@ const Dashboard = () => {
           >
             {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
-              style={{ width: '540px', height: '400px' }}
-              src="https://dexscreener.com/harmony/0xCDe0A00302CF22B3Ac367201FBD114cEFA1729b4?embed=1&theme=dark&trades=0&info=0"
+              style={{ width: '590px', height: '400px' }}
+              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS44_dnMXBvCVYrTCEaQ1egJS2SAePHobU4aHI01iX6InYDjdIaSuW83NrZMJbGR976nCN45cK9QXbC/pubhtml?widget=true&amp;headers=false"
             >
               &nbsp;
             </iframe>
           </div>
         </LayoutContainer>
       </Wrap>
+      {/*
+      <Wrap style={{ marginTop: '20px' }}>
+        <LayoutContainer style={{ padding: '5px' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              borderRadius: 5,
+              overflow: 'hidden',
+            }}
+          >
+            <iframe title='s'
+              style={{ width: '590px', height: '300px' }}
+              src="https://dexscreener.com/harmony/0xCDe0A00302CF22B3Ac367201FBD114cEFA1729b4?embed=1&theme=dark&trades=0&info=0"
+            >
+              &nbsp;
+            </iframe>
+          </div>
+        </LayoutContainer>
+      </Wrap> */}
     </Page>
   )
 }
 
-const LinkTypography = styled.p`
-  transition: all 0.3s ease-in-out;
-  font-size: 16px;
-  color: #cfcfcf;
-  font-weight: 500;
-  :hover {
-    color: #ffff !important;
-    font-weight: 500;
-  }
-`
-
 const ContentCard = styled(Container)`
   text-align: center;
   border-radius: 0px;
-  background: #161616;
+  background: #191919;
   padding: 10px;
   border-width: 0px;
   border-color: #313131;
   border-style: solid;
 `
 
-export default Dashboard
+export default Landing

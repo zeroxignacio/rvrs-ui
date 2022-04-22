@@ -125,7 +125,7 @@ const Airdrop = () => {
         <Wrap style={{ marginTop: '20px' }}>
           <LayoutContainer style={{ padding: '15px' }}>
             <Flex justifyContent="center">
-              <Typography>
+              <Typography style={{lineHeight:'1.1'}}>
                 Yield earned through the Reverseum Treasury positions is converted to UST and distributed to veRVRS and
                 RVRS holders every monday.
               </Typography>
