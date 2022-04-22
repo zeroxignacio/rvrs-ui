@@ -38,7 +38,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
   const notifySuccess = () =>
     toast.success('Success!', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -50,7 +50,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
   const notifyPending = () =>
     toast.info('Confirm transaction...', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -82,7 +82,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
         >
           <ToastContainer
             position="top-left"
-            autoClose={5000}
+            autoClose={10000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

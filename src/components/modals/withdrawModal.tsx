@@ -50,7 +50,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const notifySuccess = () =>
     toast.success('Success!', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -62,7 +62,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const notifyPending = () =>
     toast.info('Confirm transaction...', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -91,9 +91,9 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
             onDismiss()
           }}
         >
-                    <ToastContainer
+          <ToastContainer
             position="top-left"
-            autoClose={5000}
+            autoClose={10000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

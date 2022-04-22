@@ -123,7 +123,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const notifySuccess = () =>
     toast.success('Success!', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -135,7 +135,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const notifyPending = () =>
     toast.info('Confirm transaction...', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -215,7 +215,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 >
                   <ToastContainer
                     position="top-left"
-                    autoClose={5000}
+                    autoClose={10000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick
@@ -247,7 +247,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                     </ActionButton>
                   </Ripples>
                   <Ripples>
-                    <ActionButton disabled={apyNull} onClick={onPresentDeposit }>
+                    <ActionButton disabled={apyNull} onClick={onPresentDeposit}>
                       Stake {rvrsBalanceStr} RVRS
                     </ActionButton>
                   </Ripples>

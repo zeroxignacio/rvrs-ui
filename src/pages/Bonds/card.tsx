@@ -151,7 +151,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const notifySuccess = () =>
     toast.success('Success!', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -163,7 +163,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   const notifyPending = () =>
     toast.info('Confirm transaction...', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -295,7 +295,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                         >
                           <ToastContainer
                             position="top-left"
-                            autoClose={5000}
+                            autoClose={10000}
                             hideProgressBar={false}
                             newestOnTop={false}
                             closeOnClick
@@ -334,7 +334,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                     >
                       <ToastContainer
                         position="top-left"
-                        autoClose={5000}
+                        autoClose={10000}
                         hideProgressBar={false}
                         newestOnTop={false}
                         closeOnClick

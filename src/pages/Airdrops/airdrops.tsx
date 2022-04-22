@@ -57,7 +57,7 @@ const Airdrop = () => {
   const notiftSuccess = () =>
     toast.success('Success!', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -69,7 +69,7 @@ const Airdrop = () => {
   const notiftPending = () =>
     toast.info('Confirm transaction...', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -140,7 +140,7 @@ const Airdrop = () => {
                   >
                     <ToastContainer
                       position="top-left"
-                      autoClose={5000}
+                      autoClose={10000}
                       hideProgressBar={false}
                       newestOnTop={false}
                       closeOnClick

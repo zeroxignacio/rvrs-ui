@@ -37,7 +37,7 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, to
   const notifySuccess = () =>
     toast.success('Success!', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -49,7 +49,7 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, to
   const notifyPending = () =>
     toast.info('Confirm transaction...', {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -57,19 +57,6 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, to
       progress: undefined,
       theme: 'dark',
     })
-
-    const notifyPendingTx = () =>
-    toast.info('Pending...', {
-      position: 'top-left',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-
 
   return (
     <Modal title={`${TranslateString(3016, 'Stake')} ${tokenName}`} onDismiss={onDismiss}>
@@ -93,7 +80,7 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, to
         >
           <ToastContainer
             position="top-left"
-            autoClose={5000}
+            autoClose={10000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
