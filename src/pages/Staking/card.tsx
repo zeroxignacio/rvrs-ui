@@ -254,7 +254,6 @@ const ActionButton = styled.button`
   transition: 0.5s ease-in-out;
   :hover {
     opacity: 0.5;
-    animation: ${pulse} 2s infinite;
     background: transparent;
   }
 `
