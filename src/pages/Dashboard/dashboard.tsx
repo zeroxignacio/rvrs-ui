@@ -20,7 +20,7 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
-const Dashboard = () => {
+const Landing = () => {
   const { account } = useWallet()
 
   const between = (x: any, min: number, max: number): boolean => {
@@ -114,7 +114,7 @@ const Dashboard = () => {
           </Flex>
           <Flex justifyContent="center">
             <TitleCard style={{ textAlign: 'start', marginBottom: '0px', marginTop: '8px', padding:'10px' }}>
-              <Typography>
+              <Typography style={{lineHeight:'1.1'}}>
                 At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the treasury every week. A
                 total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol participants with an
                 average airdrop size of <TypographyBold>TBD</TypographyBold>.
@@ -175,4 +175,4 @@ const ContentCard = styled(Container)`
   border-style: solid;
 `
 
-export default Dashboard
+export default Landing

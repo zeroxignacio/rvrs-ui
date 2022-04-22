@@ -222,7 +222,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography>
+          <Typography style={{lineHeight:'1.1'}}>
             Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the
             introduction of (ve)RVRS.
           </Typography>

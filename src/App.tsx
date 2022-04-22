@@ -18,9 +18,9 @@ BigNumber.config({
 const BONDS = lazy(() => import('./pages/Bonds'))
 const STAKEDEPRECATED = lazy(() => import('./pages/Staking'))
 const NOTCONNECTED = lazy(() => import('./pages/NotConnected'))
-const COMINGSOON = lazy(() => import('./pages/ComingSoon'))
 const DASHBOARD = lazy(() => import('./pages/Dashboard'))
 const AIRDROP = lazy(() => import('./pages/Airdrops'))
+const LANDING = lazy(() => import('./pages/Landing'))
 
 
 const App: React.FC = () => {
@@ -42,7 +42,7 @@ const App: React.FC = () => {
         <Suspense fallback>
           <Switch>
             <Route path="/" exact>
-              <DASHBOARD />
+              <LANDING />
             </Route>
             <Route path="/bonds">
               <BONDS />
@@ -55,9 +55,6 @@ const App: React.FC = () => {
             </Route>
             <Route path="/airdrop">
               <AIRDROP />
-            </Route>
-            <Route path="/upcoming">
-              <COMINGSOON />
             </Route>
             </Switch>
         </Suspense>
