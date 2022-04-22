@@ -52,6 +52,7 @@ const Dashboard = () => {
               </a> */}
             </TypographyTitle>
           </TitleCard>
+
           <Flex justifyContent="center">
             <ContentCard style={{ marginRight: '5px' }}>
               <Skeleton marginBottom="5px" />
@@ -92,6 +93,24 @@ const Dashboard = () => {
               <Typography>Market Cap/Treasury Ratio</Typography>
             </ContentCard>
           </Flex>
+          <Flex justifyContent="center">
+            <ContentCard style={{ textAlign: 'start', marginBottom: '5px', marginTop: '10px' }}>
+              <Typography>
+                At current rates (and in average), <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the
+                treasury every week. This is equivalent to <TypographyBold>TBD&nbsp;</TypographyBold>
+                with RVRS at <TypographyBold>TBD</TypographyBold>. 
+              </Typography>
+            </ContentCard>
+          </Flex>
+          <Flex justifyContent="center">
+            <ContentCard style={{ textAlign: 'start' }}>
+              <Typography>
+                A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was
+                distributed to protocol participants with an average airdrop size is <TypographyBold>TBD</TypographyBold>
+              </Typography>
+            </ContentCard>
+          </Flex>
+
           {/*
           <Flex justifyContent="center" marginTop="5px">
             <ContentCard>
@@ -108,29 +127,26 @@ const Dashboard = () => {
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
-        <LayoutContainer>
-          <TitleCard style={{ padding: '20px', marginBottom: '5px', marginTop: '0px' }}>
-            <Typography>Buybacks and Airdrops</Typography>
-          </TitleCard>
-          <Flex justifyContent="center">
-            <ContentCard style={{ textAlign: 'start', marginBottom: '5px' }}>
-              <Typography>
-                At current rates (and in average), <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the
-                treasury every week. This is equivalent to <TypographyBold>TBD&nbsp;</TypographyBold>
-                with RVRS at <TypographyBold>TBD</TypographyBold>.
-              </Typography>
-            </ContentCard>
-          </Flex>
-          <Flex justifyContent="center">
-            <ContentCard style={{ textAlign: 'start' }}>
-              <Typography>
-                Airdrops can be claimed every monday. A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was
-                distributed to protocol participants. Average airdrop size is <TypographyBold>TBD</TypographyBold>
-              </Typography>
-            </ContentCard>
-          </Flex>
+        <LayoutContainer style={{ padding: '5px' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              borderRadius: 5,
+              overflow: 'hidden',
+            }}
+          >
+            {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
+            <iframe
+              style={{ width: '590px', height: '400px' }}
+              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS44_dnMXBvCVYrTCEaQ1egJS2SAePHobU4aHI01iX6InYDjdIaSuW83NrZMJbGR976nCN45cK9QXbC/pubhtml?widget=true&amp;headers=false"
+            >
+              &nbsp;
+            </iframe>
+            
+          </div>
         </LayoutContainer>
       </Wrap>
+
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '5px' }}>
           <div
@@ -142,7 +158,7 @@ const Dashboard = () => {
           >
             {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
-              style={{ width: '540px', height: '400px' }}
+              style={{ width: '590px', height: '300px' }}
               src="https://dexscreener.com/harmony/0xCDe0A00302CF22B3Ac367201FBD114cEFA1729b4?embed=1&theme=dark&trades=0&info=0"
             >
               &nbsp;
