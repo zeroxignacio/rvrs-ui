@@ -40,16 +40,15 @@ const Dashboard = () => {
   const rvrsBalanceStr = rvrsBalanceNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   return (
-    <Page>
+    <Page> 
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ padding: '20px', marginBottom: '5px' }}>
             <TypographyTitle>
-              <div>Dashboard</div>
-              {/* 
+              <div>Dashboard</div>&nbsp;
               <a href={`https://explorer.harmony.one/address/${account}`} className="nav-icon" onClick={() => navigator.clipboard.writeText(`${account}`)}>
-                <Typography>{account.substring(0, 16)}...&nbsp;<FaExternalLinkAlt /></Typography>
-              </a> */}
+                <Typography>{account.substring(0, 16)}...&nbsp;</Typography>
+              </a> 
             </TypographyTitle>
           </TitleCard>
 
@@ -96,34 +95,12 @@ const Dashboard = () => {
           <Flex justifyContent="center">
             <ContentCard style={{ textAlign: 'start', marginBottom: '5px', marginTop: '10px' }}>
               <Typography>
-                At current rates (and in average), <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the
-                treasury every week. This is equivalent to <TypographyBold>TBD&nbsp;</TypographyBold>
-                with RVRS at <TypographyBold>TBD</TypographyBold>. 
-              </Typography>
-            </ContentCard>
-          </Flex>
-          <Flex justifyContent="center">
-            <ContentCard style={{ textAlign: 'start' }}>
-              <Typography>
-                A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was
+                At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the
+                treasury every week.  A total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was
                 distributed to protocol participants with an average airdrop size is <TypographyBold>TBD</TypographyBold>
               </Typography>
             </ContentCard>
           </Flex>
-
-          {/*
-          <Flex justifyContent="center" marginTop="5px">
-            <ContentCard>
-              <TypographyBold style={{ marginBottom: '5px' }}><Skeleton /></TypographyBold>
-              <a
-                href="https://docs.google.com/spreadsheets/d/1fNsmVWqtPrtZr7z4i2n1ZgRNAEZdX3coPzMbZNPCZ34/edit#gid=1364928066"
-                className="nav-icon"
-              >
-                <LinkTypography>Reverseum Treasury&nbsp;<FaExternalLinkAlt /></LinkTypography>
-              </a>
-            </ContentCard>
-          </Flex>
-          */}
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
@@ -146,7 +123,7 @@ const Dashboard = () => {
           </div>
         </LayoutContainer>
       </Wrap>
-
+{/*
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '5px' }}>
           <div
@@ -156,8 +133,7 @@ const Dashboard = () => {
               overflow: 'hidden',
             }}
           >
-            {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
-            <iframe
+            <iframe title='s'
               style={{ width: '590px', height: '300px' }}
               src="https://dexscreener.com/harmony/0xCDe0A00302CF22B3Ac367201FBD114cEFA1729b4?embed=1&theme=dark&trades=0&info=0"
             >
@@ -165,7 +141,7 @@ const Dashboard = () => {
             </iframe>
           </div>
         </LayoutContainer>
-      </Wrap>
+      </Wrap> */}
     </Page>
   )
 }
