@@ -99,17 +99,17 @@ const Airdrop = () => {
                   <Typography>Total Distributed</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Expected UST returns based on your historical performance">
+              <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop.">
                 <ContentCard>
                   {expectedReturnsNo > 1 ? (
-                    <TypographyBold style={{ marginBottom: '5px' }}>{expectedReturnsStr} UST</TypographyBold>
+                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{expectedReturnsStr} UST</TypographyBold>
                   ) : (
-                    <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
+                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+ TBD</TypographyBold>
                   )}
                   <Typography>Yearly Returns</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday">
+              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated every time you claim an airdrop.">
                 <ContentCard style={{ marginLeft: '10px' }}>
                   <div>
                     <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
@@ -175,12 +175,14 @@ const Airdrop = () => {
   )
 }
 
+
 const Wrap = styled(Container)`
-  border-radius: 5px;
+  border-radius: 7px;
   padding: 2px;
   border-width: 1px;
   border-color: #313131;
   border-style: solid;
-`
+  box-shadow: 5px 5px 28px -20px #55747d;
+  `
 
 export default Airdrop

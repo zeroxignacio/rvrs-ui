@@ -152,7 +152,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
             <TypographyTitle>RVRS Staking</TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
-            <Tippy content="The USD value of all RVRS staked">
+            <Tippy content="The USD value of all RVRS staked in the protocol">
               <ContentCard style={{ marginRight: '10px' }}>
                 {pool.apy ? (
                   <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
@@ -162,7 +162,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <Typography>Total Staked</Typography>
               </ContentCard>
             </Tippy>
-            <Tippy content="The expected APY of staking RVRS">
+            <Tippy content="The expected percentage yield (compound interest) of staking RVRS for a year">
               <ContentCard>
                 {pool.apy ? (
                   <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
@@ -172,7 +172,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <Typography>Annual Yield</Typography>
               </ContentCard>
             </Tippy>
-            <Tippy content="Annual Yield / 12">
+            <Tippy content="The monthly (non-compounded) percentage yield of staking RVRS">
               <ContentCard style={{ marginLeft: '10px' }}>
                 {pool.apy ? (
                   <TypographyBold style={{ marginBottom: '5px' }}>{monthlyRoiStr}%</TypographyBold>
@@ -184,7 +184,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
             </Tippy>
           </Flex>
           <Flex justifyContent="center" marginTop="0px">
-            <Tippy content="Your expected claimable balance after staking RVRS for a year">
+            <Tippy content="Your expected RVRS interest after staking for a year based on current rates">
               <ContentCardAlt style={{ marginRight: '5px' }}>
                 <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight: '500' }}>
                   +{roiYearStr} RVRS
@@ -192,7 +192,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <Typography>Expected Yearly Interest</Typography>
               </ContentCardAlt>
             </Tippy>
-            <Tippy content="Your expected claimable balance after staking RVRS for a month">
+            <Tippy content="Your expected RVRS interest after staking for a month based on current rates">
               <ContentCardAlt>
                 <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight: '500' }}>
                   +{roiMonthStr} RVRS

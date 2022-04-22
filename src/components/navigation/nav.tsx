@@ -86,6 +86,7 @@ const Nav = (props) => {
               </ChainButton>
             </div>
             <WalletButton
+              style={{background:'white', color:'black'}}
               as={WalletNavLink}
               to="/dashboard"
               isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/dashboard')}
@@ -119,7 +120,7 @@ const WalletButton = styled.div`
   padding: 10px;
   transition: 0.3s ease-in-out;
   &:hover {
-    box-shadow: 20px 0px 40px -20px #55747d;
+    box-shadow: 10px 0px 30px -5px #55747d;
     border-color: #ffff !important;
     transform: translate(-2px);
   }
