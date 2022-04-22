@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
@@ -68,15 +70,13 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   // staked
   const staked = new BigNumber(userData?.stakedBalance || 0)
 
+
   const stakedUsdStr = new BigNumber(getBalanceNumber(staked))
     .times(rvrsPrice)
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const stakedNo = getBalanceNumber(staked)
   const stakedStr = stakedNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-
-
-
 
   // misc
   const accountHasStakedBalance = staked?.toNumber() > 0

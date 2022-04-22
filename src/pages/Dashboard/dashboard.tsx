@@ -1,4 +1,6 @@
+
 import React, { useCallback, useState } from 'react'
+import BigNumber from 'bignumber.js'
 import Page from 'components/layout/containers/page'
 import { Flex } from '@reverse/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
@@ -7,7 +9,7 @@ import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
 import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
-import useTokenBalance from 'hooks/useTokenBalance'
+import useTokenBalance, { useBurnedBalance, useTotalSupply } from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
 import { FaAward } from 'react-icons/fa'
 import { Container } from 'react-bootstrap'
@@ -17,8 +19,8 @@ import Wrap from 'components/layout/containers/Wrap'
 import TierCard from 'components/layout/cards/TierCard'
 import ReactTooltip from 'react-tooltip'
 import Tippy from '@tippyjs/react'
-import Card from 'pages/Staking'
 import 'tippy.js/dist/tippy.css'
+import { usePriceCakeBusd } from 'state/hooks'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
 const Dashboard = () => {
@@ -36,7 +38,13 @@ const Dashboard = () => {
     return 0
   }
 
-  
+  const totalSupply = new BigNumber(useTotalSupply())
+  const rvrsPrice = usePriceCakeBusd()
+  const treasuryUSD = 1481434
+  const marketCap = new BigNumber(totalSupply.times(rvrsPrice))
+  const ratio =  new BigNumber(marketCap.div(treasuryUSD).div(1e18)).toNumber()
+  const ratioStr = ratio.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+
   // wallet balance rvrs/vervrs
   const rvrsBalanceNo = getBalanceNumber(useTokenBalance(getCakeAddress()))
   const rvrsBalanceStr = rvrsBalanceNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
@@ -108,10 +116,17 @@ const Dashboard = () => {
               </ContentCard>
             </Tippy>
             <Tippy content="The treasury portion you are acquiring by buying $1 worth of RVRS">
+              {ratio > 1 ?
               <ContentCard>
-                <Skeleton marginBottom="5px" />
+                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}</TypographyBold>
                 <Typography>Market Cap/Treasury Ratio</Typography>
               </ContentCard>
+              :
+              <ContentCard>
+              <TypographyBold style={{ marginBottom: '5px', color: '#eed202' }}>{ratioStr}</TypographyBold>
+              <Typography>Market Cap/Treasury Ratio</Typography>
+            </ContentCard>
+              }       
             </Tippy>
           </Flex>
           <Flex justifyContent="center">
