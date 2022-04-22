@@ -1,9 +1,11 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
 import ModalActions from 'components/modals/components/modal/modalActions'
 import TokenInput from 'components/modals/components/modal/input'
 import ModalButton from 'components/layout/buttons/modalButton'
 import Modal from './components/modal'
+import 'react-toastify/dist/ReactToastify.css'
 import useI18n from '../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../utils/formatBalance'
 
@@ -33,9 +35,32 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
     setVal(fullBalance)
   }, [fullBalance, setVal])
 
+  const notifySuccess = () =>
+    toast.success('Success!', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+  const notifyPending = () =>
+    toast.info('Confirm transaction...', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
   return (
-    <Modal
-      title={`${TranslateString(999, 'Bond')} ${tokenName}`} onDismiss={onDismiss}>
+    <Modal title={`${TranslateString(999, 'Bond')} ${tokenName}`} onDismiss={onDismiss}>
       <TokenInput
         value={val}
         onSelectMax={handleSelectMax}
@@ -45,16 +70,28 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
       />
       <ModalActions>
         <ModalButton
-          style={{ justifyContent: "center" }}
-          disabled={pendingTx}
+          style={{ justifyContent: 'center' }}
           onClick={async () => {
+            notifyPending()
             setPendingTx(true)
             await onConfirm(val)
             setPendingTx(false)
+            notifySuccess()
             onDismiss()
           }}
         >
-          {pendingTx ? TranslateString(4288, 'Pending...') : TranslateString(4624, 'Confirm')}
+          <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          Confirm
         </ModalButton>
       </ModalActions>
     </Modal>

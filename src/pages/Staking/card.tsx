@@ -22,6 +22,8 @@ import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
 import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import WithdrawModal from 'components/modals/withdrawModal'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Wrap from 'components/layout/containers/Wrap'
 import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
 import Tippy from '@tippyjs/react'
@@ -117,7 +119,31 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const [onPresentDeposit] = useModal(
     <StakeModal max={stakingTokenBalance} onConfirm={onStake} tokenName={stakingTokenName} />,
   )
-  
+
+  const notifySuccess = () =>
+    toast.success('Success!', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+  const notifyPending = () =>
+    toast.info('Confirm transaction...', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
   return (
     <>
       <Wrap>
@@ -178,7 +204,28 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           {needsApproval ? (
             <Flex justifyContent="end" style={{ marginTop: '20px' }}>
               <Ripples>
-                <ActionButton onClick={handleApprove}>Enable Staking</ActionButton>
+                <ActionButton
+                  onClick={async () => {
+                    notifyPending()
+                    setRequestedApproval(true)
+                    await onApprove()
+                    setRequestedApproval(false)
+                    notifySuccess()
+                  }}
+                >
+                  <ToastContainer
+                    position="top-left"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
+                  Enable Staking
+                </ActionButton>
               </Ripples>
             </Flex>
           ) : (
@@ -200,7 +247,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                     </ActionButton>
                   </Ripples>
                   <Ripples>
-                    <ActionButton disabled={apyNull} onClick={onPresentDeposit}>
+                    <ActionButton disabled={apyNull} onClick={onPresentDeposit }>
                       Stake {rvrsBalanceStr} RVRS
                     </ActionButton>
                   </Ripples>
@@ -223,7 +270,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography style={{lineHeight:'1.1'}}>
+          <Typography style={{ lineHeight: '1.1' }}>
             Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the
             introduction of (ve)RVRS.
           </Typography>

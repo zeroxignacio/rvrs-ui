@@ -5,6 +5,8 @@ import Modal from 'components/modals/components/modal'
 import ModalActions from 'components/modals/components/modal/modalActions'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { TranslateString } from 'utils/translateTextHelpers'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import useWalletModal from 'components/modals/WalletModal'
 import ModalButton from 'components/layout/buttons/modalButton'
 import TokenInput from 'components/modals/components/modal/input'
@@ -32,6 +34,43 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, to
     setVal(fullBalance)
   }, [fullBalance, setVal])
 
+  const notifySuccess = () =>
+    toast.success('Success!', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+  const notifyPending = () =>
+    toast.info('Confirm transaction...', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+    const notifyPendingTx = () =>
+    toast.info('Pending...', {
+      position: 'top-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+
   return (
     <Modal title={`${TranslateString(3016, 'Stake')} ${tokenName}`} onDismiss={onDismiss}>
       <TokenInput
@@ -43,15 +82,27 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, to
       />
       <ModalActions>
         <ModalButton
-          disabled={pendingTx}
           onClick={async () => {
+            notifyPending()
             setPendingTx(true)
             await onConfirm(val)
+            notifySuccess()
             setPendingTx(false)
             onDismiss()
           }}
         >
-          {pendingTx ? 'Pending...' : 'Confirm'}
+          <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          Confirm
         </ModalButton>
       </ModalActions>
     </Modal>
