@@ -156,7 +156,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 &nbsp;
               </object>
               */}
-              <img width="35px" style={{ marginRight: '8px' }} className="img-fluid" src={`${process.env.PUBLIC_URL}/images/${tokenName}.svg`} alt="logo" />{' '}
+              <img width="35px" style={{ marginRight: '8px' }} className="img-fluid" src={`${process.env.PUBLIC_URL}/${tokenName}.svg`} alt="logo" />{' '}
               <Flex flexDirection="column">
                 <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
                 <a
