@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/containers/page'
@@ -38,20 +37,32 @@ const Dashboard = () => {
     if (balance > 10000) return 4
     return 0
   }
-  const farms = useFarms();
+  const farms = useFarms()
   const totalSupply = new BigNumber(useTotalSupply())
-  const totalSupplyStr = totalSupply.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
+  const totalSupplyStr = totalSupply
+    .div(1e18)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
   const rvrsPrice = usePriceCakeBusd()
+  const rvrsPriceStr = rvrsPrice
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const circSupply = totalSupply.minus(useNonCirculatingBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
   const marketCap = new BigNumber(circSupply.times(rvrsPrice)).div(1e18)
-  const marketCapStr = marketCap.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
+  const marketCapStr = marketCap
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
   const treasuryUSD = new BigNumber(1481434)
-  const ratio =  treasuryUSD.div(marketCap).toNumber()
+  const ratio = treasuryUSD.div(marketCap).toNumber()
   const ratioStr = ratio.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-  const farm0 = useFarmFromPid(0);
+  const farm0 = useFarmFromPid(0)
   const rvrsPerBlock = new BigNumber(farm0.vikingPerBlock)
   const rvrsPerYear = rvrsPerBlock.times(302800).times(52).div(12)
-  const inflatioRate = rvrsPerYear.div(totalSupply).times(100).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const inflatioRate = rvrsPerYear
+    .div(totalSupply)
+    .times(100)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const rvrsBalanceNo = getBalanceNumber(useTokenBalance(getCakeAddress()))
   const rvrsBalanceStr = rvrsBalanceNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
@@ -86,18 +97,18 @@ const Dashboard = () => {
                 </Typography>
               </ContentCard>
             </Tippy>
-            <Tippy content="Current RVRS balance">
+            <Tippy content="Your current veRVRS cap. To increase it, stake RVRS for veRVRS">
               <ContentCard>
-                <TypographyBold style={{ marginBottom: '5px' }}>{rvrsBalanceStr}</TypographyBold>
-                <Typography>RVRS Balance</Typography>
+                <TypographyBold style={{ marginBottom: '5px' }}>0.00</TypographyBold>
+                <Typography>veRVRS Cap</Typography>
               </ContentCard>
             </Tippy>
           </Flex>
           <Flex justifyContent="center" marginTop="8px">
-            <Tippy content="Your current veRVRS cap. To increase it, stake RVRS for veRVRS">
+            <Tippy content="Current RVRS price">
               <ContentCard style={{ marginRight: '8px' }}>
-                <TypographyBold style={{ marginBottom: '5px' }}>0.00</TypographyBold>
-                <Typography>veRVRS Cap</Typography>
+                <TypographyBold style={{ marginBottom: '5px' }}>{rvrsPriceStr}</TypographyBold>
+                <Typography>Price</Typography>
               </ContentCard>
             </Tippy>
             <Tippy content="Current RVRS market cap, calculated as: [(Supply - Noncirculating tokens) * Price]">
@@ -108,7 +119,7 @@ const Dashboard = () => {
             </Tippy>
             <Tippy content="The rate at which RVRS is being emitted monthly">
               <ContentCard>
-                <TypographyBold style={{ marginBottom: '5px'}}>+{inflatioRate}%</TypographyBold>
+                <TypographyBold style={{ marginBottom: '5px' }}>+{inflatioRate}%</TypographyBold>
                 <Typography> Monthly Inflation</Typography>
               </ContentCard>
             </Tippy>
@@ -121,17 +132,17 @@ const Dashboard = () => {
               </ContentCard>
             </Tippy>
             <Tippy content="The treasury portion you are acquiring by buying $1 worth of RVRS">
-              {ratio > 0.9 ?
-              <ContentCard>
-                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}</TypographyBold>
-                <Typography>Market Cap/Treasury Ratio</Typography>
-              </ContentCard>
-              :
-              <ContentCard>
-              <TypographyBold style={{ marginBottom: '5px', color: '#eed202' }}>{ratioStr}</TypographyBold>
-              <Typography>Treasury/Market Cap Ratio</Typography>
-            </ContentCard>
-              }       
+              {ratio > 0.9 ? (
+                <ContentCard>
+                  <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}</TypographyBold>
+                  <Typography>Market Cap/Treasury Ratio</Typography>
+                </ContentCard>
+              ) : (
+                <ContentCard>
+                  <TypographyBold style={{ marginBottom: '5px', color: '#eed202' }}>{ratioStr}</TypographyBold>
+                  <Typography>Treasury/Market Cap Ratio</Typography>
+                </ContentCard>
+              )}
             </Tippy>
           </Flex>
           <Flex justifyContent="center">
