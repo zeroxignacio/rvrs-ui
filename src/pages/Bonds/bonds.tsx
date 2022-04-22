@@ -16,6 +16,7 @@ import Page from 'components/layout/containers/page'
 import Wrap from 'components/layout/containers/Wrap'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import TitleCard from 'components/layout/cards/TitleCard'
+import { padding, position } from 'styled-system'
 import PoolCard from './card'
 
 const Bond: React.FC = () => {
@@ -26,7 +27,9 @@ const Bond: React.FC = () => {
   const block = useBlock()
   const poolsWithApy = pools2.map((pool2) => {
     let quoteTokens = new BigNumber(pool2.quoteTokenPerLp).times(pool2.totalStaked).div(new BigNumber(10).pow(18))
-    if (pool2.isSingleAsset) { quoteTokens = new BigNumber(pool2.totalStaked).div(new BigNumber(10).pow(18)).div(2) }
+    if (pool2.isSingleAsset) {
+      quoteTokens = new BigNumber(pool2.totalStaked).div(new BigNumber(10).pow(18)).div(2)
+    }
     const tvl = getTotalValueFromQuoteTokens(quoteTokens, pool2.quoteTokenSymbol, prices)
     const rewardTokenPrice = lookupPrice(QuoteToken.RVRS, prices)
     const totalRewardPricePerYear = rewardTokenPrice.times(pool2.tokenPerBlock).times(BLOCKS_PER_YEAR)
@@ -39,23 +42,27 @@ const Bond: React.FC = () => {
   const handleModal = async () => {
     setModalOpen(!modalOpen)
   }
-  const rewardTokenPriceStr = lookupPrice(QuoteToken.RVRS, prices).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-
-
+  const rewardTokenPriceStr = lookupPrice(QuoteToken.RVRS, prices)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   return (
     <Page>
+      <div id="dexscreener-embed" >
+        {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */ }
+        <iframe style={{width:'0px', height:'0px'}} src="https://dexscreener.com/harmony/0xD6e76742962379e234E9Fd4E73768cEF779f38B5?embed=1&theme=dark&trades=0&info=0">&nbsp;</iframe>
+      </div>
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ padding: '10px' }}>
-            <TypographyTitle>
-              rvBonds
-            </TypographyTitle>
+            <TypographyTitle>rvBonds</TypographyTitle>
           </TitleCard>
-          <Divider/>
+          <Divider />
           <ScrollDiv>
             <Route path={`${path}`}>
-              {orderBy(openPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+              {orderBy(openPools, ['sortOrder']).map((pool2) => (
+                <PoolCard key={pool2.sousId} pool2={pool2} />
+              ))}
             </Route>
           </ScrollDiv>
         </LayoutContainer>
@@ -63,14 +70,14 @@ const Bond: React.FC = () => {
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
           <TitleCard style={{ padding: '10px' }}>
-            <TypographyTitle>
-              Inactive rvBonds
-            </TypographyTitle>
+            <TypographyTitle>Inactive rvBonds</TypographyTitle>
           </TitleCard>
-          <Divider/>
+          <Divider />
           <ScrollDiv>
             <Route path={`${path}`}>
-              {orderBy(finishedPools, ['sortOrder']).map((pool2) => (<PoolCard key={pool2.sousId} pool2={pool2} />))}
+              {orderBy(finishedPools, ['sortOrder']).map((pool2) => (
+                <PoolCard key={pool2.sousId} pool2={pool2} />
+              ))}
             </Route>
           </ScrollDiv>
         </LayoutContainer>
@@ -78,8 +85,10 @@ const Bond: React.FC = () => {
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer style={{ padding: '15px' }}>
           <Flex>
-            <Typography>Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand its yields.
-              Bonds &apos;Sell Out&apos; when vROI goes below 5.00% and a Net Return is calculated. Both vROI and Return depend on the price of RVRS.
+            <Typography>
+              Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand
+              its yields. Bonds &apos;Sell Out&apos; when vROI goes below 5.00% and a Net Return is calculated. Both
+              vROI and Return depend on the price of RVRS.
             </Typography>
           </Flex>
         </LayoutContainer>
@@ -89,15 +98,12 @@ const Bond: React.FC = () => {
 }
 
 const ScrollDiv = styled.div`
-    overflow-y: scroll;
-    max-height: 170px
+  overflow-y: scroll;
+  max-height: 170px;
 `
 
 const Divider = styled.div`
-    height: 10px
+  height: 10px;
 `
 
-
 export default Bond
-
-

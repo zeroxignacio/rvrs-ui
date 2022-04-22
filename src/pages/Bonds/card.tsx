@@ -151,9 +151,12 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           <Flex alignItems="center" justifyContent="space-between">
             {/* Bond */}
             <Flex alignItems="center">
+              {/* 
               <object type="image/svg+xml" data="/images/ust3.svg" width="35px" style={{ marginRight: '8px' }}>
                 &nbsp;
               </object>
+              */}
+              <img width="35px" style={{ marginRight: '8px' }} className="img-fluid" src={`${process.env.PUBLIC_URL}/images/${tokenName}.svg`} alt="logo" />{' '}
               <Flex flexDirection="column">
                 <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
                 <a
