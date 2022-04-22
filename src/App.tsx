@@ -42,7 +42,7 @@ const App: React.FC = () => {
         <Suspense fallback>
           <Switch>
             <Route path="/" exact>
-              <LANDING />
+              <DASHBOARD />
             </Route>
             <Route path="/bonds">
               <BONDS />
