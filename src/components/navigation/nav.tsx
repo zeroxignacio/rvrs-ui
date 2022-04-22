@@ -16,7 +16,7 @@ const Nav = (props) => {
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: '20px' }}>
-          <NavButton2>
+          <NavButton2 style={{marginLeft:'25px'}}>
             veRVRS
           </NavButton2>
         <Ripples>
@@ -62,7 +62,7 @@ const Nav = (props) => {
               </ChainButton>
             </div>
             <WalletButton
-              style={{ justifyContent: 'space-between', alignItems: 'center' }}
+              style={{ justifyContent: 'space-between', alignItems: 'center', marginRight:'0px' }}
               as={WalletNavLink}
               to="/dashboard"
               isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/dashboard')}
@@ -105,8 +105,6 @@ const Nav = (props) => {
 const MenuContainer = styled(Container)`
   padding-top: 20px;
   text-align: center;
-  flex-wrap: wrap;
-  max-width: 1000px;
   background: transparent;
 `
 
