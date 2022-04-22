@@ -17,6 +17,8 @@ import { Container } from 'react-bootstrap'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import styled from 'styled-components'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useAirdropData } from '../../state/hooks'
 import useAirdropClaim from '../../hooks/useAirdropClaim'
 import { getBalanceNumber } from '../../utils/formatBalance'
@@ -38,6 +40,7 @@ const Airdrop = () => {
   const claimedStr = claimed.toLocaleString('en-us', { maximumFractionDigits: 3 })
   const lastClaimAmountStr = lastClaimAmount.toLocaleString('en-us', { maximumFractionDigits: 0 })
   const [pendingTxn, setPendingTxn] = useState(false)
+
   const handleAirdropClaim = useCallback(async () => {
     try {
       setPendingTxn(true)
@@ -50,6 +53,30 @@ const Airdrop = () => {
       setPendingTxn(false)
     }
   }, [onAirdropClaim, setPendingTxn])
+
+  const notiftSuccess = () =>
+    toast.success('Success!', {
+      position: 'top-left',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+  const notiftPending = () =>
+    toast.info('Confirm transaction...', {
+      position: 'top-left',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
 
   return (
     <>
@@ -100,20 +127,31 @@ const Airdrop = () => {
                 </Flex>
               </Tippy>
 
-              {toClaim && toClaim > 0 ? (
-                <div
-                  style={{
-                    display: 'inline-flex',
-                    borderRadius: 0,
-                    overflow: 'hidden',
-                  }}
-                >
-                  <Ripples>
-                    <ClaimButton onClick={handleAirdropClaim} disabled={pendingTxn}>
-                      Collect ${toClaimStr}
-                    </ClaimButton>
-                  </Ripples>
-                </div>
+              {toClaim > 0 ? (
+                <Ripples>
+                  <ClaimButton
+                    onClick={async () => {
+                      notiftPending()
+                      setPendingTxn(true)
+                      await onAirdropClaim()
+                      setPendingTxn(false)
+                      notiftSuccess()
+                    }}
+                  >
+                    <ToastContainer
+                      position="top-left"
+                      autoClose={10000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                    />
+                    Collect ${toClaimStr}
+                  </ClaimButton>
+                </Ripples>
               ) : (
                 <ClaimButton disabled style={{ opacity: '0.3', cursor: 'not-allowed' }}>
                   Come back next week!
@@ -123,9 +161,9 @@ const Airdrop = () => {
           </LayoutContainer>
         </Wrap>
         <Wrap style={{ marginTop: '20px' }}>
-          <LayoutContainer style={{ padding: '15px' }}>
+          <LayoutContainer>
             <Flex justifyContent="center">
-              <Typography style={{lineHeight:'1.1'}}>
+              <Typography style={{ lineHeight: '1.1' }}>
                 Yield earned through the Reverseum Treasury positions is converted to UST and distributed to veRVRS and
                 RVRS holders every monday.
               </Typography>

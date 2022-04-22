@@ -79,7 +79,7 @@ const Bond: React.FC = () => {
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
-        <LayoutContainer style={{ padding: '15px' }}>
+        <LayoutContainer>
           <Flex>
             <Typography style={{lineHeight:'1.1'}}>
               Reverse sells algorithmic and linearly vested bonds with variable returns to grow its treasury and expand

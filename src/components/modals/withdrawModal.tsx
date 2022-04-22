@@ -2,6 +2,8 @@ import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
 import ModalActions from 'components/modals/components/modal/modalActions'
 import styled from 'styled-components'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Modal from 'components/modals/components/modal/Modal'
 import useWalletModal from 'components/modals/WalletModal'
 import ModalButton from 'components/layout/buttons/modalButton'
@@ -18,7 +20,13 @@ interface WithdrawModalProps {
   tokenName?: string
 }
 
-const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max, tokenName = '', pricePerShare= DEFAULT_TOKEN_DECIMALS }) => {
+const WithdrawModal: React.FC<WithdrawModalProps> = ({
+  onConfirm,
+  onDismiss,
+  max,
+  tokenName = '',
+  pricePerShare = DEFAULT_TOKEN_DECIMALS,
+}) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const fullBalance = useMemo(() => {
@@ -34,13 +42,37 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max
     setVal(fullBalance)
   }, [fullBalance, setVal])
   const getSharesFromAmount = (amount) => {
-      const shares = new BigNumber(amount).times(DEFAULT_TOKEN_DECIMALS).div(pricePerShare)
-      console.log('getSharesFromAmount', pricePerShare, amount, shares.toString())
-      return shares.toFixed(18).toString()
+    const shares = new BigNumber(amount).times(DEFAULT_TOKEN_DECIMALS).div(pricePerShare)
+    console.log('getSharesFromAmount', pricePerShare, amount, shares.toString())
+    return shares.toFixed(18).toString()
   }
 
+  const notifySuccess = () =>
+    toast.success('Success!', {
+      position: 'top-left',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+  const notifyPending = () =>
+    toast.info('Confirm transaction...', {
+      position: 'top-left',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
   return (
-    <Modal title={`Unstake ${tokenName}` } onDismiss={onDismiss}>
+    <Modal title={`Unstake ${tokenName}`} onDismiss={onDismiss}>
       <TokenInput
         onSelectMax={handleSelectMax}
         onChange={handleChange}
@@ -48,14 +80,29 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max
         max={fullBalance}
         symbol={tokenName}
       />
-      <ModalActions>        
+      <ModalActions>
         <ModalButton
-          disabled={pendingTx}
           onClick={async () => {
+            notifyPending()
             setPendingTx(true)
             await onConfirm(getSharesFromAmount(val))
+            notifySuccess()
             setPendingTx(false)
-            onDismiss()}}>{pendingTx ? 'Pending...' : 'Confirm'}
+            onDismiss()
+          }}
+        >
+          <ToastContainer
+            position="top-left"
+            autoClose={10000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          Confirm
         </ModalButton>
       </ModalActions>
     </Modal>

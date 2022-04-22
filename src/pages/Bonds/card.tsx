@@ -17,6 +17,8 @@ import 'tippy.js/dist/tippy.css'
 import { FaExternalLinkSquareAlt, FaHandHolding } from 'react-icons/fa'
 import BondsContainer from 'components/layout/containers/bondsContainer'
 import DepositModal from 'components/modals/bondModal'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import BondButton from 'components/layout/buttons/bondButton'
 import ClaimButton from 'components/layout/buttons/claimButton'
 
@@ -146,6 +148,30 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
     }
   }, [onApprove, setRequestedApproval])
 
+  const notifySuccess = () =>
+    toast.success('Success!', {
+      position: 'top-left',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+  const notifyPending = () =>
+    toast.info('Confirm transaction...', {
+      position: 'top-left',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
   return (
     <>
       {hasStarted ? (
@@ -204,7 +230,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   <Tippy content="Estimated variable ROI of an open bond">
                     <Flex flexDirection="column">
                       <Typography style={{ color: 'white' }}>vROI</Typography>
-                      <TypographySmall>{roiStr}%</TypographySmall>
+                      <TypographySmall style={{ color: '#6ccca5' }}>{roiStr}%</TypographySmall>
                     </Flex>
                   </Tippy>
                 ) : (
@@ -257,7 +283,27 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   {fivePercentRoi ? (
                     <Flex>
                       {needsApproval ? (
-                        <BondButton disabled={hasEnded} onClick={handleApprove}>
+                        <BondButton
+                          disabled={hasEnded}
+                          onClick={async () => {
+                            notifyPending()
+                            setRequestedApproval(true)
+                            await onApprove()
+                            setRequestedApproval(false)
+                            notifySuccess()
+                          }}
+                        >
+                          <ToastContainer
+                            position="top-left"
+                            autoClose={10000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                          />
                           Enable
                         </BondButton>
                       ) : (
@@ -279,11 +325,24 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                     <ClaimButton
                       style={{ marginLeft: '5px' }}
                       onClick={async () => {
+                        notifyPending()
                         setPendingTx(true)
                         await onReward()
                         setPendingTx(false)
+                        notifySuccess()
                       }}
                     >
+                      <ToastContainer
+                        position="top-left"
+                        autoClose={10000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
                       <FaHandHolding style={{ color: '#9B9B9B' }} />
                     </ClaimButton>
                   </Tippy>
