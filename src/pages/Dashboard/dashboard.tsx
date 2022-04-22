@@ -9,12 +9,15 @@ import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
-import { FaAward, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaAward } from 'react-icons/fa'
 import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import Wrap from 'components/layout/containers/Wrap'
 import TierCard from 'components/layout/cards/TierCard'
+import ReactTooltip from 'react-tooltip'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
 const Dashboard = () => {
@@ -129,7 +132,7 @@ const Dashboard = () => {
         </LayoutContainer>
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
-        <LayoutContainer style={{padding:'5px'}}>
+        <LayoutContainer style={{ padding: '5px' }}>
           <div
             style={{
               display: 'inline-flex',
