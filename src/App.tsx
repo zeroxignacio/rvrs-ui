@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
 import MenuBottom from 'components/navigation/footer'
 import Style from 'components/Style'
+import pools from 'config/constants/stake'
 import Nav from './components/navigation/nav'
 import Beta from './components/navigation/beta'
 
@@ -39,7 +40,7 @@ const App: React.FC = () => {
       {account != null && account.length > 1 ? (
         <Suspense fallback>
           <Route path="/" exact>
-            <DASHBOARD />
+            <DASHBOARD/>
           </Route>
           <Route path="/bonds">
             <BONDS />

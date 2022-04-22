@@ -61,6 +61,24 @@ export const useBurnedBalance = (tokenAddress: string) => {
   return balance
 }
 
+export const useNonCirculatingBalance = (tokenAddress: string) => {
+  const [balance, setBalance] = useState(new BigNumber(0))
+  const { slowRefresh } = useRefresh()
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const rvrsContract = getContract(cakeABI, getCakeAddress())
+      const bal = await rvrsContract.methods.balanceOf('0xA3904e99b6012EB883DB1090D02D4e954539EC61').call()
+      setBalance(new BigNumber(bal))
+    }
+
+    fetchBalance()
+  }, [tokenAddress, slowRefresh])
+
+  return balance
+}
+
+
 export const useUstTreasuryBalance = (tokenAddress: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
   const { slowRefresh } = useRefresh()

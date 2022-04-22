@@ -10,7 +10,7 @@ import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
-import Ripples, { createRipples } from 'react-ripples'
+import Ripples from 'react-ripples'
 import ClaimButtonDisabled from 'components/layout/buttons/claimAirdropButtonDisabled'
 import ClaimButton from 'components/layout/buttons/claimAirdropButton'
 import { Container } from 'react-bootstrap'
@@ -104,7 +104,7 @@ const Airdrop = () => {
                   {expectedReturnsNo > 1 ? (
                     <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{expectedReturnsStr} UST</TypographyBold>
                   ) : (
-                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+ TBD</TypographyBold>
+                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+TBD</TypographyBold>
                   )}
                   <Typography>Yearly Returns</Typography>
                 </ContentCard>
