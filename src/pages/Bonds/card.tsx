@@ -156,11 +156,23 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 &nbsp;
               </object>
               */}
-              {stakingTokenName === 'JEWEL' ?
-              <img width="35px" style={{ marginRight: '8px' }} className="img-fluid" src={`${process.env.PUBLIC_URL}/jewel.svg`} alt="logo" />
-              :
-              <img width="35px" style={{ marginRight: '8px' }} className="img-fluid" src={`${process.env.PUBLIC_URL}/ust.svg`} alt="logo" />
-              }
+              {stakingTokenName === 'JEWEL' ? (
+                <img
+                  width="35px"
+                  style={{ marginRight: '8px' }}
+                  className="img-fluid"
+                  src={`${process.env.PUBLIC_URL}/jewel.svg`}
+                  alt="logo"
+                />
+              ) : (
+                <img
+                  width="35px"
+                  style={{ marginRight: '8px' }}
+                  className="img-fluid"
+                  src={`${process.env.PUBLIC_URL}/ust.svg`}
+                  alt="logo"
+                />
+              )}
               <Flex flexDirection="column">
                 <Typography style={{ color: 'white' }}>{tokenName}&nbsp;</Typography>
                 <a

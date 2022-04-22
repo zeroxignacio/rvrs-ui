@@ -4,6 +4,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from '@reverse/uikit'
 import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
+import Switch from 'react-bootstrap/esm/Switch'
 import MenuBottom from 'components/navigation/footer'
 import Style from 'components/Style'
 import Nav from './components/navigation/nav'
@@ -37,6 +38,10 @@ const App: React.FC = () => {
       <Nav />
       {account != null && account.length > 1 ?
         <Suspense fallback>
+          <Switch>
+            <Route path="/" exact>
+              <DASHBOARD />
+            </Route>
             <Route path="/bonds">
               <BONDS />
             </Route>
@@ -52,6 +57,7 @@ const App: React.FC = () => {
             <Route path="/upcoming">
               <COMINGSOON />
             </Route>
+            </Switch>
         </Suspense>
         :
         <Suspense fallback>

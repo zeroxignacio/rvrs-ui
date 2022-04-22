@@ -48,10 +48,6 @@ const Bond: React.FC = () => {
 
   return (
     <Page>
-      <div id="dexscreener-embed" >
-        {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */ }
-        <iframe style={{width:'0px', height:'0px'}} src="https://dexscreener.com/harmony/0xD6e76742962379e234E9Fd4E73768cEF779f38B5?embed=1&theme=dark&trades=0&info=0">&nbsp;</iframe>
-      </div>
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ padding: '10px' }}>

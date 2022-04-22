@@ -75,7 +75,7 @@ const TypographyTitle = styled.h1`
     :hover {
       color: #F3F3F3;
       cursor: pointer;
-      text-decoration: underline;
+      opacity: 0.6;
     }
 `
 
