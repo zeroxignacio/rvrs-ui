@@ -251,7 +251,7 @@ const ActionButton = styled.button`
   color: #eeeeee;
   border-left: 5px solid #6699a3;
   padding: 10px;
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
   :hover {
     opacity: 0.5;
     background: transparent;

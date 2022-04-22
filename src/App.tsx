@@ -8,6 +8,7 @@ import Switch from 'react-bootstrap/esm/Switch'
 import MenuBottom from 'components/navigation/footer'
 import Style from 'components/Style'
 import Nav from './components/navigation/nav'
+import Beta from './components/navigation/beta'
 
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
@@ -35,6 +36,7 @@ const App: React.FC = () => {
     <Router>
       <ResetCSS />
       <Style />
+      <Beta />
       <Nav />
       {account != null && account.length > 1 ?
         <Suspense fallback>
