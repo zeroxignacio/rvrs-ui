@@ -149,7 +149,6 @@ const Dashboard = () => {
                   {filteredCoins.map((coin) => {
                     return (
                       <>
-                        <Typography2 style={{ color: 'B33F40' }}>
                           <>
                             <PriceChange
                               key={coin.id}
@@ -159,7 +158,6 @@ const Dashboard = () => {
                               priceChange={coin.price_change_percentage_24h}
                             />
                           </>
-                        </Typography2>
                       </>
                     )
                   })}
@@ -224,7 +222,7 @@ const Dashboard = () => {
           >
             {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
-              style={{ width: '800px', height: '450px' }}
+              style={{ width: '800px', height: '400px' }}
               src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS44_dnMXBvCVYrTCEaQ1egJS2SAePHobU4aHI01iX6InYDjdIaSuW83NrZMJbGR976nCN45cK9QXbC/pubhtml?widget=true&amp;headers=false"
             >
               &nbsp;
