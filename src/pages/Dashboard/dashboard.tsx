@@ -224,7 +224,7 @@ const Dashboard = () => {
           >
             {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
-              style={{ width: '800px', height: '400px' }}
+              style={{ width: '800px', height: '450px' }}
               src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS44_dnMXBvCVYrTCEaQ1egJS2SAePHobU4aHI01iX6InYDjdIaSuW83NrZMJbGR976nCN45cK9QXbC/pubhtml?widget=true&amp;headers=false"
             >
               &nbsp;
@@ -261,6 +261,7 @@ const Divider = styled.div`
   margin-bottom: 10px;
   width: 100%;
 `
+
 const Typography2 = styled.p`
   font-size: 16px;
   color: #b33f40;
