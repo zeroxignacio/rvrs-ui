@@ -19,6 +19,7 @@ import 'tippy.js/dist/tippy.css'
 import styled from 'styled-components'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Wrap from 'components/layout/containers/Wrap'
 import { useAirdropData } from '../../state/hooks'
 import useAirdropClaim from '../../hooks/useAirdropClaim'
 import { getBalanceNumber } from '../../utils/formatBalance'
@@ -175,14 +176,5 @@ const Airdrop = () => {
   )
 }
 
-
-const Wrap = styled(Container)`
-  border-radius: 7px;
-  padding: 2px;
-  border-width: 1px;
-  border-color: #313131;
-  border-style: solid;
-  box-shadow: 5px 5px 28px -20px #55747d;
-  `
 
 export default Airdrop

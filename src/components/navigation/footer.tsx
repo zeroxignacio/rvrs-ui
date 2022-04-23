@@ -105,13 +105,12 @@ const NavContainer = styled(Container)`
 const MenuContainer = styled(Container)`
   max-width: 10000px;
   padding: 20px;
-  background-color: #181818;
   border-width: 1px 0px 0px 0px;
-  border-color: #313131;
   border-style: solid;
+  border-color: #3A3A3A;
   margin-top: 30px;
-  background-color: rgba(42, 52, 67, 0.6);
-  background-color: #121212;
+  background-color: #141414;
+  background: linear-gradient(90deg, #141414, #121212);
   transition: all 0.3s ease-in-out;
   :hover {
     opacity: 1;

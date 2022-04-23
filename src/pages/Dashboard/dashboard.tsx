@@ -15,12 +15,13 @@ import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import Wrap from 'components/layout/containers/Wrap'
-import TierCard from 'components/layout/cards/TierCard'
 import ReactTooltip from 'react-tooltip'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { useFarmFromPid, useFarms, usePriceCakeBusd } from 'state/hooks'
 import useFarmsWithBalance from 'hooks/useFarmsWithBalance'
+import { CoinGeckoClient } from 'coingecko-api-v3'
+import ContentCard from 'components/layout/cards/TierCard'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
 const Dashboard = () => {
@@ -66,11 +67,20 @@ const Dashboard = () => {
   const rvrsBalanceNo = getBalanceNumber(useTokenBalance(getCakeAddress()))
   const rvrsBalanceStr = rvrsBalanceNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
+
+const Coingecko = async () => {
+  const client = new CoinGeckoClient({ autoRetry: true })
+  const data = await client.simplePrice({
+    ids: 'reverse-protocol',
+    vs_currencies: 'usd',
+  })}
+
+
   return (
     <Page>
       <Wrap>
         <LayoutContainer>
-          <TitleCard style={{ padding: '20px', marginBottom: '8px' }}>
+          <TitleCard style={{ marginBottom: '8px' }}>
             <TypographyTitle>
               <div>Dashboard</div>&nbsp;
               <a
@@ -145,14 +155,15 @@ const Dashboard = () => {
               )}
             </Tippy>
           </Flex>
+          <Divider/>
           <Flex justifyContent="center">
-            <TitleCard style={{ textAlign: 'start', marginBottom: '0px', marginTop: '8px', padding: '10px' }}>
-              <Typography style={{ lineHeight: '1.1' }}>
-                At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the treasury every week. A
+            <div style={{ textAlign: 'start', marginBottom: '0px', marginTop: '0px', padding: '0px' }}>
+              <Typography style={{ lineHeight: '1.2' }}>
+                At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the treasury every week. To date, a
                 total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol participants with an
-                average airdrop size of <TypographyBold>TBD</TypographyBold>.
+                average airdrop size of <TypographyBold>TBD</TypographyBold>. Your current airdrop share is <TypographyBold>TBD</TypographyBold>.
               </Typography>
-            </TitleCard>
+            </div>
           </Flex>
         </LayoutContainer>
       </Wrap>
@@ -197,15 +208,12 @@ const Dashboard = () => {
     </Page>
   )
 }
-
-const ContentCard = styled(Container)`
-  text-align: center;
-  border-radius: 0px;
-  background: #191919;
-  padding: 10px;
-  border-width: 0px;
-  border-color: #313131;
-  border-style: solid;
+const Divider = styled.div`
+  background-color: #515151;
+  height: 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
 `
 
 export default Dashboard

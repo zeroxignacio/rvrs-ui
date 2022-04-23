@@ -59,6 +59,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
     endBlock,
     userData,
     stakingLimit,
+    isFinished,
   } = pool2
 
   const block = useBlock()
@@ -177,13 +178,8 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
       {hasStarted ? (
         <BondsContainer>
           <Flex alignItems="center" justifyContent="space-between">
-            {/* Bond */}
             <Flex alignItems="center">
-              {/* 
-              <object type="image/svg+xml" data="/images/ust3.svg" width="35px" style={{ marginRight: '8px' }}>
-                &nbsp;
-              </object>
-              */}
+              {/* find a better solution */}
               {stakingTokenName === 'JEWEL' ? (
                 <img
                   width="35px"
@@ -216,8 +212,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 </a>
               </Flex>
             </Flex>
-            {/* ROI */}
-            {hasEnded ? (
+            {isFinished ? (
               <Tippy content="This bond has ended">
                 <Flex flexDirection="column">
                   <Typography style={{ color: 'white' }}>vROI</Typography>

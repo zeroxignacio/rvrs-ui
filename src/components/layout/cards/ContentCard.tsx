@@ -6,9 +6,13 @@ const ContentCard = styled(Container)`
   border-radius: 0px;
   background: #191919;
   padding: 15px;
-  border-width: 0px;
-  border-color: #313131;
+  border-width: 1px;
+  border-color: transparent;
   border-style: solid;
+  transition: all 0.2s ease-in-out;
+  :hover {
+    border-color: #3A3A3A;
+  }
 `
 
 export default ContentCard
