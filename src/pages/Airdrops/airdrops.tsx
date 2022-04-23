@@ -101,7 +101,7 @@ const Airdrop = () => {
                   <Typography>Total Distributed</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop.">
+              <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
                 <ContentCard>
                   {expectedReturnsNo > 1 ? (
                     <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{expectedReturnsStr} UST</TypographyBold>
@@ -111,7 +111,7 @@ const Airdrop = () => {
                   <Typography>Yearly Returns</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated every time you claim an airdrop.">
+              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated every time you claim an airdrop">
                 <ContentCard style={{ marginLeft: '10px' }}>
                   <div>
                     <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>

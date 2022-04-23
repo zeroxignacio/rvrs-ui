@@ -22,6 +22,7 @@ import { useFarmFromPid, useFarms, usePriceCakeBusd } from 'state/hooks'
 import useFarmsWithBalance from 'hooks/useFarmsWithBalance'
 import { CoinGeckoClient } from 'coingecko-api-v3'
 import ContentCard from 'components/layout/cards/TierCard'
+import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
 const Dashboard = () => {
@@ -136,22 +137,22 @@ const Dashboard = () => {
           </Flex>
           <Flex justifyContent="center" marginTop="8px">
             <Tippy content="Your current yield boost based on veRVRS balance">
-              <ContentCard style={{ marginRight: '8px' }}>
+              <ContentCardAlt style={{ marginRight: '8px' }}>
                 <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+0.00%</TypographyBold>
                 <Typography>veRVRS Boost</Typography>
-              </ContentCard>
+              </ContentCardAlt>
             </Tippy>
-            <Tippy content="The treasury portion you are acquiring by buying $1 worth of RVRS">
+            <Tippy content="The Market Cap/Treasury Ratio works as a health indicator for the protocol and its overall participants. When above 1, $1 worth of RVRS gives you access to a +$1 of the treasury">
               {ratio > 0.9 ? (
-                <ContentCard>
+                <ContentCardAlt>
                   <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}</TypographyBold>
                   <Typography>Market Cap/Treasury Ratio</Typography>
-                </ContentCard>
+                </ContentCardAlt>
               ) : (
-                <ContentCard>
+                <ContentCardAlt>
                   <TypographyBold style={{ marginBottom: '5px', color: '#eed202' }}>{ratioStr}</TypographyBold>
                   <Typography>Treasury/Market Cap Ratio</Typography>
-                </ContentCard>
+                </ContentCardAlt>
               )}
             </Tippy>
           </Flex>
