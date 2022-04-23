@@ -11,7 +11,7 @@ const PriceChange = ({
   return (
     <div>
       {priceChange < 0 ? (
-        <Typography2>({priceChange.toFixed(2)}%)</Typography2>
+        <Typography2>{priceChange.toFixed(2)}%</Typography2>
       ) : (
         <Typography3>+{priceChange.toFixed(2)}%</Typography3>
       )}
