@@ -145,14 +145,10 @@ const Dashboard = () => {
             <Tippy content="Current RVRS price and price change (as per Coingecko API)">
               <ContentCard style={{ marginRight: '8px' }}>
                 <Flex justifyContent="center">
-                <TypographyBold style={{ marginBottom: '5px' }}>
-                  ${rvrsPriceStr}&nbsp;
-                  
-                </TypographyBold>
-                {filteredCoins.map((coin) => {
+                  <TypographyBold style={{ marginBottom: '5px' }}>${rvrsPriceStr}&nbsp;</TypographyBold>
+                  {filteredCoins.map((coin) => {
                     return (
                       <>
-                        <Typography2 style={{ color: 'B33F40' }}>
                           <>
                             <PriceChange
                               key={coin.id}
@@ -162,12 +158,10 @@ const Dashboard = () => {
                               priceChange={coin.price_change_percentage_24h}
                             />
                           </>
-                        </Typography2>
                       </>
                     )
                   })}
-                                  </Flex>
-
+                </Flex>
                 <Typography>RVRS Price</Typography>
               </ContentCard>
             </Tippy>
@@ -222,14 +216,13 @@ const Dashboard = () => {
         <LayoutContainer style={{ padding: '5px' }}>
           <div
             style={{
-              display: 'inline-flex',
-              borderRadius: 5,
+              borderRadius: 4,
               overflow: 'hidden',
             }}
           >
             {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
-              style={{ width: '590px', height: '400px' }}
+              style={{ width: '800px', height: '400px' }}
               src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS44_dnMXBvCVYrTCEaQ1egJS2SAePHobU4aHI01iX6InYDjdIaSuW83NrZMJbGR976nCN45cK9QXbC/pubhtml?widget=true&amp;headers=false"
             >
               &nbsp;
@@ -266,6 +259,7 @@ const Divider = styled.div`
   margin-bottom: 10px;
   width: 100%;
 `
+
 const Typography2 = styled.p`
   font-size: 16px;
   color: #b33f40;

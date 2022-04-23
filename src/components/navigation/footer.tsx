@@ -109,8 +109,7 @@ const MenuContainer = styled(Container)`
   border-style: solid;
   border-color: #3A3A3A;
   margin-top: 30px;
-  background-color: #141414;
-  background: linear-gradient(90deg, #141414, #121212);
+  background-color: #0D0D0D;
   transition: all 0.3s ease-in-out;
   :hover {
     opacity: 1;
