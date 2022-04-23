@@ -10,7 +10,7 @@ import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
 import useTokenBalance, { useBurnedBalance, useNonCirculatingBalance, useTotalSupply } from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
-import { FaAward } from 'react-icons/fa'
+import { FaAward, FaClipboard, FaExternalLinkSquareAlt } from 'react-icons/fa'
 import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
@@ -67,14 +67,13 @@ const Dashboard = () => {
   const rvrsBalanceNo = getBalanceNumber(useTokenBalance(getCakeAddress()))
   const rvrsBalanceStr = rvrsBalanceNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
-
-const Coingecko = async () => {
-  const client = new CoinGeckoClient({ autoRetry: true })
-  const data = await client.simplePrice({
-    ids: 'reverse-protocol',
-    vs_currencies: 'usd',
-  })}
-
+  const Coingecko = async () => {
+    const client = new CoinGeckoClient({ autoRetry: true })
+    const data = await client.simplePrice({
+      ids: 'reverse-protocol',
+      vs_currencies: 'usd',
+    })
+  }
 
   return (
     <Page>
@@ -82,13 +81,14 @@ const Coingecko = async () => {
         <LayoutContainer>
           <TitleCard style={{ marginBottom: '8px' }}>
             <TypographyTitle>
-              <div>Dashboard</div>&nbsp;
+              <div>Dashboard</div>&nbsp;&nbsp;
               <a
+                target="_blanK"
+                rel="noreferrer"
                 href={`https://explorer.harmony.one/address/${account}`}
-                className="nav-icon"
-                onClick={() => navigator.clipboard.writeText(`${account}`)}
+                className="nav-links"
               >
-                <Typography>{account.substring(0, 16)}...&nbsp;</Typography>
+                <Typography>{account.substring(0, 14)}<FaExternalLinkSquareAlt style={{marginTop: '-2px', marginLeft:'2px'}}/></Typography>
               </a>
             </TypographyTitle>
           </TitleCard>
@@ -155,13 +155,14 @@ const Coingecko = async () => {
               )}
             </Tippy>
           </Flex>
-          <Divider/>
+          <Divider />
           <Flex justifyContent="center">
             <div style={{ textAlign: 'start', marginBottom: '0px', marginTop: '0px', padding: '0px' }}>
               <Typography style={{ lineHeight: '1.2' }}>
-                At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the treasury every week. To date, a
-                total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol participants with an
-                average airdrop size of <TypographyBold>TBD</TypographyBold>. Your current airdrop share is <TypographyBold>TBD</TypographyBold>.
+                At current rates, <TypographyBold>TBD&nbsp;</TypographyBold>RVRS is bought by the treasury every week.
+                To date, a total of <TypographyBold>TBD&nbsp;</TypographyBold>UST was distributed to protocol
+                participants with an average airdrop size of <TypographyBold>TBD</TypographyBold>. Your current airdrop
+                share is <TypographyBold>TBD</TypographyBold>.
               </Typography>
             </div>
           </Flex>
