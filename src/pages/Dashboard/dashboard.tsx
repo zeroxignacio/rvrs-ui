@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/containers/page'
 import { Flex } from '@reverse/uikit'
@@ -17,10 +17,12 @@ import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import Wrap from 'components/layout/containers/Wrap'
 import ReactTooltip from 'react-tooltip'
 import Tippy from '@tippyjs/react'
+import axios from 'axios'
 import 'tippy.js/dist/tippy.css'
 import { useFarmFromPid, useFarms, usePriceCakeBusd } from 'state/hooks'
 import useFarmsWithBalance from 'hooks/useFarmsWithBalance'
 import { CoinGeckoClient } from 'coingecko-api-v3'
+import PriceChange from 'pages/Dashboard/priceChange'
 import ContentCard from 'components/layout/cards/TierCard'
 import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import { getBalanceNumber } from '../../utils/formatBalance'
@@ -76,6 +78,27 @@ const Dashboard = () => {
     })
   }
 
+  const [coins, setCoins] = useState([])
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=reverse-protocol&order=market_cap_desc&per_page=1&page=1&sparkline=false',
+      )
+      .then((res) => {
+        setCoins(res.data)
+        console.log(res.data)
+      })
+      .catch((error) => console.log(error))
+  }, [])
+
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const filteredCoins = coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()))
+
   return (
     <Page>
       <Wrap>
@@ -89,7 +112,10 @@ const Dashboard = () => {
                 href={`https://explorer.harmony.one/address/${account}`}
                 className="nav-links"
               >
-                <Typography>{account.substring(0, 14)}<FaExternalLinkSquareAlt style={{marginTop: '-2px', marginLeft:'2px'}}/></Typography>
+                <Typography>
+                  {account.substring(0, 14)}
+                  <FaExternalLinkSquareAlt style={{ marginTop: '-2px', marginLeft: '2px' }} />
+                </Typography>
               </a>
             </TypographyTitle>
           </TitleCard>
@@ -116,10 +142,33 @@ const Dashboard = () => {
             </Tippy>
           </Flex>
           <Flex justifyContent="center" marginTop="8px">
-            <Tippy content="Current RVRS price">
+            <Tippy content="Current RVRS price and price change (as per Coingecko API)">
               <ContentCard style={{ marginRight: '8px' }}>
-                <TypographyBold style={{ marginBottom: '5px' }}>${rvrsPriceStr}</TypographyBold>
-                <Typography>Price</Typography>
+                <Flex justifyContent="center">
+                <TypographyBold style={{ marginBottom: '5px' }}>
+                  ${rvrsPriceStr}&nbsp;
+                  
+                </TypographyBold>
+                {filteredCoins.map((coin) => {
+                    return (
+                      <>
+                        <Typography2 style={{ color: 'B33F40' }}>
+                          <>
+                            <PriceChange
+                              key={coin.id}
+                              price={coin.current_price}
+                              marketcap={coin.total_volume}
+                              volume={coin.market_cap}
+                              priceChange={coin.price_change_percentage_24h}
+                            />
+                          </>
+                        </Typography2>
+                      </>
+                    )
+                  })}
+                                  </Flex>
+
+                <Typography>RVRS Price</Typography>
               </ContentCard>
             </Tippy>
             <Tippy content="Current RVRS market cap, calculated as: [(Supply - Noncirculating tokens) * Price]">
@@ -216,6 +265,11 @@ const Divider = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   width: 100%;
+`
+const Typography2 = styled.p`
+  font-size: 16px;
+  color: #b33f40;
+  font-weight: 400;
 `
 
 export default Dashboard
