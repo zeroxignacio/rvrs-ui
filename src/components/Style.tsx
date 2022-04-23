@@ -7,12 +7,12 @@ const Style = createGlobalStyle`
 
 #root {
   background: radial-gradient(circle at 100%, 
-    #2B3647, 
+    #060606, 
     #121212 0%,
     #060606 65%, 
     #141414 75%, 
     #3A3A3A 75.1%,
-    #000000 75%
+    #060606 75%
     );
     border-width: 2px;
     border-color: #3A3A3A;
