@@ -66,7 +66,7 @@ const MenuBottom = (props) => {
             <a
               target="_blanK"
               rel="noreferrer"
-              href={`https://buy.ramp.network/?userAddress=${account}`}
+              href={`https://buy.ramp.network/?userAddress=${account}/&swapAsset=HARMONY_ONE`}
               className="nav-links"
             >
               <TypographyBold>Fiat Onramp</TypographyBold>
