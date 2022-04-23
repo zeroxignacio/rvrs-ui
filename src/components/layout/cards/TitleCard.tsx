@@ -5,9 +5,10 @@ const TitleCard = styled(Container)`
   text-align: center;
   background: #161616;
   padding: 15px;
-  border-width: 0px;
-  border-color: #313131;
+  border-width: 1px;
+  border-color: #3A3A3A;
   border-style: solid;
+
 `
 
 export default TitleCard

@@ -116,7 +116,7 @@ const WalletButton = styled.div`
   border-width: 1px;
   border-color: #313131;
   border-style: solid;
-  border-radius: 9px;
+  border-radius: 8px;
   padding: 10px;
   transition: 0.3s ease-in-out;
   &:hover {
@@ -126,7 +126,7 @@ const WalletButton = styled.div`
   }
 `
 
-const ChainButton = styled.button`
+const ChainButton = styled.div`
   font-size: 16px;
   font-weight: 500;
   border-color: #313131;
@@ -135,10 +135,7 @@ const ChainButton = styled.button`
   background: transparent;
   border-width: 1px;
   padding: 8px;
-  transition: 0.3s ease-in-out;
-  :hover {
-    background: transparent;
-  }
+  cursor: default;
 `
 
 const pulse = keyframes`
@@ -186,7 +183,6 @@ const NavButton2 = styled.p`
   margin-right: 2px;
   cursor: not-allowed
 `
-
 
 const activeClassName = 'ACTIVE'
 

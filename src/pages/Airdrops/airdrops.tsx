@@ -17,8 +17,10 @@ import { Container } from 'react-bootstrap'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import styled from 'styled-components'
+import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Wrap from 'components/layout/containers/Wrap'
 import { useAirdropData } from '../../state/hooks'
 import useAirdropClaim from '../../hooks/useAirdropClaim'
 import { getBalanceNumber } from '../../utils/formatBalance'
@@ -99,7 +101,7 @@ const Airdrop = () => {
                   <Typography>Total Distributed</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop.">
+              <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
                 <ContentCard>
                   {expectedReturnsNo > 1 ? (
                     <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{expectedReturnsStr} UST</TypographyBold>
@@ -109,7 +111,7 @@ const Airdrop = () => {
                   <Typography>Yearly Returns</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated every time you claim an airdrop.">
+              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated every time you claim an airdrop">
                 <ContentCard style={{ marginLeft: '10px' }}>
                   <div>
                     <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
@@ -175,14 +177,5 @@ const Airdrop = () => {
   )
 }
 
-
-const Wrap = styled(Container)`
-  border-radius: 7px;
-  padding: 2px;
-  border-width: 1px;
-  border-color: #313131;
-  border-style: solid;
-  box-shadow: 5px 5px 28px -20px #55747d;
-  `
 
 export default Airdrop

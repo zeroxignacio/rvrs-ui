@@ -9,13 +9,13 @@ const Style = createGlobalStyle`
   background: radial-gradient(circle at 100%, 
     #2B3647, 
     #121212 0%,
-    #121212 65%, 
+    #060606 65%, 
     #141414 75%, 
-    #313131 75.1%,
-    #121212 75%
+    #3A3A3A 75.1%,
+    #000000 75%
     );
     border-width: 2px;
-    border-color: #313131;
+    border-color: #3A3A3A;
     border-style: solid;
 }
 
