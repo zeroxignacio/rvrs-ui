@@ -21,10 +21,10 @@ const Input: React.FC<InputProps> = ({ endAdornment, onChange, placeholder, star
 const InputWrapper = styled.div`
   align-items: center;
   background: #F2F2F2;
-  border-radius: 0px;
+  border-radius: 2px;
   display: flex;
-  padding-left: 10px;
   padding: 0px;
+  padding-left: 10px;
 `
 
 const StyledInput = styled.input`

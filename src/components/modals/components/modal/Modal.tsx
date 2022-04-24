@@ -35,7 +35,7 @@ const Modal: React.FC<Props> = ({
 
 const Divider = styled.div`
   height: 0px;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
   width: 0%;
 `
@@ -51,14 +51,21 @@ const ModalContainer = styled.div`
 `
 
 const ModalContainerWrap = styled.div`
-  background-image: linear-gradient(45deg, #161616, #121212);
-  padding: 10000px;
+background: linear-gradient(145deg, 
+  #060606, 
+  #121212 0%,
+  #060606 50%, 
+  #0D0D0D 50%, 
+  #121212 50%
+  );
+  padding: 4000px;
   z-index: 100;
 `
 
 const TitleContainer = styled(Container)`
   background: #161616;
-  padding: 10px;
+  padding: 5px;
+  padding-left: 10px;
   border-width: 1px;
   border-color: #313131;
   border-style: solid;
