@@ -5,7 +5,7 @@ const ContentCard = styled(Container)`
   text-align: center;
   border-radius: 0px;
   background: #191919;
-  padding: 15px;
+  padding: 13px;
   border-width: 1px;
   border-color: transparent;
   border-style: solid;
