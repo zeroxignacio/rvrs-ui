@@ -8,7 +8,12 @@ import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
 import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
-import useTokenBalance, { useBurnedBalance, useNonCirculatingBalance, useTotalSupply } from 'hooks/useTokenBalance'
+import useTokenBalance, {
+  useBurnedBalance,
+  useNonCirculatingBalance,
+  useStakedBalance,
+  useTotalSupply,
+} from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
 import { FaAward, FaClipboard, FaExternalLinkSquareAlt } from 'react-icons/fa'
 import { Container } from 'react-bootstrap'
@@ -52,6 +57,13 @@ const Dashboard = () => {
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const circSupply = totalSupply.minus(useNonCirculatingBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
+
+  const stakedBalanceStr = useStakedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
+    .div(circSupply)
+    .times(100)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+
   const marketCap = new BigNumber(circSupply.times(rvrsPrice)).div(1e18)
   const marketCapStr = marketCap
     .toNumber()
@@ -141,6 +153,7 @@ const Dashboard = () => {
               </ContentCard>
             </Tippy>
           </Flex>
+
           <Flex justifyContent="center" marginTop="8px">
             <Tippy content="Current RVRS price and price change (as per Coingecko API)">
               <ContentCard style={{ marginRight: '8px' }}>
@@ -149,15 +162,15 @@ const Dashboard = () => {
                   {filteredCoins.map((coin) => {
                     return (
                       <>
-                          <>
-                            <PriceChange
-                              key={coin.id}
-                              price={coin.current_price}
-                              marketcap={coin.total_volume}
-                              volume={coin.market_cap}
-                              priceChange={coin.price_change_percentage_24h}
-                            />
-                          </>
+                        <>
+                          <PriceChange
+                            key={coin.id}
+                            price={coin.current_price}
+                            marketcap={coin.total_volume}
+                            volume={coin.market_cap}
+                            priceChange={coin.price_change_percentage_24h}
+                          />
+                        </>
                       </>
                     )
                   })}
@@ -194,9 +207,17 @@ const Dashboard = () => {
               ) : (
                 <ContentCardAlt>
                   <TypographyBold style={{ marginBottom: '5px', color: '#eed202' }}>{ratioStr}</TypographyBold>
-                  <Typography>Treasury/Market Cap Ratio</Typography>
+                  <Typography>Market Cap/Treasury Ratio</Typography>
                 </ContentCardAlt>
               )}
+            </Tippy>
+          </Flex>
+          <Flex justifyContent="center" marginTop="8px">
+            <Tippy content="The percentage of circulating RVRS locked in the staking contract. Circulating RVRS includes tokens in liquidity but excludes Multisig tokens">
+              <ContentCardAlt>
+                <TypographyBold style={{ marginBottom: '5px' }}>{stakedBalanceStr}%</TypographyBold>
+                <Typography>Supply Staked</Typography>
+              </ContentCardAlt>
             </Tippy>
           </Flex>
           <Divider />

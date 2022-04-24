@@ -46,7 +46,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   // rvrs
   const rvrsBalance = getBalanceNumber(useTokenBalance(getCakeAddress()))
-  const rvrsBalanceStr = rvrsBalance.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const rvrsBalanceStr = rvrsBalance.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
   const rvrsPrice = usePriceCakeBusd()
   const stakingTokenContract = useERC20(stakingTokenAddress)
 
@@ -249,7 +249,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                   </ActionButton>
                   <Ripples>
                     <ActionButton disabled={apyNull} onClick={onPresentDeposit}>
-                      &nbsp;Stake&nbsp;
+                      &nbsp;Stake {rvrsBalanceStr} RVRS
                     </ActionButton>
                   </Ripples>
                 </div>

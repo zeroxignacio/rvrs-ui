@@ -64,7 +64,7 @@ const Text = styled.div`
   display: flex;
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   justify-content: flex-start;
   cursor: pointer;
 `
@@ -85,9 +85,11 @@ const MaxButton = styled.button`
   background: #121212;
   color: #eeeeee;
   justify-content: center;
-  padding: 11px;
+  padding: 12px;
   transition: 0.3s ease-in-out;
   border-left: 3px solid #6699a3;
+  border-right: 4px solid grey;
+
   :hover {
     background: #121212;
   }
