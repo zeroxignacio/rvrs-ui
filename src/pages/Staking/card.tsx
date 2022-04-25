@@ -101,6 +101,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
+    const rewBlock = new BigNumber(0.046).times(1e18).toNumber()
+
   // approve, withdraw modals
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={staked} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
