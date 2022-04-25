@@ -382,7 +382,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   </Flex>
                 </Flex>
                 <Flex flexDirection="column">
-                  <Typography style={{ color: 'white', maxWidth: '100px' }}>Opening In</Typography>
+                  <Typography style={{ color: 'white', maxWidth: '100px' }}>Starts In</Typography>
                   <TypographySmall style={{ maxWidth: '100px' }}>{hoursToStartStr} Hours</TypographySmall>
                 </Flex>
               </Flex>

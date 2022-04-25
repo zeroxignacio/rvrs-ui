@@ -74,7 +74,16 @@ const MenuBottom = (props) => {
           </Flex>
           {/* <object type="image/svg+xml" data="/images/reverse.svg" width="120px" style={{ marginTop: "-20px" }}>&nbsp;</object> */}
         </Flex>
-        <Typography>2022 Reverse Protocol. MIT License.</Typography>
+        <Typography>
+          2022 Reverse Protocol.
+          <a
+            target="_blanK"
+            rel="noreferrer"
+            href="https://github.com/0xIgnacio/rvrs-ui/blob/main/LICENSE"
+            className="nav-links"
+          >&nbsp;MIT License.
+          </a>
+        </Typography>
       </NavContainer>
     </MenuContainer>
   )
@@ -114,9 +123,9 @@ const MenuContainer = styled(Container)`
   padding: 20px;
   border-width: 1px 0px 0px 0px;
   border-style: solid;
-  border-color: #3A3A3A;
+  border-color: #3a3a3a;
   margin-top: 30px;
-  background-color: #0D0D0D;
+  background-color: #0d0d0d;
   transition: all 0.3s ease-in-out;
   :hover {
     opacity: 1;
