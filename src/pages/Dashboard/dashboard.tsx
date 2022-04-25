@@ -215,12 +215,12 @@ const Dashboard = () => {
               {ratio > 0.9 ? (
                 <ContentCardAlt>
                   <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}<FaQuestionCircle style={{maxWidth:'10px', paddingBottom:'5px', marginLeft:'4px'}} color='grey'/></TypographyBold>
-                  <Typography>Market Cap/Treasury Ratio</Typography>
+                  <Typography>Treasury Ratio</Typography>
                 </ContentCardAlt>
               ) : (
                 <ContentCardAlt>
                   <TypographyBold style={{ marginBottom: '5px', color: '#eed202' }}>{ratioStr}</TypographyBold>
-                  <Typography>Market Cap/Treasury Ratio</Typography>
+                  <Typography>Treasury Ratio</Typography>
                 </ContentCardAlt>
               )}
             </Tippy>

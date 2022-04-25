@@ -6,10 +6,6 @@ const Page = styled(Container)`
   max-width: 570px;
   padding-top: 30px;
   transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 2000px) {
-    max-width: 650px;
-  }
 `
 
 export default Page
