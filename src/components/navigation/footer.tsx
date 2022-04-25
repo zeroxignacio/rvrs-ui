@@ -88,6 +88,13 @@ const TypographyBold = styled.p`
   margin-right: 3px;
   margin-left: 3px;
   transition: 0.3s ease-in-out;
+
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+    font-weight: 400;
+    margin-right: 1px;
+    margin-left: 1px;
+  }
 `
 
 const Typography = styled.p`

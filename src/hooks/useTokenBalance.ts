@@ -79,6 +79,58 @@ export const useNonCirculatingBalance = (tokenAddress: string) => {
 }
 
 
+
+export const useLpBalance = (tokenAddress: string) => {
+  const [balance, setBalance] = useState(new BigNumber(0))
+  const { slowRefresh } = useRefresh()
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const rvrsContract = getContract(cakeABI, getCakeAddress())
+      const bal = await rvrsContract.methods.balanceOf('0xcde0a00302cf22b3ac367201fbd114cefa1729b4').call()
+      setBalance(new BigNumber(bal))
+    }
+
+    fetchBalance()
+  }, [tokenAddress, slowRefresh])
+
+  return balance
+}
+
+export const useLpBalance2 = (tokenAddress: string) => {
+  const [balance, setBalance] = useState(new BigNumber(0))
+  const { slowRefresh } = useRefresh()
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const rvrsContract = getContract(cakeABI, getCakeAddress())
+      const bal = await rvrsContract.methods.balanceOf('0xf8838fcc026d8e1f40207acf5ec1da0341c37fe2').call()
+      setBalance(new BigNumber(bal))
+    }
+
+    fetchBalance()
+  }, [tokenAddress, slowRefresh])
+
+  return balance
+}
+
+export const useLpBalance3 = (tokenAddress: string) => {
+  const [balance, setBalance] = useState(new BigNumber(0))
+  const { slowRefresh } = useRefresh()
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const rvrsContract = getContract(cakeABI, getCakeAddress())
+      const bal = await rvrsContract.methods.balanceOf('0xd1af43eb1d14b0377fbe35d2bfadab16b96c0911').call()
+      setBalance(new BigNumber(bal))
+    }
+
+    fetchBalance()
+  }, [tokenAddress, slowRefresh])
+
+  return balance
+}
+
 export const useStakedBalance = (tokenAddress: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
   const { slowRefresh } = useRefresh()

@@ -28,6 +28,13 @@ const Typography = styled.p`s
     font-weight: 400;
     min-width: 70px;
     max-width: 70px;
+
+  @media screen and (max-width: 500px) {
+    min-width: 100px;
+    max-width: 100px;
+
+  }
+
 `
 
 const TypographySmall = styled.p`
@@ -356,7 +363,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
             <BondsContainer>
               <Flex alignItems="center" justifyContent="space-between">
                 <Flex alignItems="center">
-                  <object type="image/svg+xml" data="/images/ust3.svg" width="35px" style={{ marginRight: '8px' }}>
+                  <object type="image/svg+xml" data="/images/ust.svg" width="35px" style={{ marginRight: '8px' }}>
                     &nbsp;
                   </object>
                   <Flex flexDirection="column">
@@ -375,7 +382,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                   </Flex>
                 </Flex>
                 <Flex flexDirection="column">
-                  <Typography style={{ color: 'white', maxWidth: '100px' }}>Starting In</Typography>
+                  <Typography style={{ color: 'white', maxWidth: '100px' }}>Opening In</Typography>
                   <TypographySmall style={{ maxWidth: '100px' }}>{hoursToStartStr} Hours</TypographySmall>
                 </Flex>
               </Flex>
