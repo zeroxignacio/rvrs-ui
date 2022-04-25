@@ -35,8 +35,8 @@ const Airdrop = () => {
   const lastClaimAmount = getBalanceNumber(airdropData.userLastClaimedAmount)
   const expectedReturnsNo = new BigNumber(lastClaimAmount).times(52.2).toNumber()
   const expectedReturnsStr = expectedReturnsNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
-  const totalDistributedNo = totalDistributed
-  const totalDistributedStr = totalDistributed.toLocaleString('en-us', { maximumFractionDigits: 2 })
+  const totalDistributedNo = new BigNumber(totalDistributed).plus(501745).toNumber()
+  const totalDistributedStr = totalDistributedNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
 
   const allocationStr = new BigNumber(lastClaimAmount)
     .div(totalDistributed)
