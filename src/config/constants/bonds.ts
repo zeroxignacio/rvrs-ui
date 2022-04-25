@@ -664,9 +664,9 @@ const pools2: Pool2Config[] = [
         tokenPoolAddress: '0xED0B4b0F0E2c17646682fc98ACe09feB99aF3adE',
         contractAddress: {
             1666700000: '',
-            1666600000: '0x499f23410a4f992AA67d8b6BF7Ca63A97F4b0C8B',
+            1666600000: '0x48F3a3cF8b14Ddc2C7b573D6Cad113A59ABfcd26',
         },
-        startBlock: 25733803,
+        startBlock: 25736804,
         lockBlock: 25949800,
         endBlock: 25949803,
 

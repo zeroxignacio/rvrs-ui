@@ -106,10 +106,8 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
 
   // to start
   const hasStarted = block > startBlock
-  const hoursToStartNo = (startBlock - block) * 2 * 0.000277778
-  const hoursToStartStr = hoursToStartNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 0 })
-  const minutesToStartNo = (startBlock - block) * 2 * 0.000277778 * 60
-  const minutesToStarStr = minutesToStartNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 0 })
+  const hoursToStartNo = (startBlock - block) * 2 * 0.000277778 * 60
+  const hoursToStartStr = hoursToStartNo.toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 3 })
 
   // vesting period
   const hasEnded = block > endBlock
@@ -385,7 +383,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 </Flex>
                 <Flex flexDirection="column">
                   <Typography style={{ color: 'white', maxWidth: '100px' }}>Starts In</Typography>
-                  <TypographySmall style={{ maxWidth: '100px' }}>{minutesToStarStr}m</TypographySmall>
+                  <TypographySmall style={{ maxWidth: '100px' }}>{hoursToStartStr}m</TypographySmall>
                 </Flex>
               </Flex>
             </BondsContainer>
