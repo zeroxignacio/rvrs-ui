@@ -13,6 +13,7 @@ const bondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
     background: #181818;
     // box-shadow 10px 10px 5px -9px #2C2C2C;
   }
+
 `
 
 export default bondsContainer

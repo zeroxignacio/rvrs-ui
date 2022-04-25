@@ -10,12 +10,15 @@ import { Skeleton } from 'components/Skeleton'
 import TitleCard from 'components/layout/cards/TitleCard'
 import useTokenBalance, {
   useBurnedBalance,
+  useLpBalance,
+  useLpBalance2,
+  useLpBalance3,
   useNonCirculatingBalance,
   useStakedBalance,
   useTotalSupply,
 } from 'hooks/useTokenBalance'
 import { getCakeAddress } from 'utils/addressHelpers'
-import { FaAward, FaClipboard, FaExternalLinkSquareAlt } from 'react-icons/fa'
+import { FaAward, FaClipboard, FaExternalLinkSquareAlt, FaQuestion, FaQuestionCircle } from 'react-icons/fa'
 import { Container } from 'react-bootstrap'
 import styled, { keyframes } from 'styled-components'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
@@ -46,7 +49,6 @@ const Dashboard = () => {
     if (balance > 10000) return 4
     return 0
   }
-  const farms = useFarms()
   const totalSupply = new BigNumber(useTotalSupply())
   const totalSupplyStr = totalSupply
     .div(1e18)
@@ -56,20 +58,20 @@ const Dashboard = () => {
   const rvrsPriceStr = rvrsPrice
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-  const circSupply = totalSupply.minus(useNonCirculatingBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
-
+  const circSupply = totalSupply.minus(useNonCirculatingBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')).minus(useBurnedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
+  const lpBalance = useLpBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').plus(useLpBalance2('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')).plus(useLpBalance3('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
   const stakedBalanceStr = useStakedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
     .div(circSupply)
     .times(100)
     .toNumber()
-    .toLocaleString('en-us', { maximumFractionDigits: 4, minimumFractionDigits: 4 })
-
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const marketCap = new BigNumber(circSupply.times(rvrsPrice)).div(1e18)
+  const marketCapNoLp = new BigNumber(circSupply.minus(lpBalance).times(rvrsPrice)).div(1e18)
   const marketCapStr = marketCap
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
   const treasuryUSD = new BigNumber(1481434)
-  const ratio = treasuryUSD.div(marketCap).toNumber()
+  const ratio = treasuryUSD.div(marketCapNoLp).toNumber()
   const ratioStr = ratio.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const farm0 = useFarmFromPid(0)
   const rvrsPerBlock = new BigNumber(farm0.vikingPerBlock)
@@ -126,7 +128,7 @@ const Dashboard = () => {
               >
                 <Typography>
                   {account.substring(0, 14)}
-                  <FaExternalLinkSquareAlt style={{ marginTop: '-2px', marginLeft: '2px' }} />
+                  <FaExternalLinkSquareAlt style={{ marginTop: '-2px', marginLeft: '4px' }} />
                 </Typography>
               </a>
             </TypographyTitle>
@@ -192,32 +194,35 @@ const Dashboard = () => {
             </Tippy>
           </Flex>
           <Flex justifyContent="center" marginTop="8px">
+
+            {/* 
             <Tippy content="Your current yield boost based on veRVRS balance">
               <ContentCardAlt style={{ marginRight: '8px' }}>
                 <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+0.00%</TypographyBold>
                 <Typography>veRVRS Boost</Typography>
               </ContentCardAlt>
             </Tippy>
-            <Tippy content="The Market Cap/Treasury Ratio works as a health indicator for the protocol and its overall participants. When above 1, $1 worth of RVRS gives you access to a +$1 of the treasury">
+            */ }
+
+            <Tippy content="The percentage of circulating RVRS locked in the staking contract. Circulating RVRS includes tokens in liquidity but excludes noncirculating tokens in the Reverseum">
+              <ContentCardAlt style={{ marginRight: '8px' }}>
+                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{stakedBalanceStr}%</TypographyBold>
+                <Typography>Supply Staked</Typography>
+              </ContentCardAlt>
+            </Tippy>
+
+            <Tippy content={`Health indicator for the protocol and its participants. At current rates, $1 worth of RVRS is earning yield on $${ratioStr} of treasury value, which is distributed via airdrops. When the ratio is below 1, bonds are maximized to bring the ratio back up`}>
               {ratio > 0.9 ? (
                 <ContentCardAlt>
-                  <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}</TypographyBold>
-                  <Typography>Market Cap/Treasury Ratio</Typography>
+                  <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}<FaQuestionCircle style={{maxWidth:'10px', paddingBottom:'5px', marginLeft:'4px'}} color='grey'/></TypographyBold>
+                  <Typography>Treasury Ratio</Typography>
                 </ContentCardAlt>
               ) : (
                 <ContentCardAlt>
                   <TypographyBold style={{ marginBottom: '5px', color: '#eed202' }}>{ratioStr}</TypographyBold>
-                  <Typography>Market Cap/Treasury Ratio</Typography>
+                  <Typography>Treasury Ratio</Typography>
                 </ContentCardAlt>
               )}
-            </Tippy>
-          </Flex>
-          <Flex justifyContent="center" marginTop="8px">
-            <Tippy content="The percentage of circulating RVRS locked in the staking contract. Circulating RVRS includes tokens in liquidity but excludes Multisig tokens">
-              <ContentCardAlt>
-                <TypographyBold style={{ marginBottom: '5px' }}>{stakedBalanceStr}%</TypographyBold>
-                <Typography>Supply Staked</Typography>
-              </ContentCardAlt>
             </Tippy>
           </Flex>
           <Divider />
@@ -244,7 +249,7 @@ const Dashboard = () => {
             {/*  eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
               style={{ width: '800px', height: '400px' }}
-              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS44_dnMXBvCVYrTCEaQ1egJS2SAePHobU4aHI01iX6InYDjdIaSuW83NrZMJbGR976nCN45cK9QXbC/pubhtml?widget=true&amp;headers=false"
+              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQmfh6gUgzDmxKROE2SCxe4PRY9xw4xkjCp0VY06zHi3vJbjUbM0nAqWwVj5Yveq6OT7WYzWm4cPM/pubhtml?widget=true&amp;headers=false"
             >
               &nbsp;
             </iframe>

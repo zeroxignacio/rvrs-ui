@@ -124,6 +124,10 @@ const WalletButton = styled.div`
     border-color: #ffff !important;
     transform: translate(-2px);
   }
+
+  @media screen and (max-width: 500px) {
+    margin-top: 7px;
+  }
 `
 
 const ChainButton = styled.div`
@@ -136,6 +140,10 @@ const ChainButton = styled.div`
   border-width: 1px;
   padding: 8px;
   cursor: default;
+
+  @media screen and (max-width: 500px) {
+    margin-top: 7px;
+  }
 `
 
 const pulse = keyframes`

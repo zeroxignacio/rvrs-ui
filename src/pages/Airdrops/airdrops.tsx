@@ -35,11 +35,18 @@ const Airdrop = () => {
   const lastClaimAmount = getBalanceNumber(airdropData.userLastClaimedAmount)
   const expectedReturnsNo = new BigNumber(lastClaimAmount).times(52.2).toNumber()
   const expectedReturnsStr = expectedReturnsNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
-  const totalDistributedNo = totalDistributed
-  const totalDistributedStr = totalDistributed.toLocaleString('en-us', { maximumFractionDigits: 2 })
+  const totalDistributedNo = new BigNumber(totalDistributed).plus(501745).toNumber()
+  const totalDistributedStr = totalDistributedNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
+
+  const allocationStr = new BigNumber(lastClaimAmount)
+    .div(totalDistributed)
+    .times(100)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 2 })
+
   const claimedNotZero = claimed > 0
-  const toClaimStr = toClaim.toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 2 })
-  const claimedStr = claimed.toLocaleString('en-us', { maximumFractionDigits: 3 })
+  const toClaimStr = toClaim.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const claimedStr = claimed.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const lastClaimAmountStr = lastClaimAmount.toLocaleString('en-us', { maximumFractionDigits: 0 })
   const [pendingTxn, setPendingTxn] = useState(false)
 
@@ -104,31 +111,44 @@ const Airdrop = () => {
               <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
                 <ContentCard>
                   {expectedReturnsNo > 1 ? (
-                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{expectedReturnsStr} UST</TypographyBold>
+                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>
+                      +${expectedReturnsStr} UST
+                    </TypographyBold>
                   ) : (
                     <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+TBD</TypographyBold>
                   )}
                   <Typography>Yearly Returns</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated every time you claim an airdrop">
+              <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated once you claim your first airdrop">
                 <ContentCard style={{ marginLeft: '10px' }}>
-                  <div>
+                  {expectedReturnsNo > 1 ? (
+                    <TypographyBold style={{ marginBottom: '5px' }}>{allocationStr}%</TypographyBold>
+                  ) : (
                     <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
-                    <Typography>Net Allocation</Typography>
-                  </div>
+                  )}
+                  <Typography>Net Allocation</Typography>
                 </ContentCard>
               </Tippy>
             </Flex>
             <Flex justifyContent="space-between" marginTop="20px">
               <Tippy content="Amount of UST you have claimed to date">
                 <Flex style={{ textAlign: 'center', alignItems: 'center' }}>
-                  <ClaimButtonDisabled disabled>
-                    <Typography>Claimed ${lastClaimAmountStr} to Date</Typography>
+                  <ClaimButtonDisabled style={{ padding: '8px' }} disabled>
+                    <Flex alignItems="center">
+                      <Typography style={{ alignItems: 'center' }}>Claimed ${claimedStr}&nbsp;</Typography>
+                      <img
+                        width="23px"
+                        style={{ marginLeft: '0px', marginBottom: '0px' }}
+                        className="img-fluid"
+                        src={`${process.env.PUBLIC_URL}/ust.svg`}
+                        alt="logo"
+                      />
+                      <Typography style={{ alignItems: 'center' }}>&nbsp;to Date</Typography>
+                    </Flex>
                   </ClaimButtonDisabled>
                 </Flex>
               </Tippy>
-
               {toClaim > 0 ? (
                 <Ripples>
                   <ClaimButton
@@ -151,7 +171,7 @@ const Airdrop = () => {
                       draggable
                       pauseOnHover
                     />
-                    Collect ${toClaimStr}
+                    Claim ${toClaimStr}
                   </ClaimButton>
                 </Ripples>
               ) : (
@@ -176,6 +196,5 @@ const Airdrop = () => {
     </>
   )
 }
-
 
 export default Airdrop
