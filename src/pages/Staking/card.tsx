@@ -66,12 +66,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   // staked
   const staked = new BigNumber(userData?.stakedBalance || 0)
 
-  const stakedUsdStr = new BigNumber(getBalanceNumber(staked))
-    .times(rvrsPrice)
-    .toNumber()
-    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const stakedNo = getBalanceNumber(staked)
   const stakedStr = stakedNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const stakedUsdStr = new BigNumber(stakedNo).times(rvrsPrice).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   // misc
   const accountHasStakedBalance = staked?.toNumber() > 0
@@ -223,7 +220,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           ) : (
             <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
               <div>
-                <Tippy content="Your current staked balance">
+                <Tippy content={`Your staked balance, currently valued at $${stakedUsdStr}`}>
                   <ContentCardAlt>
                     <TypographyBold>
                       {stakedStr}&nbsp;<Typography>RVRS Staked</Typography>

@@ -12,7 +12,7 @@ const MenuBottom = (props) => {
       <NavContainer>
         <Flex justifyContent="center" marginTop="0px">
           <Flex alignItems="center" >
-            <TypographyBold>rvrs.app is on release v0.1, please use at your own risk</TypographyBold>
+            <TypographyBold>rvrs.app is on release v0.2, please use at your own risk</TypographyBold>
           </Flex>
         </Flex>
       </NavContainer>
