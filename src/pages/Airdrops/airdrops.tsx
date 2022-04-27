@@ -21,7 +21,8 @@ import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Wrap from 'components/layout/containers/Wrap'
-import { useAirdropData } from '../../state/hooks'
+import { useBurnedBalance, useNonCirculatingBalance, useStakedBalance, useTotalSupply } from 'hooks/useTokenBalance'
+import { useAirdropData, usePriceCakeBusd } from '../../state/hooks'
 import useAirdropClaim from '../../hooks/useAirdropClaim'
 import { getBalanceNumber } from '../../utils/formatBalance'
 
@@ -37,6 +38,7 @@ const Airdrop = () => {
   const expectedReturnsStr = expectedReturnsNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
   const totalDistributedNo = new BigNumber(totalDistributed).plus(501745).toNumber()
   const totalDistributedStr = totalDistributedNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
+  const rvrsPrice = usePriceCakeBusd()
 
   const allocationStr = new BigNumber(lastClaimAmount)
     .div(totalDistributed)
@@ -44,6 +46,16 @@ const Airdrop = () => {
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 2 })
 
+  const stakedBalanceUsd = useStakedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').times(rvrsPrice)
+
+  // need to add last distr. to contract to automate this
+  const aprStr = new BigNumber(9930)
+    .div(stakedBalanceUsd)
+    .times(100)
+    .times(52)
+    .times(1e18)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const claimedNotZero = claimed > 0
   const toClaimStr = toClaim.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
   const claimedStr = claimed.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
@@ -108,16 +120,10 @@ const Airdrop = () => {
                   <Typography>Total Distributed</Typography>
                 </ContentCard>
               </Tippy>
-              <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
+              <Tippy content="Expected annual rate on airdrops alone. The APR is calculated with a very simplified formula that assumes airdrops remain constant for a year">
                 <ContentCard>
-                  {expectedReturnsNo > 1 ? (
-                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>
-                      +${expectedReturnsStr} UST
-                    </TypographyBold>
-                  ) : (
-                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+TBD</TypographyBold>
-                  )}
-                  <Typography>Yearly Returns</Typography>
+                  <TypographyBold style={{ marginBottom: '5px' }}>{aprStr}%</TypographyBold>
+                  <Typography>Annual Rate</Typography>
                 </ContentCard>
               </Tippy>
               <Tippy content="Your UST allocation relative to the total amount of UST distributed each monday. It will be calculated once you claim your first airdrop">
@@ -129,6 +135,20 @@ const Airdrop = () => {
                   )}
                   <Typography>Net Allocation</Typography>
                 </ContentCard>
+              </Tippy>
+            </Flex>
+            <Flex justifyContent="center">
+              <Tippy content="Expected UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
+                <ContentCardAlt style={{ marginTop: '10px' }}>
+                  {expectedReturnsNo > 1 ? (
+                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>
+                      +${expectedReturnsStr} UST
+                    </TypographyBold>
+                  ) : (
+                    <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>+TBD</TypographyBold>
+                  )}
+                  <Typography>Expected Yearly Interest</Typography>
+                </ContentCardAlt>
               </Tippy>
             </Flex>
             <Flex justifyContent="space-between" marginTop="20px">
@@ -186,8 +206,8 @@ const Airdrop = () => {
           <LayoutContainer>
             <Flex justifyContent="center">
               <Typography style={{ lineHeight: '1.1' }}>
-                Yield earned through the Reverseum Treasury positions is converted to UST and distributed to veRVRS and
-                RVRS holders every monday.
+                Yield earned through the Reverseum Treasury positions is converted to UST and distributed RVRS stakers
+                every monday. Airdrops can be claimed any time and do not expire.
               </Typography>
             </Flex>
           </LayoutContainer>
@@ -196,5 +216,12 @@ const Airdrop = () => {
     </>
   )
 }
+
+const TypoLink = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 0px;
+  text-decoration: underline;
+`
 
 export default Airdrop

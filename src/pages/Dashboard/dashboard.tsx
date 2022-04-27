@@ -186,7 +186,7 @@ const Dashboard = () => {
                 <Typography>Market Cap</Typography>
               </ContentCard>
             </Tippy>
-            <Tippy content="The rate at which RVRS is being emitted monthly">
+            <Tippy content="The rate at which RVRS is being emitted monthly. Emissions are cut by 25% every month until 2025">
               <ContentCard>
                 <TypographyBold style={{ marginBottom: '5px' }}>+{inflatioRate}%</TypographyBold>
                 <Typography> Monthly Inflation</Typography>

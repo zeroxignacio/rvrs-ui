@@ -128,7 +128,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   })
   // tvl
   const tbvNo = pool2.tvl && pool2.tvl.toNumber()
-  const tbvStr = tbvNo.toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
+  const tbvStr = tbvNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   // rewards to claim
   const rewardsNo = getBalanceNumber(earnings, tokenDecimals)
@@ -269,7 +269,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                 </Flex>
               </Tippy>
             )}
-            <Tippy content="Your bonded tokens USD value">
+            <Tippy content={`Your bonded balance: $${bondedBalanceStr} / TVB: $${tbvStr}`}>
               <Flex flexDirection="column">
                 <Typography style={{ color: 'white' }}>Bonded</Typography>
                 <TypographySmall>${bondedBalanceStr}</TypographySmall>
