@@ -20,7 +20,9 @@ const Staking: React.FC = () => {
   const { path } = useRouteMatch()
   const { account } = useWallet()
   const farm0 = useFarmFromPid(0);
-  const pools = usePools(account)
+  let pools = usePools(account)
+  // Filtering for only autoRvrs
+  pools = pools.filter(p => p.sousId === 0)
   const prices = usePrices()
   const block = useBlock()
   const poolsWithApy = pools.map((pool) => {

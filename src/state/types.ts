@@ -29,6 +29,14 @@ export interface Pool extends PoolConfig {
   tokenPriceVsQuote?: BigNumber
   startBlock?: number
   endBlock?: number
+  veRvrsPublicData?: {
+    totalStaked: BigNumber
+    totalSupply: BigNumber
+    generationRate: BigNumber
+    maxCap: BigNumber
+    withdrawFee: BigNumber
+    withdrawFeeTime: BigNumber
+  }
   userData?: {
     allowance: BigNumber
     stakingTokenBalance: BigNumber
@@ -37,6 +45,15 @@ export interface Pool extends PoolConfig {
     reverseAtlastUserAction: BigNumber
     lastDepositedTime: BigNumber
     lastUserActionTime: BigNumber
+  }
+  veRvrsUserData?: {
+    allowance: BigNumber
+    rvrsStaked: BigNumber
+    veRvrsBalance: BigNumber
+    pendingRvrs: BigNumber
+    pendingVeRvrs: BigNumber
+    lastClaim: BigNumber
+    lastDeposit: BigNumber
   }
 }
 

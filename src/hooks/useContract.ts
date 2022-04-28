@@ -8,7 +8,8 @@ import {
   getWbnbAddress,
   getSousChefAddress,
   getAutoRvrsAddress,
-  getAirdropAddress
+  getAirdropAddress,
+  getVeRvrsAddress
 } from 'utils/addressHelpers'
 import { pools2Config } from 'config/constants'
 import erc20 from 'config/abi/erc20.json'
@@ -16,6 +17,7 @@ import devFeeProcessor from 'config/abi/devFeeProcessor.json'
 import masterChef from 'config/abi/masterchef.json'
 import sousChef from 'config/abi/sousChef.json'
 import autoRvrs from 'config/abi/autorvrs.json'
+import veRvrs from 'config/abi/veRvrs.json'
 import RewardClaim from 'config/abi/RewardClaim.json'
 import sousChefBurn from 'config/abi/sousChefBurn.json'
 import sousChefBurn2 from 'config/abi/sousChefBurn2.json'
@@ -62,6 +64,11 @@ export const useAirdropContract = () => {
 export const useAutoRvrs = () => {
   const abi = (autoRvrs as unknown) as AbiItem
   return useContract(abi, getAutoRvrsAddress())
+}
+
+export const useVeRvrs = () => {
+  const abi = (veRvrs as unknown) as AbiItem
+  return useContract(abi, getVeRvrsAddress())
 }
 
 export const useSousChefBurn = (id) => {

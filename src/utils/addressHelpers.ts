@@ -24,7 +24,9 @@ export const getWbnbAddress = () => {
 export const getOneAddress = () => {
   return addresses.one[chainId]
 }
-
+export const getVeRvrsAddress = () => {
+  return addresses.vervrs[chainId]
+}
 export const getAutoRvrsAddress = () => {
   return addresses.autoRVRS[chainId]
 }

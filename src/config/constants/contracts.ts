@@ -9,6 +9,10 @@ export default {
     1666600000: '0xED0B4b0F0E2c17646682fc98ACe09feB99aF3adE',
     1666700000: '',
   },
+  vervrs: {
+    1666600000: '0x9520E7d6eD2256613C30B22b566259aefcA7D75D',
+    1666700000: '',
+  },
   rvrs: {
     1666600000: '0xED0B4b0F0E2c17646682fc98ACe09feB99aF3adE',
     1666700000: '',

@@ -154,3 +154,31 @@ export const sousStakeBurn2 = async (sousChefContract, amount, account) => {
       return tx.transactionHash
     })
 }
+
+export const veRvrsDeposit = async (veRvrsContract, account, amount, restakeRewards: boolean) => {
+  return veRvrsContract.methods
+    .deposit(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(), restakeRewards)
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const veRvrsClaim = async (veRvrsContract, account, restakeRewards: boolean) => {
+  return veRvrsContract.methods
+    .claim(restakeRewards)
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const veRvrsWithdraw = async (veRvrsContract, account, amount) => {
+  return veRvrsContract.methods
+    .withdraw(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
