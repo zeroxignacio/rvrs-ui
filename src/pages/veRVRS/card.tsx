@@ -41,6 +41,8 @@ interface HarvestProps {
   pool: PoolWithApy
 }
 
+export const BIG_TEN = new BigNumber(10)
+const ETHERS = BIG_TEN.pow(18)
 
 const Card: React.FC<HarvestProps> = ({ pool }) => {
   const notifySuccess = () =>
@@ -78,8 +80,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
 
-  const stakedRvrs = new BigNumber(pool.veRvrsUserData?.rvrsStaked ?? 0)
-  
+  const stakedRvrs = new BigNumber(pool.veRvrsUserData?.rvrsStaked.toString() ?? 0)
   
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
