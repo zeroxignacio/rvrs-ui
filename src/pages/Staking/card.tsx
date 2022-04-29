@@ -68,7 +68,10 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   const stakedNo = getBalanceNumber(staked)
   const stakedStr = stakedNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-  const stakedUsdStr = new BigNumber(stakedNo).times(rvrsPrice).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const stakedUsdStr = new BigNumber(stakedNo)
+    .times(rvrsPrice)
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   // misc
   const accountHasStakedBalance = staked?.toNumber() > 0
@@ -98,7 +101,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
-    const rewBlock = new BigNumber(0.046).times(1e18).toNumber()
+  const rewBlock = new BigNumber(0.046).times(1e18).toNumber()
 
   // approve, withdraw modals
   const [onPresentWithdraw] = useModal(
@@ -130,11 +133,11 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       progress: undefined,
       theme: 'dark',
     })
-    const Staked = ()=> new BigNumber(userData?.stakedBalance || 0) 
-    
+  const Staked = () => new BigNumber(userData?.stakedBalance || 0)
+
   return (
     <>
-    {Staked}
+      {Staked}
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ marginBottom: '10px' }}>
@@ -259,8 +262,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography style={{ lineHeight: '1.1'}}>
-            Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the introduction of (ve)RVRS.
+          <Typography style={{ lineHeight: '1.1' }}>
+            Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the
+            introduction of (ve)RVRS.
           </Typography>
         </LayoutContainer>
       </Wrap>

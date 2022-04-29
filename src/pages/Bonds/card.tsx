@@ -22,30 +22,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import BondButton from 'components/layout/buttons/bondButton'
 import ClaimButton from 'components/layout/buttons/claimButton'
 
-const Typography = styled.p`s
-    font-size: 16px;
-    color: #CFCFCF;
-    font-weight: 400;
-    min-width: 70px;
-    max-width: 70px;
-
-  @media screen and (max-width: 500px) {
-    min-width: 100px;
-    max-width: 100px;
-
-  }
-
-`
-
-const TypographySmall = styled.p`
-  font-size: 14px;
-  color: #9b9b9b;
-  font-weight: 400;
-  min-width: 60px;
-  max-width: 60px;
-  margin-top: 3px;
-`
-
 interface PoolWithApy extends Pool2 {
   apy: BigNumber
 }
@@ -395,5 +371,27 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
     </>
   )
 }
+
+
+const Typography = styled.p`s
+    font-size: 16px;
+    color: #CFCFCF;
+    font-weight: 400;
+    min-width: 70px;
+    max-width: 70px;
+  @media screen and (max-width: 500px) {
+    min-width: 100px;
+    max-width: 100px;
+  }
+`
+
+const TypographySmall = styled.p`
+  font-size: 14px;
+  color: #9b9b9b;
+  font-weight: 400;
+  min-width: 60px;
+  max-width: 60px;
+  margin-top: 3px;
+`
 
 export default Bonds

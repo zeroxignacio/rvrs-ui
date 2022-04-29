@@ -217,11 +217,4 @@ const Airdrop = () => {
   )
 }
 
-const TypoLink = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  margin-bottom: 0px;
-  text-decoration: underline;
-`
-
 export default Airdrop

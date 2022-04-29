@@ -4,7 +4,7 @@ import { Contract } from 'web3-eth-contract'
 import { useDispatch } from 'react-redux'
 import {updateUserAllowance, fetchFarmUserDataAsync, updateUserAllowance2} from 'state/actions'
 import { approve } from 'utils/callHelpers'
-import { useMasterchef, useSousChefBurn, useAutoRvrs } from './useContract'
+import { useMasterchef, useSousChefBurn, useAutoRvrs, useVeRvrs } from './useContract'
 
 // approve a farm
 export const useApprove = (lpContract: Contract) => {
@@ -30,6 +30,24 @@ export const useSousApprove = (lpContract: Contract, sousId) => {
   const dispatch = useDispatch()
   const { account }: { account: string } = useWallet()
   const sousChefContract = useAutoRvrs()
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(lpContract, sousChefContract, account)
+      dispatch(updateUserAllowance(sousId, account))
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, dispatch, lpContract, sousChefContract, sousId])
+
+  return { onApprove: handleApprove }
+}
+
+export const useVeRvrsApprove = (lpContract: Contract, sousId) => {
+  const dispatch = useDispatch()
+  const { account }: { account: string } = useWallet()
+  const sousChefContract = useVeRvrs()
 
   const handleApprove = useCallback(async () => {
     try {

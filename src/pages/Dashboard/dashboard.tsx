@@ -57,9 +57,13 @@ const Dashboard = () => {
   const rvrsPrice = usePriceCakeBusd()
   const rvrsPriceStr = rvrsPrice
     .toNumber()
-    .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-  const circSupply = totalSupply.minus(useNonCirculatingBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')).minus(useBurnedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
-  const lpBalance = useLpBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').plus(useLpBalance2('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')).plus(useLpBalance3('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
+    .toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 3 })
+  const circSupply = totalSupply
+    .minus(useNonCirculatingBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
+    .minus(useBurnedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
+  const lpBalance = useLpBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
+    .plus(useLpBalance2('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
+    .plus(useLpBalance3('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade'))
   const stakedBalanceStr = useStakedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
     .div(circSupply)
     .times(100)
@@ -91,10 +95,8 @@ const Dashboard = () => {
       vs_currencies: 'usd',
     })
   }
-
   const [coins, setCoins] = useState([])
   const [search, setSearch] = useState('')
-
   useEffect(() => {
     axios
       .get(
@@ -110,7 +112,6 @@ const Dashboard = () => {
   const handleChange = (e) => {
     setSearch(e.target.value)
   }
-
   const filteredCoins = coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
@@ -194,7 +195,6 @@ const Dashboard = () => {
             </Tippy>
           </Flex>
           <Flex justifyContent="center" marginTop="8px">
-
             {/* 
             <Tippy content="Your current yield boost based on veRVRS balance">
               <ContentCardAlt style={{ marginRight: '8px' }}>
@@ -202,8 +202,7 @@ const Dashboard = () => {
                 <Typography>veRVRS Boost</Typography>
               </ContentCardAlt>
             </Tippy>
-            */ }
-
+            */}
             <Tippy content="The percentage of circulating RVRS locked in the staking contract. Circulating RVRS includes tokens in liquidity but excludes noncirculating tokens in the Reverseum">
               <ContentCardAlt style={{ marginRight: '8px' }}>
                 <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{stakedBalanceStr}%</TypographyBold>
@@ -211,10 +210,18 @@ const Dashboard = () => {
               </ContentCardAlt>
             </Tippy>
 
-            <Tippy content={`Health indicator for the protocol and its participants. At current rates, $1 worth of RVRS is earning yield on $${ratioStr} of treasury value, which is distributed via airdrops. When the ratio is below 1, bonds are maximized to bring the ratio back up`}>
+            <Tippy
+              content={`Health indicator for the protocol and its participants. At current rates, $1 worth of RVRS is earning yield on $${ratioStr} of treasury value, which is distributed via airdrops. When the ratio is below 1, bonds are maximized to bring the ratio back up`}
+            >
               {ratio > 0.9 ? (
                 <ContentCardAlt>
-                  <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>{ratioStr}<FaQuestionCircle style={{maxWidth:'10px', paddingBottom:'5px', marginLeft:'4px'}} color='grey'/></TypographyBold>
+                  <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5' }}>
+                    {ratioStr}
+                    <FaQuestionCircle
+                      style={{ maxWidth: '10px', paddingBottom: '5px', marginLeft: '4px' }}
+                      color="grey"
+                    />
+                  </TypographyBold>
                   <Typography>Treasury Ratio</Typography>
                 </ContentCardAlt>
               ) : (
@@ -274,7 +281,8 @@ const Dashboard = () => {
             </iframe>
           </div>
         </LayoutContainer>
-      </Wrap> */}
+      </Wrap> 
+      */}
     </Page>
   )
 }

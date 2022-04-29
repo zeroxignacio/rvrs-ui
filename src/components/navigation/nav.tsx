@@ -16,9 +16,15 @@ const Nav = (props) => {
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: '20px' }}>
-          <NavButton2 style={{marginLeft:'0px'}}>
+      <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/vervrs"
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/vervrs')}
+          >
             veRVRS
-          </NavButton2>
+          </NavButton>
+        </Ripples>
         <Ripples>
           <NavButton
             as={StyledNavLink}
@@ -47,7 +53,6 @@ const Nav = (props) => {
           </NavButton>
         </Ripples>
       </ButtonGroup>
-      
       <ButtonGroup>
         {account != null && account.length > 1 ? (
           <Flex style={{ alignItems: 'center' }}>

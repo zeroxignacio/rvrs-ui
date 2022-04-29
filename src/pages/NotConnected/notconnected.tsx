@@ -1,32 +1,29 @@
 import React, { useCallback, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Page from 'components/layout/containers/page'
-import { useWallet } from "@binance-chain/bsc-use-wallet"
+import { useWallet } from '@binance-chain/bsc-use-wallet'
 import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
 import { Container } from 'react-bootstrap'
 import useWalletModal from 'components/modals/WalletModal'
 import rvrs from 'config/constants/rvrs'
 
-
 const NOTCONNECTED = (props) => {
   const { account, connect, reset } = useWallet()
   const { onPresentConnectModal } = useWalletModal(connect, reset)
-  
+
   return (
     <Page>
       <CardContainer>
         <Card>
-          <TypographyTitle
-           disabled={rvrs.isLocked.unlockWalletButton}
-           onClick={onPresentConnectModal} {...props}
-           >Connect First</TypographyTitle>
+          <TypographyTitle disabled={rvrs.isLocked.unlockWalletButton} onClick={onPresentConnectModal} {...props}>
+            Connect First
+          </TypographyTitle>
         </Card>
       </CardContainer>
     </Page>
   )
 }
-
 
 const Card = styled(Container)`
   border-radius: 10px;
@@ -46,11 +43,11 @@ const CardContainer = styled.div`
   position: relative;
   text-align: center;
   margin-bottom: 0px;
-  border: 0px solid #FFFF;
-  box-shadow: 0px 0px 0px #A5A5A5;
+  border: 0px solid #ffff;
+  box-shadow: 0px 0px 0px #a5a5a5;
   border: 0px;
   border-style: solid !important;
-  border-color: #FFFFFF !important;
+  border-color: #ffffff !important;
 `
 
 const pulse = keyframes`
@@ -66,18 +63,17 @@ const pulse = keyframes`
 `
 
 const TypographyTitle = styled.h1`
-    font-size: 20px;
-    font-weight: 700;
-    align-items: center;
-    display: inline-flex;
-    transition: all 0.3s ease-in-out;
-    animation: ${pulse} 5s infinite;
-    :hover {
-      color: #F3F3F3;
-      cursor: pointer;
-      opacity: 0.6;
-    }
+  font-size: 20px;
+  font-weight: 700;
+  align-items: center;
+  display: inline-flex;
+  transition: all 0.3s ease-in-out;
+  animation: ${pulse} 5s infinite;
+  :hover {
+    color: #f3f3f3;
+    cursor: pointer;
+    opacity: 0.6;
+  }
 `
-
 
 export default NOTCONNECTED

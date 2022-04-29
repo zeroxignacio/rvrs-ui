@@ -1,32 +1,24 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
-import ModalActions from 'components/modals/components/modal/modalActions'
 import styled from 'styled-components'
+import Modal from 'components/modals/components/modal'
+import ModalActions from 'components/modals/components/modal/modalActions'
+import { getFullDisplayBalance } from 'utils/formatBalance'
+import { TranslateString } from 'utils/translateTextHelpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Modal from 'components/modals/components/modal/Modal'
 import useWalletModal from 'components/modals/WalletModal'
 import ModalButton from 'components/layout/buttons/modalButton'
 import TokenInput from 'components/modals/components/modal/input'
-import { getFullDisplayBalance } from 'utils/formatBalance'
 
-const DEFAULT_TOKEN_DECIMALS = new BigNumber(10).pow(18)
-
-interface WithdrawModalProps {
+interface DepositModalProps {
   max: BigNumber
   onConfirm: (amount: string) => void
   onDismiss?: () => void
-  pricePerShare?: BigNumber
   tokenName?: string
 }
 
-const WithdrawModal: React.FC<WithdrawModalProps> = ({
-  onConfirm,
-  onDismiss,
-  max,
-  tokenName = '',
-  pricePerShare = DEFAULT_TOKEN_DECIMALS,
-}) => {
+const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, tokenName = '' }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const fullBalance = useMemo(() => {
@@ -40,13 +32,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   )
   const handleSelectMax = useCallback(() => {
     setVal(fullBalance)
-  
   }, [fullBalance, setVal])
-  const getSharesFromAmount = (amount) => {
-    const shares = new BigNumber(amount).times(DEFAULT_TOKEN_DECIMALS).div(pricePerShare)
-    console.log('getSharesFromAmount', pricePerShare, amount, shares.toString())
-    return shares.toFixed(18).toString()
-  }
 
   const notifySuccess = () =>
     toast.success('Success!', {
@@ -73,11 +59,11 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
     })
 
   return (
-    <Modal title={`Unstake ${tokenName}`} onDismiss={onDismiss}>
+    <Modal title="Stake RVRS >.<" onDismiss={onDismiss}>
       <TokenInput
+        value={val}
         onSelectMax={handleSelectMax}
         onChange={handleChange}
-        value={val}
         max={fullBalance}
         symbol={tokenName}
       />
@@ -86,7 +72,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
           onClick={async () => {
             notifyPending()
             setPendingTx(true)
-            await onConfirm(getSharesFromAmount(val))
+            await onConfirm(val)
             notifySuccess()
             setPendingTx(false)
             onDismiss()
@@ -110,4 +96,4 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   )
 }
 
-export default WithdrawModal
+export default StakeModal

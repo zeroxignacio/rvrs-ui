@@ -1,13 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-const PriceChange = ({
-  price,
-  marketcap,
-  volume,
-  priceChange,
-
-}) => {
+const PriceChange = ({ price, marketcap, volume, priceChange }) => {
   return (
     <div>
       {priceChange < 0 ? (
