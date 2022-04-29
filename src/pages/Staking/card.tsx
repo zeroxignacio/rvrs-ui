@@ -29,6 +29,7 @@ import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
+import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 import { usePriceCakeBusd } from '../../state/hooks'
 import StakeModal from '../../components/modals/stakeModal'
 
@@ -50,13 +51,13 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const rvrsPrice = usePriceCakeBusd()
   const stakingTokenContract = useERC20(stakingTokenAddress)
 
-  // func
   const { account } = useWallet()
   const { onApprove } = useSousApprove(stakingTokenContract, sousId)
   const { onStake } = useSousStake(sousId)
   const { onUnstake } = useSousUnstake(sousId)
 
   const [requestedApproval, setRequestedApproval] = useState(false)
+
   const [pendingTx, setPendingTx] = useState(false)
 
   const allowance = new BigNumber(userData?.allowance || 0)
@@ -101,9 +102,6 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
-  const rewBlock = new BigNumber(0.046).times(1e18).toNumber()
-
-  // approve, withdraw modals
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={staked} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
   )
@@ -111,33 +109,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
     <StakeModal max={stakingTokenBalance} onConfirm={onStake} tokenName={stakingTokenName} />,
   )
 
-  const notifySuccess = () =>
-    toast.success('Success!', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-  const notifyPending = () =>
-    toast.info('Confirm transaction...', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-  const Staked = () => new BigNumber(userData?.stakedBalance || 0)
-
   return (
     <>
-      {Staked}
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ marginBottom: '10px' }}>
@@ -199,23 +172,16 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <ActionButton
                   onClick={async () => {
                     notifyPending()
-                    setRequestedApproval(true)
-                    await onApprove()
-                    setRequestedApproval(false)
-                    notifySuccess()
+                    try {
+                      setRequestedApproval(true)
+                      await onApprove()
+                      setRequestedApproval(false)
+                      notifySuccess()
+                    } catch (e) {
+                      notifyError()
+                    }
                   }}
                 >
-                  <ToastContainer
-                    position="top-left"
-                    autoClose={10000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                  />
                   Enable Staking
                 </ActionButton>
               </Ripples>
@@ -268,6 +234,17 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </Typography>
         </LayoutContainer>
       </Wrap>
+      <ToastContainer
+        position="top-left"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+      />
     </>
   )
 }

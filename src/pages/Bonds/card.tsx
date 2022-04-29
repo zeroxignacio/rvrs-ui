@@ -21,6 +21,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import BondButton from 'components/layout/buttons/bondButton'
 import ClaimButton from 'components/layout/buttons/claimButton'
+import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 
 interface PoolWithApy extends Pool2 {
   apy: BigNumber
@@ -118,43 +119,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
       tokenName={stakingLimit ? `${stakingTokenName} (${stakingLimit} max)` : stakingTokenName}
     />,
   )
-
-  // approve tx
-  const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      const txHash = await onApprove()
-      if (!txHash) {
-        setRequestedApproval(false)
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onApprove, setRequestedApproval])
-
-  const notifySuccess = () =>
-    toast.success('Success!', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-
-  const notifyPending = () =>
-    toast.info('Confirm transaction...', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
 
   return (
     <>
@@ -271,17 +235,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                             notifySuccess()
                           }}
                         >
-                          <ToastContainer
-                            position="top-left"
-                            autoClose={10000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                          />
                           Enable
                         </BondButton>
                       ) : (
@@ -304,23 +257,16 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
                       style={{ marginLeft: '5px' }}
                       onClick={async () => {
                         notifyPending()
-                        setPendingTx(true)
-                        await onReward()
-                        setPendingTx(false)
-                        notifySuccess()
+                        try {
+                          setPendingTx(true)
+                          await onReward()
+                          setPendingTx(false)
+                          notifySuccess()
+                        } catch (e) {
+                          notifyError()
+                        }
                       }}
                     >
-                      <ToastContainer
-                        position="top-left"
-                        autoClose={10000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                      />
                       <FaHandHolding style={{ color: '#9B9B9B' }} />
                     </ClaimButton>
                   </Tippy>
@@ -368,10 +314,20 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           )}
         </>
       )}
+      <ToastContainer
+        position="top-left"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+      />
     </>
   )
 }
-
 
 const Typography = styled.p`s
     font-size: 16px;

@@ -29,6 +29,7 @@ import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
+import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 import { usePools, usePriceCakeBusd } from '../../state/hooks'
 import StakeModal from '../../components/modals/stakeModal'
 
@@ -45,29 +46,6 @@ export const BIG_TEN = new BigNumber(10)
 const ETHERS = BIG_TEN.pow(18)
 
 const Card: React.FC<HarvestProps> = ({ pool }) => {
-  const notifySuccess = () =>
-    toast.success('Success!', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-  const notifyPending = () =>
-    toast.info('Confirm transaction...', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-
   const { sousId, stakingTokenName, stakingTokenAddress, apy, userData, pricePerShare, apr } = pool
   const { account } = useWallet()
 
@@ -81,7 +59,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
 
   const stakedRvrs = new BigNumber(pool.veRvrsUserData?.rvrsStaked.toString() ?? 0)
-  
+
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
   )
@@ -101,8 +79,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           <Flex justifyContent="center" marginBottom="10px">
             <Tippy content="...">
               <ContentCard style={{ marginRight: '0px' }}>
-                <TypographyBold style={{ marginBottom: '5px' }}>...</TypographyBold>
-                <Typography>...</Typography>
+                <TypographyBold style={{ marginBottom: '5px' }}>Boosted APR</TypographyBold>
+                <Typography>TBA%</Typography>
               </ContentCard>
             </Tippy>
           </Flex>
@@ -113,23 +91,16 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <ActionButton
                   onClick={async () => {
                     notifyPending()
-                    setRequestedApproval(true)
-                    await onApprove()
-                    setRequestedApproval(false)
-                    notifySuccess()
+                    try {
+                      setRequestedApproval(true)
+                      await onApprove()
+                      setRequestedApproval(false)
+                      notifySuccess()
+                    } catch (e) {
+                      notifyError()
+                    }
                   }}
                 >
-                  <ToastContainer
-                    position="top-left"
-                    autoClose={10000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                  />
                   Enable
                 </ActionButton>
               </Ripples>
@@ -143,11 +114,11 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               </Ripples>
               <Ripples>
                 <ActionButton style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                  Stake RVRS
+                  Stake
                 </ActionButton>
               </Ripples>
               <Ripples>
-                <ActionButton onClick={onPresentDeposit}>Claim veRVRS</ActionButton>
+                <ActionButton onClick={onPresentDeposit}>Claim veRVRS and RVRS</ActionButton>
               </Ripples>
             </Flex>
           )}
@@ -155,9 +126,20 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography style={{ lineHeight: '1.1' }}>...</Typography>
+          <Typography style={{ lineHeight: '1.1' }}>Do NOT deposit RVRS in this pool. It will lead to loss of funds.</Typography>
         </LayoutContainer>
       </Wrap>
+      <ToastContainer
+        position="top-left"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+      />
     </>
   )
 }
