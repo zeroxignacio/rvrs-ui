@@ -24,7 +24,7 @@ import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import WithdrawModal from 'components/modals/withdrawModal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Wrap from 'components/layout/containers/Wrap'
+import { Container } from 'react-bootstrap'
 import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
@@ -114,82 +114,54 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ marginBottom: '10px' }}>
-            <TypographyTitle>RVRS Staking</TypographyTitle>
+            <TypographyTitle>
+              RVRS Staking
+            </TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
-            <Tippy content="The USD value of all RVRS staked in the protocol">
+            <Tippy content="The USD value of all RVRS staked in the deprecated staking contract">
               <ContentCard style={{ marginRight: '10px' }}>
-                {pool.apy ? (
-                  <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
-                ) : (
-                  <Skeleton marginBottom="5px" />
-                )}
-                <Typography>Total Staked</Typography>
+                <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
+                <Typography>Deposited</Typography>
               </ContentCard>
             </Tippy>
-            <Tippy content="The expected percentage yield (compound interest) of staking RVRS for a year">
+            <Tippy content="N/A">
               <ContentCard>
-                {pool.apy ? (
-                  <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
-                ) : (
-                  <Skeleton marginBottom="5px" />
-                )}
+                <TypographyBold style={{ marginBottom: '5px' }}>0%</TypographyBold>
                 <Typography>Annual Yield</Typography>
               </ContentCard>
             </Tippy>
-            <Tippy content="The monthly (non-compounded) percentage yield of staking RVRS">
+            <Tippy content="N/A">
               <ContentCard style={{ marginLeft: '10px' }}>
-                {pool.apy ? (
-                  <TypographyBold style={{ marginBottom: '5px' }}>{monthlyRoiStr}%</TypographyBold>
-                ) : (
-                  <Skeleton marginBottom="5px" />
-                )}
+                <TypographyBold style={{ marginBottom: '5px' }}>0%</TypographyBold>
                 <Typography>Monthly Yield</Typography>
               </ContentCard>
             </Tippy>
           </Flex>
           <Flex justifyContent="center" marginTop="0px">
-            <Tippy content="Your expected RVRS interest after staking for a year based on current rates">
+            <Tippy content="N/A">
               <ContentCardAlt style={{ marginRight: '5px' }}>
-                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight: '500' }}>
-                  +{roiYearStr} RVRS
+                <TypographyBold style={{ marginBottom: '5px', color: '#b33f40', fontWeight: '500' }}>
+                  +0 RVRS
                 </TypographyBold>
                 <Typography>Expected Yearly Interest</Typography>
               </ContentCardAlt>
             </Tippy>
-            <Tippy content="Your expected RVRS interest after staking for a month based on current rates">
+            <Tippy content="N/A">
               <ContentCardAlt>
-                <TypographyBold style={{ marginBottom: '5px', color: '#6ccca5', fontWeight: '500' }}>
-                  +{roiMonthStr} RVRS
+                <TypographyBold style={{ marginBottom: '5px', color: '#b33f40', fontWeight: '500' }}>
+                  +0 RVRS
                 </TypographyBold>
                 <Typography>Expected Monthly Interest</Typography>
               </ContentCardAlt>
             </Tippy>
           </Flex>
           {needsApproval ? (
-            <Flex justifyContent="end" style={{ marginTop: '20px' }}>
-              <Ripples>
-                <ActionButton
-                  onClick={async () => {
-                    notifyPending()
-                    try {
-                      setRequestedApproval(true)
-                      await onApprove()
-                      setRequestedApproval(false)
-                      notifySuccess()
-                    } catch (e) {
-                      notifyError()
-                    }
-                  }}
-                >
-                  Enable Staking
-                </ActionButton>
-              </Ripples>
-            </Flex>
+            <div>&nbsp;</div>
           ) : (
             <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
               <div>
-                <Tippy content={`Your staked balance, currently valued at $${stakedUsdStr}`}>
+                <Tippy content={`Your deposited balance, currently valued at $${stakedUsdStr}. Please migrate your stake now.`}>
                   <ContentCardAlt>
                     <TypographyBold>
                       {stakedStr}&nbsp;<Typography>RVRS Staked</Typography>
@@ -201,39 +173,30 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <div style={{ justifyContent: 'space-between' }}>
                   <Ripples>
                     <ActionButton style={{ marginRight: '10px' }} onClick={onPresentWithdraw}>
-                      Unstake
+                      Unstake All
                     </ActionButton>
                   </Ripples>
                   <Ripples>
-                    <ActionButton disabled={apyNull} onClick={onPresentDeposit}>
+                    <ActionButtonDisabled style={{ opacity: '0.3', cursor: 'not-allowed' }} disabled>
                       Stake {rvrsBalanceStr} RVRS
-                    </ActionButton>
+                    </ActionButtonDisabled>
                   </Ripples>
                 </div>
               ) : (
-                <div>
-                  <ActionButton style={{ marginRight: '10px', opacity: '0.3', cursor: 'not-allowed' }} disabled>
-                    Unstake
-                  </ActionButton>
-                  <Ripples>
-                    <ActionButton disabled={apyNull} onClick={onPresentDeposit}>
-                      &nbsp;Stake {rvrsBalanceStr} RVRS
-                    </ActionButton>
-                  </Ripples>
-                </div>
+                <div>&nbsp;</div>
               )}
             </Flex>
           )}
         </LayoutContainer>
       </Wrap>
-      <Wrap style={{ marginTop: '20px' }}>
-        <LayoutContainer>
+      <WrapWarning style={{ marginTop: '20px', backgroundColor:'#b33f40;'}}>
+        <LayoutContainer style={{borderColor:'#b33f40'}}>
           <Typography style={{ lineHeight: '1.1' }}>
-            Stakers mint RVRS and gain Governance power over time. This form of staking is being deprecated with the
-            introduction of (ve)RVRS.
+            This form of staking is now deprecated with the introduction of (ve)RVRS. Please migrate your funds to the
+            supported contract.
           </Typography>
         </LayoutContainer>
-      </Wrap>
+      </WrapWarning>
       <ToastContainer
         position="top-left"
         autoClose={10000}
@@ -261,6 +224,40 @@ const ActionButton = styled.button`
     opacity: 0.5;
     background: transparent;
   }
+`
+
+const ActionButtonDisabled = styled.button`
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+  color: #eeeeee;
+  border-left: 5px solid #b33f40;
+  padding: 10px;
+  transition: 0.3s ease-in-out;
+  :hover {
+    opacity: 0.5;
+    background: transparent;
+  }
+`
+
+const Wrap = styled(Container)`
+    border-radius: 7px;
+    padding: 2px;
+    border-width: 1px;
+    border-color: #3A3A3A;
+    border-style: solid;
+    box-shadow: 5px 5px 25px -15px #55747d;
+    transition: all 0.3s ease-in-out;
+`
+
+const WrapWarning = styled(Container)`
+    border-radius: 7px;
+    padding: 2px;
+    border-width: 1px;
+    border-color: #b33f40;
+    border-style: solid;
+    box-shadow: 5px 5px 25px -15px #b33f40;
+    transition: all 0.3s ease-in-out;
 `
 
 // eslint-disable-next-line import/prefer-default-export

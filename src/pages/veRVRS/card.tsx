@@ -62,6 +62,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
 
   const stakedRvrs = new BigNumber(pool.veRvrsUserData?.rvrsStaked.toString())
+
+  const totalRvrsStaked = pool.veRvrsPublicData?.totalStaked.toString()
+
   const pendingRvrs = pool.veRvrsUserData?.pendingRvrs
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 18, minimumFractionDigits: 2 })
@@ -87,8 +90,22 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
             <ContentCard style={{ marginRight: '0px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>Total Staked</TypographyBold>
+              <Typography>{totalRvrsStaked}</Typography>
+            </ContentCard>
+            <ContentCard style={{ marginRight: '0px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>Pending veRVRS</TypographyBold>
+              <Typography>{pendingVeRvrs}</Typography>
+            </ContentCard>
+            <ContentCard style={{ marginRight: '0px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>Pending RVRS</TypographyBold>
+              <Typography>{pendingRvrs}</Typography>
+            </ContentCard>
+          </Flex>
+          <Flex justifyContent="center" marginBottom="10px">
+            <ContentCard style={{ marginRight: '0px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Staked RVRS</TypographyBold>
-              <Typography>{}</Typography>
+              <Typography>TODO</Typography>
             </ContentCard>
             <ContentCard style={{ marginRight: '0px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Pending veRVRS</TypographyBold>
