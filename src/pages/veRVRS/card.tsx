@@ -30,6 +30,7 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
+import { useVeRvrsClaim } from 'hooks/useHarvest'
 import { usePools, usePriceCakeBusd } from '../../state/hooks'
 import StakeModal from '../../components/modals/stakeModal'
 
@@ -55,10 +56,18 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const { onUnstake } = useVeRvrsUnstake(sousId)
   const [pendingTx, setPendingTx] = useState(false)
 
+  const { onReward } = useVeRvrsClaim(sousId)
+
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
 
-  const stakedRvrs = new BigNumber(pool.veRvrsUserData?.rvrsStaked.toString() ?? 0)
+  const stakedRvrs = new BigNumber(pool.veRvrsUserData?.rvrsStaked.toString())
+  const pendingRvrs = pool.veRvrsUserData?.pendingRvrs
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 18, minimumFractionDigits: 2 })
+  const pendingVeRvrs = pool.veRvrsUserData?.pendingVeRvrs
+    .toNumber()
+    .toLocaleString('en-us', { maximumFractionDigits: 18, minimumFractionDigits: 2 })
 
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
@@ -77,14 +86,19 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
             <TypographyTitle>Stake RVRS to Earn veRVRS &gt;.&gt;</TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
-            <Tippy content="...">
-              <ContentCard style={{ marginRight: '0px' }}>
-                <TypographyBold style={{ marginBottom: '5px' }}>Boosted APR</TypographyBold>
-                <Typography>TBA%</Typography>
-              </ContentCard>
-            </Tippy>
+            <ContentCard style={{ marginRight: '0px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>Staked RVRS</TypographyBold>
+              <Typography>{}</Typography>
+            </ContentCard>
+            <ContentCard style={{ marginRight: '0px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>Pending veRVRS</TypographyBold>
+              <Typography>{pendingVeRvrs}</Typography>
+            </ContentCard>
+            <ContentCard style={{ marginRight: '0px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>Pending RVRS</TypographyBold>
+              <Typography>{pendingRvrs}</Typography>
+            </ContentCard>
           </Flex>
-
           {!allowance.toNumber() ? (
             <Flex justifyContent="end" style={{ marginTop: '20px' }}>
               <Ripples>
@@ -118,7 +132,21 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 </ActionButton>
               </Ripples>
               <Ripples>
-                <ActionButton onClick={onPresentDeposit}>Claim veRVRS and RVRS</ActionButton>
+                <ActionButton
+                  onClick={async () => {
+                    notifyPending()
+                    try {
+                      setPendingTx(true)
+                      await onReward()
+                      setPendingTx(false)
+                      notifySuccess()
+                    } catch (e) {
+                      notifyError()
+                    }
+                  }}
+                >
+                  Claim veRVRS and RVRS
+                </ActionButton>
               </Ripples>
             </Flex>
           )}
@@ -126,7 +154,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       </Wrap>
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
-          <Typography style={{ lineHeight: '1.1' }}>Do NOT deposit RVRS in this pool. It will lead to loss of funds.</Typography>
+          <Typography style={{ lineHeight: '1.1' }}>
+            Do NOT deposit RVRS in this pool. It will lead to loss of funds.
+          </Typography>
         </LayoutContainer>
       </Wrap>
       <ToastContainer
