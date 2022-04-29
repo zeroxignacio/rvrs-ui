@@ -69,8 +69,6 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const { sousId, stakingTokenName, stakingTokenAddress, apy, userData, pricePerShare, apr } = pool
   const { account } = useWallet()
 
-  const pools = usePools(account)
-  
   const stakingTokenContract = useERC20('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
   const { onApprove } = useVeRvrsApprove(stakingTokenContract, sousId)
   const { onStake } = useVeRvrsStake(sousId, false)
