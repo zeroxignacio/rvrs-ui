@@ -62,12 +62,12 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
   const { userInfo, pricePerFullShare } = await fetchPoolsTotalStaking()
   const veRvrsData =  await fetchPoolsVeRvrsData()
   const veRvrsPublicDatas = {
-    totalStaked: veRvrsData[0],
-    totalSupply: veRvrsData[1],
-    generationRate: veRvrsData[2],
-    maxCap: veRvrsData[3],
-    withdrawFee: veRvrsData[4],
-    withdrawFeeTime: veRvrsData[5]
+    totalStaked: veRvrsData[0][0],
+    totalSupply: veRvrsData[1][0],
+    generationRate: veRvrsData[2][0],
+    maxCap: veRvrsData[3][0],
+    withdrawFee: veRvrsData[4][0],
+    withdrawFeeTime: veRvrsData[5][0]
   }
   const liveData = poolsConfig.map((pool) => {
     return {
@@ -116,9 +116,9 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
     sousId: pool.sousId,
     allowance: allowances[1],
     rvrsStaked: veRvrsUserInfo[0].amount,
-    veRvrsBalance: veRvrsUserInfo[1],
-    pendingRvrs: veRvrsUserInfo[2],
-    pendingVeRvrs: veRvrsUserInfo[3],
+    veRvrsBalance: veRvrsUserInfo[1][0],
+    pendingRvrs: veRvrsUserInfo[2][0],
+    pendingVeRvrs: veRvrsUserInfo[3][0],
     lastClaim: veRvrsUserInfo[0].lastClaim,
     lastDeposit: veRvrsUserInfo[0].lastDeposit,
   }))
