@@ -24,13 +24,11 @@ import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 import { useVeRvrsClaim } from 'hooks/useHarvest'
 import { BLOCKS_PER_YEAR } from 'config'
+import useBlock from 'hooks/useBlock'
 import StakeModal from '../../components/modals/stakeModal'
 import { useFarmFromPid, usePriceCakeBusd } from '../../state/hooks'
 
-interface PoolWithApy extends Pool {
-  apy: BigNumber
-  apr: BigNumber
-}
+type PoolWithApy = Pool
 
 interface HarvestProps {
   pool: PoolWithApy
@@ -40,6 +38,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const { sousId, stakingTokenName, userData, veRvrsPublicData, veRvrsUserData } = pool
   const stakingTokenContract = useERC20('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
   const rvrsPrice = usePriceCakeBusd()
+  const block = useBlock()
   const { account } = useWallet() // user
   const { onApprove } = useVeRvrsApprove(stakingTokenContract, sousId) // approve
   const { onStake } = useVeRvrsStake(sousId, false) // stake
@@ -79,7 +78,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
     minimumFractionDigits: 2,
   })
 
-  // boosted apr calculation
+  // boosted apr calculation'
   const boostedYearlyInterest = veRvrsBalance.div(veRvrsSupply).times(totalRewardsPerYearUsd)
   const boostedApr = boostedYearlyInterest.div(stakedRvrsUsd).times(100)
   const boostedAprStr = boostedApr.toNumber().toLocaleString('en-us', {
