@@ -43,7 +43,7 @@ const Staking: React.FC = () => {
       .div(BIG_TEN.pow(18))
       .times(farm0.poolWeight)
       .times(BLOCKS_PER_YEAR)
-    const apr = totalRewardPricePerYear.div(tvl).times(100).times(2)
+    const apr = totalRewardPricePerYear.div(tvl).times(100)
     const apy = aprToApy(apr)
     // console.log("TVL", pool.stakingTokenName, tvl && tvl.toNumber(), apy && apy.toNumber())
     // console.log("APY", pool, tvl && tvl.toNumber())

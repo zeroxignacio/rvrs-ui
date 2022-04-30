@@ -4,15 +4,10 @@ import styled, { keyframes } from 'styled-components'
 import { useModal } from '@reverse/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useERC20 } from 'hooks/useContract'
-import { useSousApprove, useVeRvrsApprove } from 'hooks/useApprove'
-import { useSousStake, useVeRvrsStake } from 'hooks/useStake'
-import { useSousUnstake, useVeRvrsUnstake } from 'hooks/useUnstake'
-import { getBalanceNumber } from 'utils/formatBalance'
-import { QuoteToken } from 'config/constants/types'
+import { useVeRvrsApprove } from 'hooks/useApprove'
+import { useVeRvrsStake } from 'hooks/useStake'
+import { useVeRvrsUnstake } from 'hooks/useUnstake'
 import { Pool } from 'state/types'
-import useTokenBalance from 'hooks/useTokenBalance'
-import { getCakeAddress } from 'utils/addressHelpers'
-import Skeleton from 'components/Skeleton/Skeleton'
 import Typography from 'components/layout/typography/typography'
 import { Flex } from 'components/layout/flex'
 import Ripples from 'react-ripples'
@@ -20,19 +15,17 @@ import TypographyBold from 'components/layout/typography/typographyBold'
 import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
-import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import WithdrawModal from 'components/modals/withdrawModal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Wrap from 'components/layout/containers/Wrap'
-import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
-import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 import { useVeRvrsClaim } from 'hooks/useHarvest'
-import { usePools, usePriceCakeBusd } from '../../state/hooks'
+import { BLOCKS_PER_YEAR } from 'config'
 import StakeModal from '../../components/modals/stakeModal'
+import { useFarmFromPid, usePriceCakeBusd } from '../../state/hooks'
 
 interface PoolWithApy extends Pool {
   apy: BigNumber
@@ -43,42 +36,61 @@ interface HarvestProps {
   pool: PoolWithApy
 }
 
-export const BIG_TEN = new BigNumber(10)
-const ETHERS = BIG_TEN.pow(18)
-
 const Card: React.FC<HarvestProps> = ({ pool }) => {
-  const { sousId, stakingTokenName, stakingTokenAddress, apy, userData, pricePerShare, apr } = pool
-  const { account } = useWallet()
-
+  const { sousId, stakingTokenName, userData, veRvrsPublicData, veRvrsUserData } = pool
   const stakingTokenContract = useERC20('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
-  const { onApprove } = useVeRvrsApprove(stakingTokenContract, sousId)
-  const { onStake } = useVeRvrsStake(sousId, false)
-  const { onUnstake } = useVeRvrsUnstake(sousId)
+  const rvrsPrice = usePriceCakeBusd()
+  const { account } = useWallet() // user
+  const { onApprove } = useVeRvrsApprove(stakingTokenContract, sousId) // approve
+  const { onStake } = useVeRvrsStake(sousId, false) // stake
+  const { onUnstake } = useVeRvrsUnstake(sousId) // unstake
+  const { onReward } = useVeRvrsClaim(sousId) // claim
   const [pendingTx, setPendingTx] = useState(false)
+  const hasAllowance = new BigNumber(veRvrsUserData?.allowance.toString()).toNumber() > 0
+  const rvrsBalance = new BigNumber(userData?.stakingTokenBalance || 0)
+  const stakedRvrs = new BigNumber(veRvrsUserData?.rvrsStaked.toString() || 0)
+  const stakedRvrsUsd = new BigNumber(veRvrsUserData?.rvrsStaked.toString() || 0).times(rvrsPrice)
+  const stakedRvrsNo = stakedRvrs.div(1e18).toNumber()
+  const stakedRvrsStr = stakedRvrsNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+  const totalRvrsStakedNo = new BigNumber(veRvrsPublicData?.totalStaked.toString() || 0).div(1e18).toNumber()
+  const totalRvrsStakedStr = totalRvrsStakedNo.toLocaleString('en-us', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })
+  const tvl = new BigNumber(veRvrsPublicData?.totalStaked.toString() || 0).div(1e18).times(rvrsPrice)
+  const veRvrsSupply = 1
+  // const veRvrsSupply = new BigNumber(pool.veRvrsPublicData.totalSupply.toString() || 0).div(1e18)
+  // const generationRateNo = new BigNumber(veRvrsPublicData.generationRate.toString() || 0).div(1e18).toNumber()
+  // const withdrawFeeTimeNo = new BigNumber(veRvrsPublicData.withdrawFeeTime.toString() || 0).div(1e18).toNumber()
+  // const maxCapNo = new BigNumber(veRvrsPublicData.maxCap.toString() || 0).toNumber()
+  const pendingRvrsNo = new BigNumber(veRvrsUserData?.pendingRvrs.toString() || 0).div(1e18).toNumber()
+  const pendingVeRvrsNo = new BigNumber(veRvrsUserData?.pendingVeRvrs.toString() || 0).div(1e18).toNumber()
+  const veRvrsBalance = new BigNumber(veRvrsUserData?.veRvrsBalance.toString() || 0).div(1e18)
+  const farm0 = useFarmFromPid(0)
+  const rvrsPerBlock = new BigNumber(farm0.vikingPerBlock)
 
-  const { onReward } = useVeRvrsClaim(sousId)
+  // const apr = new BigNumber()
+  // const boostedApr =
+  const totalRewardsPerYearUsd = rvrsPrice.times(rvrsPerBlock).div(1e18).times(BLOCKS_PER_YEAR)
+  const apr = totalRewardsPerYearUsd.div(930000).times(100)
+  const apy = new BigNumber(apr).div(100).div(365).plus(1).pow(365).minus(1).times(100)
+  const apyStr = apy.toNumber().toLocaleString('en-us', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })
 
-  const allowance = new BigNumber(userData?.allowance || 0)
-  const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
-
-  const stakedRvrs = new BigNumber(pool.veRvrsUserData?.rvrsStaked.toString())
-
-  const totalRvrsStaked = pool.veRvrsPublicData?.totalStaked.toString()
-
-  const pendingRvrs = pool.veRvrsUserData?.pendingRvrs
-    .toNumber()
-    .toLocaleString('en-us', { maximumFractionDigits: 18, minimumFractionDigits: 2 })
-  const pendingVeRvrs = pool.veRvrsUserData?.pendingVeRvrs
-    .toNumber()
-    .toLocaleString('en-us', { maximumFractionDigits: 18, minimumFractionDigits: 2 })
+  // boosted apr calculation
+  const boostedYearlyInterest = veRvrsBalance.div(veRvrsSupply).times(totalRewardsPerYearUsd)
+  const boostedApr = boostedYearlyInterest.div(stakedRvrsUsd).times(100)
+  const boostedAprStr = boostedApr.toNumber().toLocaleString('en-us', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })
 
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} pricePerShare={pricePerShare} />,
+    <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} />,
   )
-  const [onPresentDeposit] = useModal(
-    <StakeModal max={stakingTokenBalance} onConfirm={onStake} tokenName={stakingTokenName} />,
-  )
-
+  const [onPresentDeposit] = useModal(<StakeModal max={rvrsBalance} onConfirm={onStake} tokenName={stakingTokenName} />)
   const [requestedApproval, setRequestedApproval] = useState(false)
 
   return (
@@ -89,34 +101,34 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
             <TypographyTitle>Stake RVRS to Earn veRVRS &gt;.&gt;</TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
-            <ContentCard style={{ marginRight: '0px' }}>
+            <ContentCard style={{ marginRight: '10px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Total Staked</TypographyBold>
-              <Typography>{totalRvrsStaked}</Typography>
+              <Typography>{totalRvrsStakedStr}</Typography>
+            </ContentCard>
+            <ContentCard style={{ marginRight: '10px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>APY</TypographyBold>
+              <Typography>{apyStr}</Typography>
             </ContentCard>
             <ContentCard style={{ marginRight: '0px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Pending veRVRS</TypographyBold>
-              <Typography>{pendingVeRvrs}</Typography>
-            </ContentCard>
-            <ContentCard style={{ marginRight: '0px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Pending RVRS</TypographyBold>
-              <Typography>{pendingRvrs}</Typography>
+              <TypographyBold style={{ marginBottom: '5px' }}>Boosted APR</TypographyBold>
+              <Typography>{boostedAprStr}</Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginBottom="10px">
-            <ContentCard style={{ marginRight: '0px' }}>
+            <ContentCard style={{ marginRight: '10px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Staked RVRS</TypographyBold>
-              <Typography>TODO</Typography>
+              <Typography>{stakedRvrsStr}</Typography>
             </ContentCard>
-            <ContentCard style={{ marginRight: '0px' }}>
+            <ContentCard style={{ marginRight: '10px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Pending veRVRS</TypographyBold>
-              <Typography>{pendingVeRvrs}</Typography>
+              <Typography>{}</Typography>
             </ContentCard>
             <ContentCard style={{ marginRight: '0px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>Pending RVRS</TypographyBold>
-              <Typography>{pendingRvrs}</Typography>
+              <Typography>{}</Typography>
             </ContentCard>
           </Flex>
-          {!allowance.toNumber() ? (
+          {!hasAllowance ? (
             <Flex justifyContent="end" style={{ marginTop: '20px' }}>
               <Ripples>
                 <ActionButton
