@@ -25,6 +25,10 @@ import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 import { useVeRvrsClaim } from 'hooks/useHarvest'
 import { BLOCKS_PER_YEAR } from 'config'
 import useBlock from 'hooks/useBlock'
+import { FaQuestionCircle } from 'react-icons/fa'
+import GradientCard from 'components/layout/cards/GradientCard'
+import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
+import Tippy from '@tippyjs/react'
 import StakeModal from '../../components/modals/stakeModal'
 import { useFarmFromPid, usePriceCakeBusd } from '../../state/hooks'
 
@@ -62,29 +66,27 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   // const generationRateNo = new BigNumber(veRvrsPublicData.generationRate.toString() || 0).div(1e18).toNumber()
   // const withdrawFeeTimeNo = new BigNumber(veRvrsPublicData.withdrawFeeTime.toString() || 0).div(1e18).toNumber()
   // const maxCapNo = new BigNumber(veRvrsPublicData.maxCap.toString() || 0).toNumber()
-  const pendingRvrsNo = new BigNumber(veRvrsUserData?.pendingRvrs.toString() || 0).div(1e18).toNumber()
-  const pendingVeRvrsNo = new BigNumber(veRvrsUserData?.pendingVeRvrs.toString() || 0).div(1e18).toNumber()
+  // const pendingRvrsNo = new BigNumber(veRvrsUserData?.pendingRvrs.toString() || 0).div(1e18).toNumber()
+  // const pendingVeRvrsNo = new BigNumber(veRvrsUserData?.pendingVeRvrs.toString() || 0).div(1e18).toNumber()
   const veRvrsBalance = new BigNumber(veRvrsUserData?.veRvrsBalance.toString() || 0).div(1e18)
   const farm0 = useFarmFromPid(0)
   const rvrsPerBlock = new BigNumber(farm0.vikingPerBlock)
 
-  // const apr = new BigNumber()
-  // const boostedApr =
-  const totalRewardsPerYearUsd = rvrsPrice.times(rvrsPerBlock).div(1e18).times(BLOCKS_PER_YEAR)
+  const totalRewardsPerYearUsd = rvrsPrice.times(rvrsPerBlock).div(1e18).times(BLOCKS_PER_YEAR).times(2)
   const apr = totalRewardsPerYearUsd.div(930000).times(100)
   const apy = new BigNumber(apr).div(100).div(365).plus(1).pow(365).minus(1).times(100)
   const apyStr = apy.toNumber().toLocaleString('en-us', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
   })
 
   // boosted apr calculation'
-  const boostedYearlyInterest = veRvrsBalance.div(veRvrsSupply).times(totalRewardsPerYearUsd)
-  const boostedApr = boostedYearlyInterest.div(stakedRvrsUsd).times(100)
-  const boostedAprStr = boostedApr.toNumber().toLocaleString('en-us', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
-  })
+  // const boostedYearlyInterest = veRvrsBalance.div(veRvrsSupply).times(totalRewardsPerYearUsd)
+  // const boostedApr = boostedYearlyInterest.div(stakedRvrsUsd).times(100)
+  // onst boostedAprStr = boostedApr.toNumber().toLocaleString('en-us', {
+  //   maximumFractionDigits: 2,
+  //   minimumFractionDigits: 2,
+  // })
 
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} />,
@@ -97,35 +99,34 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       <Wrap>
         <LayoutContainer>
           <TitleCard style={{ marginBottom: '10px' }}>
-            <TypographyTitle>Stake RVRS to Earn veRVRS &gt;.&gt;</TypographyTitle>
+            <TypographyTitle>Stake RVRS to Earn veRVRS</TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
             <ContentCard style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Total Staked</TypographyBold>
-              <Typography>{totalRvrsStakedStr}</Typography>
+              <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
+              <Typography>Base APY</Typography>
             </ContentCard>
-            <ContentCard style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>APY</TypographyBold>
-              <Typography>{apyStr}</Typography>
-            </ContentCard>
+            <GradientCard style={{ marginRight: '10px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
+              <Typography>
+                Total APY
+                <FaQuestionCircle style={{ maxWidth: '10px', paddingBottom: '5px', marginLeft: '3px' }} color="grey" />
+              </Typography>
+            </GradientCard>
             <ContentCard style={{ marginRight: '0px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Boosted APR</TypographyBold>
-              <Typography>{boostedAprStr}</Typography>
+              <TypographyBold style={{ marginBottom: '5px' }}>0.00%</TypographyBold>
+              <Typography>Boosted APY</Typography>
             </ContentCard>
           </Flex>
-          <Flex justifyContent="center" marginBottom="10px">
-            <ContentCard style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Staked RVRS</TypographyBold>
-              <Typography>{stakedRvrsStr}</Typography>
-            </ContentCard>
-            <ContentCard style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Pending veRVRS</TypographyBold>
-              <Typography>{}</Typography>
-            </ContentCard>
-            <ContentCard style={{ marginRight: '0px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>Pending RVRS</TypographyBold>
-              <Typography>{}</Typography>
-            </ContentCard>
+          <Flex justifyContent="center" marginBottom="0px">
+            <ContentCardAlt style={{ marginRight: '10px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>0.00%</TypographyBold>
+              <Typography>Protocol Share</Typography>
+            </ContentCardAlt>
+            <ContentCardAlt style={{ marginRight: '0px' }}>
+              <TypographyBold style={{ marginBottom: '5px' }}>0.00</TypographyBold>
+              <Typography>veRVRS</Typography>
+            </ContentCardAlt>
           </Flex>
           {!hasAllowance ? (
             <Flex justifyContent="end" style={{ marginTop: '20px' }}>
@@ -143,40 +144,54 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                     }
                   }}
                 >
-                  Enable
+                  Enable Staking
                 </ActionButton>
               </Ripples>
             </Flex>
           ) : (
-            <Flex alignItems="center" style={{ marginTop: '20px' }} justifyContent="center">
-              <Ripples>
-                <ActionButton style={{ marginRight: '10px' }} onClick={onPresentWithdraw}>
-                  Unstake
-                </ActionButton>
-              </Ripples>
-              <Ripples>
-                <ActionButton style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                  Stake
-                </ActionButton>
-              </Ripples>
-              <Ripples>
-                <ActionButton
-                  onClick={async () => {
-                    notifyPending()
-                    try {
-                      setPendingTx(true)
-                      await onReward()
-                      setPendingTx(false)
-                      notifySuccess()
-                    } catch (e) {
-                      notifyError()
-                    }
-                  }}
-                >
-                  Claim veRVRS and RVRS
-                </ActionButton>
-              </Ripples>
-            </Flex>
+            <>
+              <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
+                <div>
+                  <ContentCardAlt>
+                    <TypographyBold>
+                      {stakedRvrsStr}&nbsp;<Typography>RVRS Staked</Typography>
+                    </TypographyBold>
+                  </ContentCardAlt>
+                </div>
+                <div style={{ justifyContent: 'space-between' }}>
+                  <Ripples>
+                    <StakeUnstakeButton disabled style={{ marginRight: '10px' }}>
+                      <Flex>
+                        <ActionTypography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
+                          Stake
+                        </ActionTypography>
+                        <Typography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
+                          |
+                        </Typography>
+                        <ActionTypography onClick={onPresentWithdraw}>Unstake</ActionTypography>
+                      </Flex>
+                    </StakeUnstakeButton>
+                  </Ripples>
+                  <Ripples>
+                    <ActionButton
+                      onClick={async () => {
+                        notifyPending()
+                        try {
+                          setPendingTx(true)
+                          await onReward()
+                          setPendingTx(false)
+                          notifySuccess()
+                        } catch (e) {
+                          notifyError()
+                        }
+                      }}
+                    >
+                      Claim
+                    </ActionButton>
+                  </Ripples>
+                </div>
+              </Flex>
+            </>
           )}
         </LayoutContainer>
       </Wrap>
@@ -214,6 +229,49 @@ const ActionButton = styled.button`
     opacity: 0.5;
     background: transparent;
   }
+`
+
+const StakeUnstakeButton = styled.button`
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+  color: #eeeeee;
+  border-left: 5px solid #6699a3;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: 0.3s ease-in-out;
+  :hover {
+    background: transparent;
+  }
+`
+
+const ActionTypography = styled.p`
+    font-size: 16px;
+    color: white;
+    font-weight: 400;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    :hover {
+      opacity: 0.6;
+    }
+`
+
+const Divider = styled.div`
+  background-color: #515151;
+  height: 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+`
+
+const TypographyAccent = styled.p`
+  font-size: 17px;
+  font-weight: 600;
+  color: #6699a3;
+  align-items: center;
+  display: inline-flex;
+  text-shadow: 0px 0px 15px #6699a3;
 `
 
 // eslint-disable-next-line import/prefer-default-export
