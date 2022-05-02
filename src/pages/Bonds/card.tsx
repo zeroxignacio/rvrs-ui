@@ -107,7 +107,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
   // to start
   const hasStarted = block > startBlock
   const hoursToStartNo = (startBlock - block) * 2 * 0.000277778 * 60
-  const hoursToStartStr = hoursToStartNo.toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 3 })
+  const hoursToStartStr = hoursToStartNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
 
   // vesting period
   const hasEnded = block > endBlock
@@ -359,7 +359,7 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
         </BondsContainer>
       ) : (
         <>
-          {hoursToStartNo < 100 ? (
+          {hoursToStartNo < 1000 ? (
             <BondsContainer>
               <Flex alignItems="center" justifyContent="space-between">
                 <Flex alignItems="center">
