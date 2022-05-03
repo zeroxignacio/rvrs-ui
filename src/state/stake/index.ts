@@ -115,16 +115,28 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
   const veRvrsUserData = poolsConfig.map((pool) => ({
     sousId: pool.sousId,
     allowance: allowances[1],
-    rvrsStaked: veRvrsUserInfo[0].amount,
-    veRvrsBalance: veRvrsUserInfo[1][0],
-    pendingRvrs: veRvrsUserInfo[2][0],
-    pendingVeRvrs: veRvrsUserInfo[3][0],
-    lastClaim: veRvrsUserInfo[0].lastClaim,
-    lastDeposit: veRvrsUserInfo[0].lastDeposit,
+    rvrsStaked: veRvrsUserInfo[0].amount.toString(),
+    veRvrsBalance: veRvrsUserInfo[1][0].toString(),
+    pendingRvrs: veRvrsUserInfo[2][0].toString(),
+    pendingVeRvrs: veRvrsUserInfo[3][0].toString(),
+    lastClaim: veRvrsUserInfo[0].lastClaim.toString(),
+    lastDeposit: veRvrsUserInfo[0].lastDeposit.toString(),
   }))
   console.log('veRvrsUserData', veRvrsUserData)
 
-  dispatch(setPoolsVeRvrsUserData(veRvrsUserData))
+  const _18_ZEROS = '000000000000000000'
+  const veRvrsUserDataTest = poolsConfig.map((pool) => ({
+    sousId: pool.sousId,
+    allowance: allowances[1],
+    rvrsStaked: `123${_18_ZEROS}`,
+    veRvrsBalance: `123${_18_ZEROS}`,
+    pendingRvrs: `123${_18_ZEROS}`,
+    pendingVeRvrs: `123${_18_ZEROS}`,
+    lastClaim: '1651536000', // use this to get timestamps: https://www.epochconverter.com/
+    lastDeposit: '1651449600', // last deposit is 1 day before last claim
+  }))
+
+  dispatch(setPoolsVeRvrsUserData(veRvrsUserDataTest))
   dispatch(setPoolsUserData(userData))
 }
 
