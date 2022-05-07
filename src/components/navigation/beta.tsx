@@ -12,7 +12,7 @@ const MenuBottom = (props) => {
       <NavContainer>
         <Flex justifyContent="center" marginTop="0px">
           <Flex alignItems="center" >
-            <TypographyBold>rvrs.app is on release v0.2, please use at your own risk</TypographyBold>
+            <Typography>make sure you are using https://rvrs.app, bookmark it to be safe</Typography>
           </Flex>
         </Flex>
       </NavContainer>
@@ -20,8 +20,8 @@ const MenuBottom = (props) => {
   )
 }
 
-const TypographyBold = styled.p`
-  font-size: 14px;
+const Typography = styled.p`
+  font-size: 12px;
   font-weight: 400;
   margin-bottom: 0px;
   margin-right: 5px;
@@ -31,11 +31,14 @@ const TypographyBold = styled.p`
 
 const NavContainer = styled(Container)`
   text-align: center;
-  padding: 5px;
+  padding: 3px;
 `
 const MenuContainer = styled(Container)`
   max-width: 10000px;
-  background-color: #B40000;
+  background-color: #191919;
+  border-width: 0 0 1px;
+  border-color: #4A4A4A;
+  border-style: solid;
   cursor: help;
 `
 
