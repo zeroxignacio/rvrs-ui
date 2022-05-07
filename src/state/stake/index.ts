@@ -62,19 +62,28 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
   const { userInfo, pricePerFullShare } = await fetchPoolsTotalStaking()
   const veRvrsData =  await fetchPoolsVeRvrsData()
   const veRvrsPublicDatas = {
-    totalStaked: veRvrsData[0][0],
-    totalSupply: veRvrsData[1][0],
-    generationRate: veRvrsData[2][0],
-    maxCap: veRvrsData[3][0],
-    withdrawFee: veRvrsData[4][0],
-    withdrawFeeTime: veRvrsData[5][0]
+    totalStaked: veRvrsData[0][0].toString(),
+    totalSupply: veRvrsData[1][0].toString(),
+    generationRate: veRvrsData[2][0].toString(),
+    maxCap: veRvrsData[3][0].toString(),
+    withdrawFee: veRvrsData[4][0].toString(),
+    withdrawFeeTime: veRvrsData[5][0].toString()
+  }
+  const _18_ZEROS = '000000000000000000'
+  const veRvrsPublicDatasTest = {
+    totalStaked: `6000000${_18_ZEROS}`,
+    totalSupply: `100000${_18_ZEROS}`,
+    generationRate: `10000${_18_ZEROS}`,
+    maxCap: `4${_18_ZEROS}`,
+    withdrawFee: `20${_18_ZEROS}`,
+    withdrawFeeTime: `12${_18_ZEROS}`,
   }
   const liveData = poolsConfig.map((pool) => {
     return {
       ...pool,
       totalStaked: userInfo[0].amount,
       pricePerShare: pricePerFullShare[0].toString(),
-      veRvrsPublicData: veRvrsPublicDatas
+      veRvrsPublicData: veRvrsPublicDatasTest // change to veRvrsPublicDatas on la
     }
   })
   console.log('fetchPoolsPublicDataAsync', veRvrsPublicDatas)
@@ -128,9 +137,9 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
   const veRvrsUserDataTest = poolsConfig.map((pool) => ({
     sousId: pool.sousId,
     allowance: allowances[1],
-    rvrsStaked: `123${_18_ZEROS}`,
-    veRvrsBalance: `123${_18_ZEROS}`,
-    pendingRvrs: `123${_18_ZEROS}`,
+    rvrsStaked: `30000${_18_ZEROS}`,
+    veRvrsBalance: `10000${_18_ZEROS}`,
+    pendingRvrs: `10${_18_ZEROS}`,
     pendingVeRvrs: `123${_18_ZEROS}`,
     lastClaim: '1651536000', // use this to get timestamps: https://www.epochconverter.com/
     lastDeposit: '1651449600', // last deposit is 1 day before last claim

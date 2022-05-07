@@ -42,51 +42,40 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const { sousId, stakingTokenName, userData, veRvrsPublicData, veRvrsUserData } = pool
   const stakingTokenContract = useERC20('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade')
   const rvrsPrice = usePriceCakeBusd()
-  const block = useBlock()
-  const { account } = useWallet() // user
-  const { onApprove } = useVeRvrsApprove(stakingTokenContract, sousId) // approve
-  const { onStake } = useVeRvrsStake(sousId, false) // stake
-  const { onUnstake } = useVeRvrsUnstake(sousId) // unstake
-  const { onReward } = useVeRvrsClaim(sousId) // claim
-  const [pendingTx, setPendingTx] = useState(false)
-  const hasAllowance = new BigNumber(veRvrsUserData?.allowance.toString()).toNumber() > 0
-  const rvrsBalance = new BigNumber(userData?.stakingTokenBalance || 0)
-  const stakedRvrs = new BigNumber(veRvrsUserData?.rvrsStaked.toString() || 0)
-  const stakedRvrsUsd = new BigNumber(veRvrsUserData?.rvrsStaked.toString() || 0).times(rvrsPrice)
-  const stakedRvrsNo = stakedRvrs.div(1e18).toNumber()
-  const stakedRvrsStr = stakedRvrsNo.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-  const totalRvrsStakedNo = new BigNumber(veRvrsPublicData?.totalStaked.toString() || 0).div(1e18).toNumber()
-  const totalRvrsStakedStr = totalRvrsStakedNo.toLocaleString('en-us', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
-  })
-  const tvl = new BigNumber(veRvrsPublicData?.totalStaked.toString() || 0).div(1e18).times(rvrsPrice)
-  const veRvrsSupply = 1
-  // const veRvrsSupply = new BigNumber(pool.veRvrsPublicData.totalSupply.toString() || 0).div(1e18)
-  // const generationRateNo = new BigNumber(veRvrsPublicData.generationRate.toString() || 0).div(1e18).toNumber()
-  // const withdrawFeeTimeNo = new BigNumber(veRvrsPublicData.withdrawFeeTime.toString() || 0).div(1e18).toNumber()
-  // const maxCapNo = new BigNumber(veRvrsPublicData.maxCap.toString() || 0).toNumber()
-  // const pendingRvrsNo = new BigNumber(veRvrsUserData?.pendingRvrs.toString() || 0).div(1e18).toNumber()
-  // const pendingVeRvrsNo = new BigNumber(veRvrsUserData?.pendingVeRvrs.toString() || 0).div(1e18).toNumber()
-  const veRvrsBalance = new BigNumber(veRvrsUserData?.veRvrsBalance.toString() || 0).div(1e18)
   const farm0 = useFarmFromPid(0)
   const rvrsPerBlock = new BigNumber(farm0.vikingPerBlock)
+  const block = useBlock()
+  const { account } = useWallet()
 
-  const totalRewardsPerYearUsd = rvrsPrice.times(rvrsPerBlock).div(1e18).times(BLOCKS_PER_YEAR).times(2)
-  const apr = totalRewardsPerYearUsd.div(930000).times(100)
-  const apy = new BigNumber(apr).div(100).div(365).plus(1).pow(365).minus(1).times(100)
-  const apyStr = apy.toNumber().toLocaleString('en-us', {
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-  })
+  const { onApprove } = useVeRvrsApprove(stakingTokenContract, sousId)
+  const { onStake } = useVeRvrsStake(sousId, false)
+  const { onUnstake } = useVeRvrsUnstake(sousId)
+  const { onReward } = useVeRvrsClaim(sousId)
+  const [pendingTx, setPendingTx] = useState(false)
 
-  // boosted apr calculation'
-  // const boostedYearlyInterest = veRvrsBalance.div(veRvrsSupply).times(totalRewardsPerYearUsd)
-  // const boostedApr = boostedYearlyInterest.div(stakedRvrsUsd).times(100)
-  // onst boostedAprStr = boostedApr.toNumber().toLocaleString('en-us', {
-  //   maximumFractionDigits: 2,
-  //   minimumFractionDigits: 2,
-  // })
+  const hasAllowance = new BigNumber(veRvrsUserData?.allowance).toNumber() > 0
+
+  const rvrsBalance = new BigNumber(userData?.stakingTokenBalance || 0)
+  const veRvrsBalance = new BigNumber(veRvrsUserData?.veRvrsBalance || 0).div(1e18)
+
+  const stakedRvrs = new BigNumber(veRvrsUserData?.rvrsStaked || 0).div(1e18)
+  const stakedRvrsUsd = stakedRvrs.times(rvrsPrice)
+
+  const pendingRvrs = new BigNumber(veRvrsUserData?.pendingRvrs || 0)
+  const pendingVeRvrs = new BigNumber(veRvrsUserData?.pendingVeRvrs || 0)
+
+  const totalRvrsStaked = new BigNumber(veRvrsPublicData?.totalStaked || 0)
+  const veRvrsSupply = new BigNumber(veRvrsPublicData?.totalSupply || 0)
+
+  const baseAprRatio = 0.6666
+  const boostedAprRatio = 0.3333
+  const tvl = totalRvrsStaked.times(rvrsPrice)
+  const totalRvrsPerYearUsd = rvrsPerBlock.times(BLOCKS_PER_YEAR).times(2).times(rvrsPrice) // times(2) because reverse masterchef mints per second, not block
+  const baseApr = totalRvrsPerYearUsd.div(tvl).times(100).times(baseAprRatio)
+  const boostedEarnings = (veRvrsBalance.div(veRvrsSupply)).times(totalRvrsPerYearUsd).times(boostedAprRatio) // gets the amount of usd a user will get in boosted rewards in a year
+  const boostedApr = boostedEarnings.div(stakedRvrsUsd).times(100) // calculates the % of what is earned relative to the usd value of a users stake
+  const totalApr = baseApr.plus(boostedApr)
+  // const netApy = new BigNumber(totalApr).div(100).div(365).plus(1).pow(365).minus(1).times(100)
 
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} />,
@@ -103,19 +92,25 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
             <ContentCard style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
-              <Typography>Base APY</Typography>
+              <TypographyBold style={{ marginBottom: '5px' }}>
+                {baseApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
+              </TypographyBold>
+              <Typography>Base APR</Typography>
             </ContentCard>
             <GradientCard style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>{apyStr}%</TypographyBold>
+              <TypographyBold style={{ marginBottom: '5px' }}>
+                {totalApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
+              </TypographyBold>
               <Typography>
-                Total APY
+                Total APR
                 <FaQuestionCircle style={{ maxWidth: '10px', paddingBottom: '5px', marginLeft: '3px' }} color="grey" />
               </Typography>
             </GradientCard>
             <ContentCard style={{ marginRight: '0px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>0.00%</TypographyBold>
-              <Typography>Boosted APY</Typography>
+              <TypographyBold style={{ marginBottom: '5px' }}>
+                {boostedApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
+              </TypographyBold>
+              <Typography>Boosted APR</Typography>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginBottom="0px">
@@ -124,7 +119,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               <Typography>Protocol Share</Typography>
             </ContentCardAlt>
             <ContentCardAlt style={{ marginRight: '0px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>0.00</TypographyBold>
+              <TypographyBold style={{ marginBottom: '5px' }}>
+                {veRvrsBalance.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+              </TypographyBold>
               <Typography>veRVRS</Typography>
             </ContentCardAlt>
           </Flex>
@@ -154,7 +151,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <div>
                   <ContentCardAlt>
                     <TypographyBold>
-                      {stakedRvrsStr}&nbsp;<Typography>RVRS Staked</Typography>
+                      {stakedRvrs.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}&nbsp;<Typography>RVRS Staked</Typography>
                     </TypographyBold>
                   </ContentCardAlt>
                 </div>
@@ -247,14 +244,14 @@ const StakeUnstakeButton = styled.button`
 `
 
 const ActionTypography = styled.p`
-    font-size: 16px;
-    color: white;
-    font-weight: 400;
-    transition: 0.3s ease-in-out;
-    cursor: pointer;
-    :hover {
-      opacity: 0.6;
-    }
+  font-size: 16px;
+  color: white;
+  font-weight: 400;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  :hover {
+    opacity: 0.6;
+  }
 `
 
 const Divider = styled.div`
