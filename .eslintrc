@@ -30,6 +30,7 @@
     "import/no-unresolved": 0,
     "import/named": 0,
     "react/no-unused-prop-types": 0,
+    "react/no-unused-vars": 0,
     "no-unused-prop-types": 0
   }
 }
