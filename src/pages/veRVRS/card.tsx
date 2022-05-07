@@ -66,6 +66,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   const totalRvrsStaked = new BigNumber(veRvrsPublicData?.totalStaked || 0)
   const veRvrsSupply = new BigNumber(veRvrsPublicData?.totalSupply || 0)
+  const protocolShare = (veRvrsBalance.div(veRvrsSupply.div(1e18))).times(100)
 
   const baseAprRatio = 0.6666
   const boostedAprRatio = 0.3333
@@ -76,6 +77,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const boostedApr = boostedEarnings.div(stakedRvrsUsd).times(100) // calculates the % of what is earned relative to the usd value of a users stake
   const totalApr = baseApr.plus(boostedApr)
   // const netApy = new BigNumber(totalApr).div(100).div(365).plus(1).pow(365).minus(1).times(100)
+
 
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} />,
@@ -115,7 +117,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </Flex>
           <Flex justifyContent="center" marginBottom="0px">
             <ContentCardAlt style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>0.00%</TypographyBold>
+              <TypographyBold style={{ marginBottom: '5px' }}>{protocolShare.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%</TypographyBold>
               <Typography>Protocol Share</Typography>
             </ContentCardAlt>
             <ContentCardAlt style={{ marginRight: '0px' }}>
