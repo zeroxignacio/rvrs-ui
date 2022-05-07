@@ -25,7 +25,7 @@ import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 import { useVeRvrsClaim } from 'hooks/useHarvest'
 import { BLOCKS_PER_YEAR } from 'config'
 import useBlock from 'hooks/useBlock'
-import { FaQuestionCircle } from 'react-icons/fa'
+import { FaExternalLinkAlt, FaExternalLinkSquareAlt, FaQuestionCircle, FaRegQuestionCircle } from 'react-icons/fa'
 import GradientCard from 'components/layout/cards/GradientCard'
 import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import Tippy from '@tippyjs/react'
@@ -55,7 +55,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   const hasAllowance = new BigNumber(veRvrsUserData?.allowance).toNumber() > 0
 
-  const rvrsBalance = new BigNumber(userData?.stakingTokenBalance || 0)
+  const rvrsBalance = new BigNumber(userData?.stakingTokenBalance || 0).div(1e18)
   const veRvrsBalance = new BigNumber(veRvrsUserData?.veRvrsBalance || 0).div(1e18)
 
   const stakedRvrs = new BigNumber(veRvrsUserData?.rvrsStaked || 0).div(1e18)
@@ -63,6 +63,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
 
   const pendingRvrs = new BigNumber(veRvrsUserData?.pendingRvrs || 0)
   const pendingVeRvrs = new BigNumber(veRvrsUserData?.pendingVeRvrs || 0)
+
+  const hasStaked = pendingRvrs.toNumber() > 0 && pendingVeRvrs.toNumber() > 0
 
   const totalRvrsStaked = new BigNumber(veRvrsPublicData?.totalStaked || 0)
   const veRvrsSupply = new BigNumber(veRvrsPublicData?.totalSupply || 0)
@@ -94,29 +96,36 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
             <TypographyTitle>Stake RVRS to Earn veRVRS</TypographyTitle>
           </TitleCard>
           <Flex justifyContent="center" marginBottom="10px">
-            <ContentCard style={{ marginRight: '10px' }}>
+            <ContentCard style={{ marginRight: '10px', padding: '16px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>
                 {baseApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
               </TypographyBold>
               <Typography>Base APR</Typography>
             </ContentCard>
-            <GradientCard style={{ marginRight: '10px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>
-                {totalApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
-              </TypographyBold>
-              <Typography>
-                Total APR
-                <FaQuestionCircle style={{ maxWidth: '10px', paddingBottom: '5px', marginLeft: '3px' }} color="grey" />
-              </Typography>
+            <GradientCard style={{ marginRight: '10px', padding: '16px' }}>
+              {boostedApr.toNumber() > 0 ? (
+                <TypographyBold style={{ marginBottom: '5px' }}>
+                  {totalApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
+                </TypographyBold>
+              ) : (
+                <TypographyBold style={{ marginBottom: '5px' }}>
+                  {baseApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
+                </TypographyBold>
+              )}
+              <Typography>Total APR</Typography>
             </GradientCard>
-            <ContentCard style={{ marginRight: '0px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>
-                {boostedApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
-              </TypographyBold>
+            <ContentCard style={{ marginRight: '0px', padding: '16px' }}>
+              {boostedApr.toNumber() > 0 ? (
+                <TypographyBold style={{ marginBottom: '5px' }}>
+                  {boostedApr.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}%
+                </TypographyBold>
+              ) : (
+                <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
+              )}
               <Typography>Boosted APR</Typography>
             </ContentCard>
           </Flex>
-          <Flex justifyContent="center" marginBottom="10px">
+          <Flex justifyContent="center" marginBottom="0px">
             <ContentCardAlt style={{ padding: '15px' }}>
               <Flex justifyContent="space-between" alignItems="center">
                 <Typography>My Balance</Typography>
@@ -129,6 +138,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                     alt="logo"
                   />
                   <TypographyAccent>
+                    <ActivePulse style={{ marginRight: '5px' }} />
                     {veRvrsBalance
                       .toNumber()
                       .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -138,89 +148,150 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               </Flex>
               <Divider />
               <Flex justifyContent="space-between" alignItems="center">
-                <TypographySmall>
-                  veRVRS Supply:{' '}
-                  {veRvrsSupply.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
-                </TypographySmall>
-                <TypographySmall>
-                  Your veRVRS Cap:{' '}
-                  {userVeRvrsCap.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
-                </TypographySmall>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <TypographySmall>
+                    veRVRS Supply:&nbsp;
+                    {veRvrsSupply.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                  </TypographySmall>
+                  <Tippy content="The current supply of veRVRS">
+                    <div>
+                      <FaRegQuestionCircle
+                        style={{ maxWidth: '10px', paddingBottom: '3px', marginLeft: '2px' }}
+                        color="grey"
+                      />
+                    </div>
+                  </Tippy>
+                </Flex>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <TypographySmall>
+                    Your veRVRS Cap:&nbsp;
+                    {userVeRvrsCap.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                  </TypographySmall>
+                  <Tippy content="The maximum amount of veRVRS you can accumulate based on your current RVRS staked">
+                    <div>
+                      <FaRegQuestionCircle
+                        style={{ maxWidth: '10px', paddingBottom: '3px', marginLeft: '2px' }}
+                        color="grey"
+                      />
+                    </div>
+                  </Tippy>
+                </Flex>
               </Flex>
             </ContentCardAlt>
           </Flex>
-
           {!hasAllowance ? (
-            <Flex justifyContent="end" style={{ marginTop: '20px' }}>
-              <Ripples>
-                <ActionButton
-                  onClick={async () => {
-                    notifyPending()
-                    try {
-                      setRequestedApproval(true)
-                      await onApprove()
-                      setRequestedApproval(false)
-                      notifySuccess()
-                    } catch (e) {
-                      notifyError()
-                    }
-                  }}
-                >
-                  Enable Staking
-                </ActionButton>
-              </Ripples>
+            <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
+              <div>
+                <ContentCardAlt>
+                  <Flex alignItems="center" justifyContent="center">
+                    <Typography>Need RVRS?&nbsp;</Typography>
+                    <a
+                      target="_blanK"
+                      rel="noreferrer"
+                      href="https://app.sushi.com/swap?outputCurrency=0xed0b4b0f0e2c17646682fc98ace09feb99af3ade"
+                      className="nav-links"
+                    >
+                      <TypographyBold style={{ fontSize: '15px' }}>Get Some&nbsp;</TypographyBold>
+                    </a>
+                  </Flex>
+                </ContentCardAlt>
+              </div>
+              <ActionButton
+                onClick={async () => {
+                  notifyPending()
+                  try {
+                    setRequestedApproval(true)
+                    await onApprove()
+                    setRequestedApproval(false)
+                    notifySuccess()
+                  } catch (e) {
+                    notifyError()
+                  }
+                }}
+              >
+                Enable Staking
+              </ActionButton>
             </Flex>
           ) : (
             <>
               <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
                 <div>
-                  <ContentCardAlt>
-                    <Flex alignItems="center" justifyContent="center">
-                      <TypographyBold>
-                        {stakedRvrs.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
-                      </TypographyBold>&nbsp;
-                      <img
-                        width="20px"
-                        style={{ marginRight: '0px', marginBottom: '0px' }}
-                        className="img-fluid"
-                        src={`${process.env.PUBLIC_URL}/images/vervrs.svg`}
-                        alt="logo"
-                      />&nbsp;
-                      <Typography>RVRS Staked</Typography>
-                    </Flex>
-                  </ContentCardAlt>
+                  {hasStaked ? (
+                    <ContentCardAlt>
+                      <Flex alignItems="center" justifyContent="center">
+                        <TypographyBold>
+                          {stakedRvrs.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                        </TypographyBold>
+                        &nbsp;
+                        <img
+                          width="20px"
+                          style={{ marginRight: '0px', marginBottom: '0px' }}
+                          className="img-fluid"
+                          src={`${process.env.PUBLIC_URL}/images/vervrs.svg`}
+                          alt="logo"
+                        />
+                        &nbsp;
+                        <Typography>RVRS Staked</Typography>
+                      </Flex>
+                    </ContentCardAlt>
+                  ) : (
+                    <ContentCardAlt>
+                      <Flex alignItems="center" justifyContent="center">
+                        <Typography>Need RVRS?&nbsp;</Typography>
+                        <a
+                          target="_blanK"
+                          rel="noreferrer"
+                          href="https://app.sushi.com/swap?outputCurrency=0xed0b4b0f0e2c17646682fc98ace09feb99af3ade"
+                          className="nav-links"
+                        >
+                          <TypographyBold style={{ fontSize: '15px' }}>Get Some&nbsp;</TypographyBold>
+                        </a>
+                      </Flex>
+                    </ContentCardAlt>
+                  )}
                 </div>
                 <div style={{ justifyContent: 'space-between' }}>
-                  <Ripples>
-                    <StakeUnstakeButton disabled style={{ marginRight: '10px' }}>
-                      <Flex>
-                        <ActionTypography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                          Stake
-                        </ActionTypography>
-                        <Typography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                          |
-                        </Typography>
-                        <ActionTypography onClick={onPresentWithdraw}>Unstake</ActionTypography>
-                      </Flex>
-                    </StakeUnstakeButton>
-                  </Ripples>
-                  <Ripples>
-                    <ActionButton
-                      onClick={async () => {
-                        notifyPending()
-                        try {
-                          setPendingTx(true)
-                          await onReward()
-                          setPendingTx(false)
-                          notifySuccess()
-                        } catch (e) {
-                          notifyError()
-                        }
-                      }}
-                    >
-                      Claim
+                  {hasStaked ? (
+                    <Ripples>
+                      <StakeUnstakeButton disabled style={{ marginRight: '10px' }}>
+                        <Flex>
+                          <ActionTypography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
+                            Stake
+                          </ActionTypography>
+                          <Typography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
+                            |
+                          </Typography>
+                          <ActionTypography onClick={onPresentWithdraw}>Unstake</ActionTypography>
+                        </Flex>
+                      </StakeUnstakeButton>
+                    </Ripples>
+                  ) : (
+                    <ActionButton onClick={onPresentDeposit}>
+                      Stake&nbsp;{rvrsBalance.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                      &nbsp;RVRS
                     </ActionButton>
-                  </Ripples>
+                  )}
+                  {hasStaked ? (
+                    <Ripples>
+                      <ActionButton
+                        onClick={async () => {
+                          notifyPending()
+                          try {
+                            setPendingTx(true)
+                            await onReward()
+                            setPendingTx(false)
+                            notifySuccess()
+                          } catch (e) {
+                            notifyError()
+                          }
+                        }}
+                      >
+                        Claim
+                      </ActionButton>
+                    </Ripples>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </Flex>
             </>
@@ -246,6 +317,8 @@ const ActionButton = styled.button`
   border-left: 5px solid #6699a3;
   padding: 10px;
   transition: 0.3s ease-in-out;
+  box-shadow: 0 0 20px -8px #6699a3;
+
   :hover {
     opacity: 0.5;
     background: transparent;
@@ -265,9 +338,10 @@ const StakeUnstakeButton = styled.button`
   color: #eeeeee;
   border-left: 5px solid #6699a3;
   padding: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 20.5px;
+  padding-right: 20.5px;
   transition: 0.3s ease-in-out;
+
   :hover {
     background: transparent;
   }
@@ -282,6 +356,32 @@ const ActionTypography = styled.p`
   :hover {
     opacity: 0.6;
   }
+`
+
+const pulse = keyframes`
+  0% {
+    transform: scale(0.90);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 1);
+  }
+  50% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0.5px #6699a3;
+  }
+  100% {
+    transform: scale(0.90);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 1);
+`
+
+const ActivePulse = styled.div`
+  background: #6699a3;
+  border-radius: 100%;
+  margin: 0px;
+  height: 6px;
+  width: 6px;
+  opacity: 0.5;
+  box-shadow: #6ccca5;
+  transform: scale(1);
+  animation: ${pulse} 3s infinite;
 `
 
 const Divider = styled.div`
@@ -300,6 +400,15 @@ const TypographyAccent = styled.p`
   align-items: center;
   display: inline-flex;
   text-shadow: 0px 0px 0px #6699a3;
+`
+
+const TypographyAccentAlt = styled.p`
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  align-items: center;
+  display: inline-flex;
+  text-shadow: 0px 0px 0px #6ccca5;
 `
 
 const StyledWrap = styled(Container)`
