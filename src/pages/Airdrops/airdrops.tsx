@@ -38,10 +38,14 @@ const Airdrop = () => {
   const expectedReturnsStr = expectedReturnsNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
   const totalDistributedNo = new BigNumber(totalDistributed).plus(501745).toNumber()
   const totalDistributedStr = totalDistributedNo.toLocaleString('en-us', { maximumFractionDigits: 2 })
+
+  // change this every monday
+  const airdropSize = 8500
+
   const rvrsPrice = usePriceCakeBusd()
 
   const allocationStr = new BigNumber(lastClaimAmount)
-    .div(totalDistributed)
+    .div(airdropSize)
     .times(100)
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 3, minimumFractionDigits: 2 })
@@ -49,7 +53,7 @@ const Airdrop = () => {
   const stakedBalanceUsd = useStakedBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').times(rvrsPrice)
 
   // need to add last distr. to contract to automate this
-  const aprStr = new BigNumber(9930)
+  const aprStr = new BigNumber(airdropSize)
     .div(stakedBalanceUsd)
     .times(100)
     .times(52)
