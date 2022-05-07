@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
 import ModalActions from 'components/modals/components/modal/modalActions'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Modal from 'components/modals/components/modal/Modal'
 import ModalButton from 'components/layout/buttons/modalButton'
@@ -53,17 +52,6 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max
         >
           Confirm
         </ModalButton>
-        <ToastContainer
-          position="top-left"
-          autoClose={10000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable={false}
-          pauseOnHover
-        />
       </ModalActions>
     </Modal>
   )

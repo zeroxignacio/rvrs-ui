@@ -17,7 +17,6 @@ import 'tippy.js/dist/tippy.css'
 import { FaExternalLinkSquareAlt, FaHandHolding } from 'react-icons/fa'
 import BondsContainer from 'components/layout/containers/bondsContainer'
 import DepositModal from 'components/modals/bondModal'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import BondButton from 'components/layout/buttons/bondButton'
 import ClaimButton from 'components/layout/buttons/claimButton'
@@ -314,17 +313,6 @@ const Bonds: React.FC<HarvestProps> = ({ pool2 }) => {
           )}
         </>
       )}
-      <ToastContainer
-        position="top-left"
-        autoClose={10000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-      />
     </>
   )
 }

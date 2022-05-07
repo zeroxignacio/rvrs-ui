@@ -22,7 +22,6 @@ import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
 import ContentCardAlt from 'components/layout/cards/ContentCardAlt'
 import WithdrawModal from 'components/modals/withdrawModal'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Container } from 'react-bootstrap'
 import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
@@ -197,17 +196,6 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </Typography>
         </LayoutContainer>
       </WrapWarning>
-      <ToastContainer
-        position="top-left"
-        autoClose={10000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-      />
     </>
   )
 }

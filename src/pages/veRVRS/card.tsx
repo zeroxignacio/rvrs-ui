@@ -17,7 +17,6 @@ import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
 import WithdrawModal from 'components/modals/withdrawModal'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Wrap from 'components/layout/containers/Wrap'
 import 'tippy.js/dist/tippy.css'
@@ -235,17 +234,6 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </Typography>
         </LayoutContainer>
       </Wrap>
-      <ToastContainer
-        position="top-left"
-        autoClose={10000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-      />
     </>
   )
 }

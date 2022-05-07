@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import Modal from 'components/modals/components/modal'
 import ModalActions from 'components/modals/components/modal/modalActions'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ModalButton from 'components/layout/buttons/modalButton'
 import TokenInput from 'components/modals/components/modal/input'
@@ -52,17 +51,6 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss }) 
         >
           Confirm
         </ModalButton>
-        <ToastContainer
-          position="top-left"
-          autoClose={10000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable={false}
-          pauseOnHover
-        />
       </ModalActions>
     </Modal>
   )

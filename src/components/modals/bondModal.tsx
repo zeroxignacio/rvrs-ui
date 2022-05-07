@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
 import ModalActions from 'components/modals/components/modal/modalActions'
 import TokenInput from 'components/modals/components/modal/input'
 import ModalButton from 'components/layout/buttons/modalButton'
@@ -62,17 +61,6 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
         >
           Confirm
         </ModalButton>
-        <ToastContainer
-          position="top-left"
-          autoClose={10000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable={false}
-          pauseOnHover
-        />
       </ModalActions>
     </Modal>
   )

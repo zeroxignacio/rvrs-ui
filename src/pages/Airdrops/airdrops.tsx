@@ -179,18 +179,7 @@ const Airdrop = () => {
                       setPendingTxn(false)
                       notiftSuccess()
                     }}
-                  >
-                    <ToastContainer
-                      position="top-left"
-                      autoClose={10000}
-                      hideProgressBar={false}
-                      newestOnTop={false}
-                      closeOnClick
-                      rtl={false}
-                      pauseOnFocusLoss
-                      draggable
-                      pauseOnHover
-                    />
+                  >      
                     Claim ${toClaimStr}
                   </ClaimButton>
                 </Ripples>

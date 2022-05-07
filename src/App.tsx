@@ -7,6 +7,7 @@ import { useFetchPublicData } from 'state/hooks'
 import MenuBottom from 'components/navigation/footer'
 import Style from 'components/Style'
 import pools from 'config/constants/stake'
+import { ToastContainer } from 'react-toastify'
 import Nav from './components/navigation/nav'
 import Beta from './components/navigation/beta'
 
@@ -35,6 +36,17 @@ const App: React.FC = () => {
     <Router>
       <ResetCSS />
       <Style />
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+      />
       <Beta />
       <Nav />
       {account != null && account.length > 1 ? (

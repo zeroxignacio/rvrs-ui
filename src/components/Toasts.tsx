@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 export const notifySuccess = () =>
   toast.success('Success!', {
     position: 'top-left',
-    autoClose: 10000,
+    autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: false,
     pauseOnHover: true,
@@ -15,7 +15,7 @@ export const notifySuccess = () =>
 export const notifyPending = () =>
   toast.info('Confirm transaction...', {
     position: 'top-left',
-    autoClose: 10000,
+    autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: false,
     pauseOnHover: true,
@@ -27,7 +27,7 @@ export const notifyPending = () =>
 export const notifyError = () =>
   toast.error('Error', {
     position: 'top-left',
-    autoClose: 10000,
+    autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: false,
     pauseOnHover: true,
