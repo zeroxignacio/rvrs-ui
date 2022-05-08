@@ -5,6 +5,7 @@ const bondsContainer = styled.div<{ isActive?: boolean; isFinished?: boolean }>`
   padding: 5px;
   transition: all 0.3s ease-in-out;
   border-width: 1px;
+  margin-bottom: 1px;
   border-style: solid;
   border-color: transparent;
   margin-right: 3px;

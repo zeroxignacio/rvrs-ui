@@ -694,7 +694,7 @@ const pools2: Pool2Config[] = [
         lockBlock: 26237500,
         endBlock: 26237507,
 
-        isFinished: true,
+        isFinished: false,
 
         quoteTokenSymbol: QuoteToken.UST,
         quoteTokenPoolAddress: UST_ADDRESS,

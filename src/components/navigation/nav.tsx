@@ -38,19 +38,19 @@ const Nav = (props) => {
         <Ripples>
           <NavButton
             as={StyledNavLink}
-            to="/bonds"
-            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/bonds')}
+            to="/liquidity"
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/liquidity')}
           >
-            Bonds
+            Liquidity
           </NavButton>
         </Ripples>
         <Ripples>
           <NavButton
             as={StyledNavLink}
-            to="/staking"
-            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/staking')}
+            to="/bonds"
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/bonds')}
           >
-            Stake
+            Bonds
           </NavButton>
         </Ripples>
       </ButtonGroup>

@@ -22,6 +22,7 @@ const NOTCONNECTED = lazy(() => import('./pages/NotConnected'))
 const DASHBOARD = lazy(() => import('./pages/Dashboard'))
 const AIRDROP = lazy(() => import('./pages/Airdrops'))
 const VERVRS = lazy(() => import('./pages/veRVRS'))
+const LIQUIDITY = lazy(() => import('./pages/Liquidity'))
 
 const App: React.FC = () => {
   const { account, connect } = useWallet()
@@ -56,6 +57,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/bonds">
             <BONDS />
+          </Route>
+          <Route path="/liquidity">
+            <LIQUIDITY />
           </Route>
           <Route path="/staking">
             <STAKEDEPRECATED />
