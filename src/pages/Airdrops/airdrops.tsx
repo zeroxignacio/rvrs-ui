@@ -213,7 +213,7 @@ const Airdrop = () => {
           <LayoutContainer>
             <Flex justifyContent="center">
               <Typography style={{ lineHeight: '1.1' }}>
-                Yield earned through the Reverseum Treasury positions is converted to UST and distributed RVRS stakers
+                Yield earned through the Reverseum Treasury positions is converted to UST and distributed veRVRS holders
                 every monday. Airdrops can be claimed any time and do not expire.
               </Typography>
             </Flex>

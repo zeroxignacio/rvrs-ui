@@ -179,6 +179,36 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               </Flex>
             </ContentCardAlt>
           </Flex>
+          <Flex justifyContent="center">
+            <Tippy content="Expected monthly UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
+              <ContentCardAlt style={{ marginTop: '10px', marginRight: '10px' }}>
+                <Typography style={{ marginBottom: '5px' }}>
+                  {stakedRvrs
+                    .toNumber()
+                    .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </Typography>
+                <TypographySmall>Your Stake</TypographySmall>
+              </ContentCardAlt>
+            </Tippy>
+            <Tippy content="Expected yearly UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
+              <ContentCardAlt style={{ marginTop: '10px', marginRight: '10px' }}>
+                <Typography style={{ marginBottom: '5px', color: '#6ccca5' }}>+12,578 RVRS</Typography>
+                <TypographySmall>Monthly Interest</TypographySmall>
+              </ContentCardAlt>
+            </Tippy>
+            <Tippy content="Expected yearly UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
+              <ContentCardAlt style={{ marginTop: '10px', marginRight: '0px' }}>
+                <Typography style={{ marginBottom: '5px' }}>
+                  $
+                  {tvl
+                    .div(1e18)
+                    .toNumber()
+                    .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </Typography>
+                <TypographySmall>Value Locked</TypographySmall>
+              </ContentCardAlt>
+            </Tippy>
+          </Flex>
           {!hasAllowance ? (
             <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
               <div>
@@ -217,23 +247,27 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
                 <div>
                   {hasStaked ? (
-                    <ContentCardAlt>
+                    <ContentCardAlt2>
                       <Flex alignItems="center" justifyContent="center">
-                        <TypographyBold>
-                          {stakedRvrs.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
-                        </TypographyBold>
+                        <ClaimButton
+                          onClick={async () => {
+                            notifyPending()
+                            try {
+                              setPendingTx(true)
+                              await onReward()
+                              setPendingTx(false)
+                              notifySuccess()
+                            } catch (e) {
+                              notifyError()
+                            }
+                          }}
+                        >
+                          Claim All
+                        </ClaimButton>
                         &nbsp;
-                        <img
-                          width="20px"
-                          style={{ marginRight: '0px', marginBottom: '0px' }}
-                          className="img-fluid"
-                          src={`${process.env.PUBLIC_URL}/images/vervrs.svg`}
-                          alt="logo"
-                        />
-                        &nbsp;
-                        <Typography>RVRS Staked</Typography>
+                        <Typography>RVRS: 128 / veRVRS: 2,499</Typography>
                       </Flex>
-                    </ContentCardAlt>
+                    </ContentCardAlt2>
                   ) : (
                     <ContentCardAlt>
                       <Flex alignItems="center" justifyContent="center">
@@ -252,43 +286,17 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 </div>
                 <div style={{ justifyContent: 'space-between' }}>
                   {hasStaked ? (
-                    <StakeUnstakeButton disabled style={{ marginRight: '10px' }}>
-                      <Flex>
-                        <ActionTypography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                          Stake
-                        </ActionTypography>
-                        <Typography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                          |
-                        </Typography>
-                        <ActionTypography onClick={onPresentWithdraw}>Unstake</ActionTypography>
-                      </Flex>
-                    </StakeUnstakeButton>
+                    <Flex>
+                      <StakeUnstakeButton style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
+                        Stake
+                      </StakeUnstakeButton>
+                      <StakeUnstakeButton onClick={onPresentWithdraw}>Unstake</StakeUnstakeButton>
+                    </Flex>
                   ) : (
                     <ActionButton onClick={onPresentDeposit}>
                       Stake&nbsp;{rvrsBalance.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
                       &nbsp;RVRS
                     </ActionButton>
-                  )}
-                  {hasStaked ? (
-                    <Ripples>
-                      <ActionButton
-                        onClick={async () => {
-                          notifyPending()
-                          try {
-                            setPendingTx(true)
-                            await onReward()
-                            setPendingTx(false)
-                            notifySuccess()
-                          } catch (e) {
-                            notifyError()
-                          }
-                        }}
-                      >
-                        Claim
-                      </ActionButton>
-                    </Ripples>
-                  ) : (
-                    <></>
                   )}
                 </div>
               </Flex>
@@ -299,7 +307,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
       <Wrap style={{ marginTop: '20px' }}>
         <LayoutContainer>
           <Typography style={{ lineHeight: '1.1' }}>
-            Do NOT deposit RVRS in this pool. It will lead to loss of funds.
+            Stakers can boost their RVRS yields by accumulating veRVRS. On unstake, all veRVRS previously held will drop
+            to 0. veRVRS is the governance token of the Reverse Protocol and UST airdrops will depend on your balance.
           </Typography>
         </LayoutContainer>
       </Wrap>
@@ -323,6 +332,37 @@ const ActionButton = styled.button`
   }
 `
 
+const ClaimButton = styled.button`
+  font-size: 16px;
+  font-weight: 400;
+  background: #6699a3;
+  color: #eeeeee;
+  padding: 8px;
+  transition: 0.3s ease-in-out;
+  boder-radius: 5px;
+  box-shadow: 0 0 20px -8px #6699a3;
+  :hover {
+    opacity: 0.5;
+    background: transparent;
+  }
+`
+
+
+const ContentCardAlt2 = styled(Container)`
+  text-align: center;
+  border-radius: 0px;
+  // padding: 8px;
+  padding: 2px;
+  border-width: 1px;
+  border-color: #3a3a3a;
+  border-style: solid;
+  transition: all 0.2s ease-in-out;
+  padding-right: 8px;
+  :hover {
+    border-color: #515151;
+  }
+`
+
 const TypographySmall = styled.p`
   font-size: 12px;
   color: #9b9b9b;
@@ -336,13 +376,11 @@ const StakeUnstakeButton = styled.button`
   color: #eeeeee;
   border-left: 5px solid #6699a3;
   padding: 10px;
-  padding-left: 20.5px;
-  padding-right: 20.5px;
   transition: 0.3s ease-in-out;
-  box-shadow: 0 0 17px -8px #6699a3;
-
+  box-shadow: 0 0 17px -10px #6699a3;
   :hover {
     background: transparent;
+    opacity: 0.5;
   }
 `
 
@@ -391,6 +429,7 @@ const Divider = styled.div`
   margin-bottom: 8px;
   width: 100%;
 `
+
 
 const TypographyAccent = styled.p`
   font-size: 18px;
