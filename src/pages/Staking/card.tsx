@@ -117,7 +117,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               RVRS Staking
             </TypographyTitle>
           </TitleCard>
-          <Flex justifyContent="center" marginBottom="10px">
+          <Flex justifyContent="center" marginBottom="0px">
             <Tippy content="The USD value of all RVRS staked in the deprecated staking contract">
               <ContentCard style={{ marginRight: '10px' }}>
                 <TypographyBold style={{ marginBottom: '5px' }}>${tvlStr}</TypographyBold>
@@ -135,24 +135,6 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <TypographyBold style={{ marginBottom: '5px' }}>0%</TypographyBold>
                 <Typography>Monthly Yield</Typography>
               </ContentCard>
-            </Tippy>
-          </Flex>
-          <Flex justifyContent="center" marginTop="0px">
-            <Tippy content="N/A">
-              <ContentCardAlt style={{ marginRight: '5px' }}>
-                <TypographyBold style={{ marginBottom: '5px', color: '#b33f40', fontWeight: '500' }}>
-                  +0 RVRS
-                </TypographyBold>
-                <Typography>Expected Yearly Interest</Typography>
-              </ContentCardAlt>
-            </Tippy>
-            <Tippy content="N/A">
-              <ContentCardAlt>
-                <TypographyBold style={{ marginBottom: '5px', color: '#b33f40', fontWeight: '500' }}>
-                  +0 RVRS
-                </TypographyBold>
-                <Typography>Expected Monthly Interest</Typography>
-              </ContentCardAlt>
             </Tippy>
           </Flex>
           {needsApproval ? (
@@ -237,6 +219,7 @@ const Wrap = styled(Container)`
     box-shadow: 5px 5px 25px -15px #55747d;
     transition: all 0.3s ease-in-out;
 `
+
 
 const WrapWarning = styled(Container)`
     border-radius: 7px;

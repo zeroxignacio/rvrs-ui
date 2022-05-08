@@ -139,8 +139,8 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
     allowance: allowances[1],
     rvrsStaked: `0000${_18_ZEROS}`,
     veRvrsBalance: `0000${_18_ZEROS}`,
-    pendingRvrs: `0${_18_ZEROS}`,
-    pendingVeRvrs: `0${_18_ZEROS}`,
+    pendingRvrs: `10${_18_ZEROS}`,
+    pendingVeRvrs: `123${_18_ZEROS}`,
     lastClaim: '1651536000', // use this to get timestamps: https://www.epochconverter.com/
     lastDeposit: '1651449600', // last deposit is 1 day before last claim
   }))

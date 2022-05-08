@@ -252,19 +252,17 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 </div>
                 <div style={{ justifyContent: 'space-between' }}>
                   {hasStaked ? (
-                    <Ripples>
-                      <StakeUnstakeButton disabled style={{ marginRight: '10px' }}>
-                        <Flex>
-                          <ActionTypography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                            Stake
-                          </ActionTypography>
-                          <Typography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                            |
-                          </Typography>
-                          <ActionTypography onClick={onPresentWithdraw}>Unstake</ActionTypography>
-                        </Flex>
-                      </StakeUnstakeButton>
-                    </Ripples>
+                    <StakeUnstakeButton disabled style={{ marginRight: '10px' }}>
+                      <Flex>
+                        <ActionTypography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
+                          Stake
+                        </ActionTypography>
+                        <Typography style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
+                          |
+                        </Typography>
+                        <ActionTypography onClick={onPresentWithdraw}>Unstake</ActionTypography>
+                      </Flex>
+                    </StakeUnstakeButton>
                   ) : (
                     <ActionButton onClick={onPresentDeposit}>
                       Stake&nbsp;{rvrsBalance.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
@@ -341,6 +339,7 @@ const StakeUnstakeButton = styled.button`
   padding-left: 20.5px;
   padding-right: 20.5px;
   transition: 0.3s ease-in-out;
+  box-shadow: 0 0 17px -8px #6699a3;
 
   :hover {
     background: transparent;
@@ -421,7 +420,6 @@ const StyledWrap = styled(Container)`
   :hover {
     box-shadow: 25px 25px 40px -45px #55747d, -25px -25px 40px -45px #6699a3;
   }
-
   transition: all 0.3s ease-in-out;
 `
 
