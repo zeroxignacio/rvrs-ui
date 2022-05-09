@@ -13,10 +13,21 @@ import axios from 'axios'
 import 'tippy.js/dist/tippy.css'
 import ContentCard from 'components/layout/cards/TierCard'
 import GradientCard from 'components/layout/cards/GradientCard'
+import { usePriceCakeBusd } from 'state/hooks'
+import { useLpBalance, useLpBalance2, useLpBalance3 } from 'hooks/useTokenBalance'
 
 const Liquidity = () => {
   // a mvp implementation of the liquidity page...
   // todo: automate stuff
+
+  const rvrsPrice = usePriceCakeBusd()
+
+  // get tvl
+  const oneRvrsTvl = useLpBalance('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').times(2).times(rvrsPrice)
+  const ustRvrsTvl = useLpBalance2('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').times(2).times(rvrsPrice)
+  const ethRvrsTvl = useLpBalance3('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').times(2).times(rvrsPrice)
+  const totalTvl = oneRvrsTvl.plus(ustRvrsTvl).plus(ethRvrsTvl)
+
   return (
     <Page>
       <Wrap>
