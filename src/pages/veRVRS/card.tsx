@@ -63,7 +63,9 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const stakedRvrsUsd = stakedRvrs.times(rvrsPrice)
   const pendingRvrs = new BigNumber(veRvrsUserData?.pendingRvrs || 0)
   const pendingVeRvrs = new BigNumber(veRvrsUserData?.pendingVeRvrs || 0)
-  const hasStaked = rvrsBalanceBn.toNumber() > 0
+
+  const hasStaked = stakedRvrsBn.toNumber() > 0
+  
   const totalRvrsStaked = new BigNumber(veRvrsPublicData?.totalStaked || 0)
   const veRvrsSupply = new BigNumber(veRvrsPublicData?.totalSupply || 0)
   const protocolShare = veRvrsBalance.div(veRvrsSupply.div(1e18)).times(100)
