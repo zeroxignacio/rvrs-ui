@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import Page from 'components/layout/containers/page'
 import { Flex } from '@reverse/uikit'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
 import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TypographyBold from 'components/layout/typography/typographyBold'
 import Typography from 'components/layout/typography/typography'
@@ -9,17 +8,15 @@ import TitleCard from 'components/layout/cards/TitleCard'
 import styled from 'styled-components'
 import LayoutContainer from 'components/layout/containers/LayoutContainer'
 import Wrap from 'components/layout/containers/Wrap'
-import axios from 'axios'
 import 'tippy.js/dist/tippy.css'
 import ContentCard from 'components/layout/cards/TierCard'
 import GradientCard from 'components/layout/cards/GradientCard'
 import { usePriceCakeBusd } from 'state/hooks'
 import { useLpBalance, useLpBalance2, useLpBalance3, useLpBalance4 } from 'hooks/useTokenBalance'
+import BigNumber from 'bignumber.js'
 
 const Liquidity = () => {
   // a mvp implementation of the liquidity page...
-  // todo: automate stuff
-
   const rvrsPrice = usePriceCakeBusd()
 
   // get tvl
@@ -29,6 +26,14 @@ const Liquidity = () => {
   const usdcRvrsTvl = useLpBalance4('0xed0b4b0f0e2c17646682fc98ace09feb99af3ade').times(2).times(rvrsPrice)
   const totalTvl = oneRvrsTvl.plus(ustRvrsTvl).plus(ethRvrsTvl).plus(usdcRvrsTvl)
 
+  // get volume
+  const totalDailyVolume = new BigNumber(0)
+
+  // calculate fees by using volume
+  const totalDailyFees = totalDailyVolume.times(0.025)
+
+  // calculate apr
+  const totalApr = totalDailyFees.div(totalTvl).times(365).times(100)
 
   return (
     <Page>
@@ -43,7 +48,9 @@ const Liquidity = () => {
               <Typography>Fees (24H)</Typography>
             </ContentCard>
             <GradientCard style={{ marginRight: '10px', padding: '16px' }}>
-              <TypographyBold style={{ marginBottom: '5px' }}>${totalTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}</TypographyBold>
+              <TypographyBold style={{ marginBottom: '5px' }}>
+                ${totalTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+              </TypographyBold>
               <Typography>Total Liquidity</Typography>
             </GradientCard>
             <ContentCard style={{ marginRight: '0px', padding: '16px' }}>
@@ -72,7 +79,9 @@ const Liquidity = () => {
                   <TypographySmall>Platform</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
-                  <Typography style={{ color: 'white' }}>${ustRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}</Typography>
+                  <Typography style={{ color: 'white' }}>
+                    ${ustRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                  </Typography>
                   <TypographySmall>Liquidity</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
@@ -103,7 +112,9 @@ const Liquidity = () => {
                   <TypographySmall>Platform</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
-                  <Typography style={{ color: 'white' }}>${oneRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}</Typography>
+                  <Typography style={{ color: 'white' }}>
+                    ${oneRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                  </Typography>
                   <TypographySmall>Liquidity</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
@@ -134,7 +145,9 @@ const Liquidity = () => {
                   <TypographySmall>Platform</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
-                  <Typography style={{ color: 'white' }}>${usdcRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}</Typography>
+                  <Typography style={{ color: 'white' }}>
+                    ${usdcRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                  </Typography>
                   <TypographySmall>Liquidity</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
@@ -165,7 +178,9 @@ const Liquidity = () => {
                   <TypographySmall>Platform</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
-                  <Typography style={{ color: 'white' }}>${ethRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}</Typography>
+                  <Typography style={{ color: 'white' }}>
+                    ${ethRvrsTvl.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                  </Typography>
                   <TypographySmall>Liquidity</TypographySmall>
                 </Flex>
                 <Flex flexDirection="column">
