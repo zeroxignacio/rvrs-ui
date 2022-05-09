@@ -126,7 +126,7 @@ const Dashboard = () => {
           <Flex justifyContent="center" marginBottom="10px">
             <ContentCard style={{ marginRight: '10px', padding: '16px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
-              <Typography>Fees Earned</Typography>
+              <Typography>Fees (24H)</Typography>
             </ContentCard>
             <GradientCard style={{ marginRight: '10px', padding: '16px' }}>
               <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
