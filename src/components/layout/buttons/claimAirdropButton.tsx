@@ -14,8 +14,8 @@ const pulse = keyframes`
 
 
 const claimAirdropButton = styled.button`
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 500;
     background: transparent;
     color: #EEEEEE;
     border-left: 5px solid #6699A3;

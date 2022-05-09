@@ -16,7 +16,7 @@ import TypographyBold from 'components/layout/typography/typographyBold'
 import TypographyTitle from 'components/layout/typography/typographyTitle'
 import TitleCard from 'components/layout/cards/TitleCard'
 import ContentCard from 'components/layout/cards/ContentCard'
-import WithdrawModal from 'components/modals/withdrawModal'
+import WithdrawModal from 'components/modals/withdrawModalVe'
 import 'react-toastify/dist/ReactToastify.css'
 import Wrap from 'components/layout/containers/Wrap'
 import 'tippy.js/dist/tippy.css'
@@ -54,24 +54,20 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const [pendingTx, setPendingTx] = useState(false)
 
   const hasAllowance = new BigNumber(veRvrsUserData?.allowance).toNumber() > 0
-
+  const rvrsBalanceBn = new BigNumber(userData?.stakingTokenBalance || 0)
   const rvrsBalance = new BigNumber(userData?.stakingTokenBalance || 0).div(1e18)
   const veRvrsBalance = new BigNumber(veRvrsUserData?.veRvrsBalance || 0).div(1e18)
-
   const stakedRvrs = new BigNumber(veRvrsUserData?.rvrsStaked || 0).div(1e18)
-  const stakedRvrsUsd = stakedRvrs.times(rvrsPrice)
+  const stakedRvrsBn = new BigNumber(veRvrsUserData?.rvrsStaked || 0)
 
+  const stakedRvrsUsd = stakedRvrs.times(rvrsPrice)
   const pendingRvrs = new BigNumber(veRvrsUserData?.pendingRvrs || 0)
   const pendingVeRvrs = new BigNumber(veRvrsUserData?.pendingVeRvrs || 0)
-
-  const hasStaked = pendingRvrs.toNumber() > 0 && pendingVeRvrs.toNumber() > 0
-
+  const hasStaked = rvrsBalanceBn.toNumber() > 0
   const totalRvrsStaked = new BigNumber(veRvrsPublicData?.totalStaked || 0)
   const veRvrsSupply = new BigNumber(veRvrsPublicData?.totalSupply || 0)
   const protocolShare = veRvrsBalance.div(veRvrsSupply.div(1e18)).times(100)
-
   const userVeRvrsCap = stakedRvrs.times(new BigNumber(veRvrsPublicData?.maxCap || 0))
-
   const baseAprRatio = 0.6666
   const boostedAprRatio = 0.3333
   const tvl = totalRvrsStaked.times(rvrsPrice)
@@ -80,12 +76,15 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
   const boostedEarnings = veRvrsBalance.div(veRvrsSupply).times(totalRvrsPerYearUsd).times(boostedAprRatio) // gets the amount of usd a user will get in boosted rewards in a year
   const boostedApr = boostedEarnings.div(stakedRvrsUsd).times(100) // calculates the % of what is earned relative to the usd value of a users stake
   const totalApr = baseApr.plus(boostedApr)
+  const monthlyInterest = totalApr.div(12).times(0.01).times(stakedRvrs)
   // const netApy = new BigNumber(totalApr).div(100).div(365).plus(1).pow(365).minus(1).times(100)
 
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={stakedRvrs} onConfirm={onUnstake} tokenName={stakingTokenName} />,
+    <WithdrawModal max={stakedRvrsBn} onConfirm={onUnstake} tokenName={stakingTokenName} />,
   )
-  const [onPresentDeposit] = useModal(<StakeModal max={rvrsBalance} onConfirm={onStake} tokenName={stakingTokenName} />)
+  const [onPresentDeposit] = useModal(
+    <StakeModal max={rvrsBalanceBn} onConfirm={onStake} tokenName={stakingTokenName} />,
+  )
   const [requestedApproval, setRequestedApproval] = useState(false)
 
   return (
@@ -122,7 +121,17 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
               ) : (
                 <TypographyBold style={{ marginBottom: '5px' }}>TBD</TypographyBold>
               )}
-              <Typography>Boosted APR</Typography>
+              <Flex justifyContent="center" alignItems="center">
+                <Typography>Boosted APR</Typography>
+                <Tippy content="The more veRVRS you hold, the higher your boosted APR will be! Make sure to come back and claim every day.">
+                  <div>
+                    <FaRegQuestionCircle
+                      style={{ maxWidth: '10px', cursor: 'pointer', marginLeft: '2px' }}
+                      color="grey"
+                    />
+                  </div>
+                </Tippy>
+              </Flex>
             </ContentCard>
           </Flex>
           <Flex justifyContent="center" marginBottom="0px">
@@ -151,12 +160,12 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <Flex justifyContent="space-between" alignItems="center">
                   <TypographySmall>
                     veRVRS Supply:&nbsp;
-                    {veRvrsSupply.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                    {veRvrsSupply.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 2 })}
                   </TypographySmall>
                   <Tippy content="The current supply of veRVRS">
                     <div>
                       <FaRegQuestionCircle
-                        style={{ maxWidth: '10px', paddingBottom: '3px', marginLeft: '2px' }}
+                        style={{ maxWidth: '10px', cursor: 'pointer', marginLeft: '2px' }}
                         color="grey"
                       />
                     </div>
@@ -165,12 +174,12 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                 <Flex justifyContent="space-between" alignItems="center">
                   <TypographySmall>
                     Your veRVRS Cap:&nbsp;
-                    {userVeRvrsCap.div(1e18).toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                    {userVeRvrsCap.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
                   </TypographySmall>
                   <Tippy content="The maximum amount of veRVRS you can accumulate based on your current RVRS staked">
                     <div>
                       <FaRegQuestionCircle
-                        style={{ maxWidth: '10px', paddingBottom: '3px', marginLeft: '2px' }}
+                        style={{ maxWidth: '10px', cursor: 'pointer', marginLeft: '2px' }}
                         color="grey"
                       />
                     </div>
@@ -180,34 +189,47 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
             </ContentCardAlt>
           </Flex>
           <Flex justifyContent="center">
-            <Tippy content="Expected monthly UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
-              <ContentCardAlt style={{ marginTop: '10px', marginRight: '10px' }}>
-                <Typography style={{ marginBottom: '5px' }}>
-                  {stakedRvrs
-                    .toNumber()
-                    .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </Typography>
+            <ContentCardAlt style={{ marginTop: '10px', marginRight: '10px' }}>
+              <Typography style={{ marginBottom: '5px' }}>
+                {stakedRvrs.toNumber().toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </Typography>
+              <Flex justifyContent="center" alignItems="center">
                 <TypographySmall>Your Stake</TypographySmall>
-              </ContentCardAlt>
-            </Tippy>
-            <Tippy content="Expected yearly UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
-              <ContentCardAlt style={{ marginTop: '10px', marginRight: '10px' }}>
-                <Typography style={{ marginBottom: '5px', color: '#6ccca5' }}>+12,578 RVRS</Typography>
-                <TypographySmall>Monthly Interest</TypographySmall>
-              </ContentCardAlt>
-            </Tippy>
-            <Tippy content="Expected yearly UST returns based on your historical performance. It will be calculated once you claim your first airdrop">
-              <ContentCardAlt style={{ marginTop: '10px', marginRight: '0px' }}>
-                <Typography style={{ marginBottom: '5px' }}>
-                  $
-                  {tvl
-                    .div(1e18)
+                <Tippy
+                  content={`Your staked balance is currently valued at $${stakedRvrs
+                    .times(rvrsPrice)
                     .toNumber()
                     .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </Typography>
-                <TypographySmall>Value Locked</TypographySmall>
-              </ContentCardAlt>
-            </Tippy>
+                `}
+                >
+                  <div>
+                    <FaRegQuestionCircle
+                      style={{ maxWidth: '10px', cursor: 'pointer', marginLeft: '2px' }}
+                      color="grey"
+                    />
+                  </div>
+                </Tippy>
+              </Flex>
+            </ContentCardAlt>
+            <ContentCardAlt style={{ marginTop: '10px', marginRight: '10px' }}>
+              <Typography style={{ marginBottom: '5px', color: '#6ccca5' }}>
+                +
+                {monthlyInterest
+                  .toNumber()
+                  .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </Typography>
+              <TypographySmall>Monthly Interest</TypographySmall>
+            </ContentCardAlt>
+            <ContentCardAlt style={{ marginTop: '10px', marginRight: '0px' }}>
+              <Typography style={{ marginBottom: '5px' }}>
+                $
+                {tvl
+                  .div(1e18)
+                  .toNumber()
+                  .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </Typography>
+              <TypographySmall>Value Locked</TypographySmall>
+            </ContentCardAlt>
           </Flex>
           {!hasAllowance ? (
             <Flex alignItems="center" justifyContent="space-between" style={{ marginTop: '20px' }}>
@@ -265,7 +287,22 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                           Claim All
                         </ClaimButton>
                         &nbsp;
-                        <Typography>RVRS: 128 / veRVRS: 2,499</Typography>
+                        <TypographySmall>
+                          <p style={{ justifyContent: 'left' }}>
+                            RVRS:&nbsp;
+                            {pendingRvrs
+                              .div(1e18)
+                              .toNumber()
+                              .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </p>
+                          <p style={{ justifyContent: 'left' }}>
+                            veRVRS:&nbsp;
+                            {pendingVeRvrs
+                              .div(1e18)
+                              .toNumber()
+                              .toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </p>
+                        </TypographySmall>
                       </Flex>
                     </ContentCardAlt2>
                   ) : (
@@ -288,7 +325,8 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                   {hasStaked ? (
                     <Flex>
                       <StakeUnstakeButton style={{ marginRight: '10px' }} onClick={onPresentDeposit}>
-                        Stake
+                        Stake&nbsp;{rvrsBalance.toNumber().toLocaleString('en-us', { maximumFractionDigits: 0 })}
+                        &nbsp;RVRS
                       </StakeUnstakeButton>
                       <StakeUnstakeButton onClick={onPresentWithdraw}>Unstake</StakeUnstakeButton>
                     </Flex>
@@ -312,13 +350,20 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
           </Typography>
         </LayoutContainer>
       </Wrap>
+      <Wrap style={{ marginTop: '20px' }}>
+        <LayoutContainer>
+          <Typography style={{ lineHeight: '1.1' }}>
+            DO NOT DEPOSIT RVRS TO THIS POOL. CONTRACTS WILL BE SWAPPED ON LAUNCH
+          </Typography>
+        </LayoutContainer>
+      </Wrap>
     </>
   )
 }
 
 const ActionButton = styled.button`
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 500;
   background: transparent;
   color: #eeeeee;
   border-left: 5px solid #6699a3;
@@ -333,8 +378,8 @@ const ActionButton = styled.button`
 `
 
 const ClaimButton = styled.button`
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 500;
   background: #6699a3;
   color: #eeeeee;
   padding: 8px;
@@ -346,7 +391,6 @@ const ClaimButton = styled.button`
     background: transparent;
   }
 `
-
 
 const ContentCardAlt2 = styled(Container)`
   text-align: center;
@@ -370,8 +414,8 @@ const TypographySmall = styled.p`
 `
 
 const StakeUnstakeButton = styled.button`
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 15x;
+  font-weight: 500;
   background: transparent;
   color: #eeeeee;
   border-left: 5px solid #6699a3;
@@ -429,7 +473,6 @@ const Divider = styled.div`
   margin-bottom: 8px;
   width: 100%;
 `
-
 
 const TypographyAccent = styled.p`
   font-size: 18px;

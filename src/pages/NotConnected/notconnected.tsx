@@ -122,8 +122,10 @@ const TypographyTitle = styled.h1`
   transition: all 0.3s ease-in-out;
   // animation: ${pulse} 5s infinite;
   :hover {
+    box-shadow: 10px 0px 50px 0px #55747d;
+    border-color: #ffff !important;
     cursor: pointer;
-    opacity: 0.6;
+    transform: translate(0px, -2px);
   }
 `
 

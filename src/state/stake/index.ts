@@ -83,7 +83,7 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
       ...pool,
       totalStaked: userInfo[0].amount,
       pricePerShare: pricePerFullShare[0].toString(),
-      veRvrsPublicData: veRvrsPublicDatasTest // change to veRvrsPublicDatas on la
+      veRvrsPublicData: veRvrsPublicDatas // change to veRvrsPublicDatas on la
     }
   })
   console.log('fetchPoolsPublicDataAsync', veRvrsPublicDatas)
@@ -145,7 +145,7 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
     lastDeposit: '1651449600', // last deposit is 1 day before last claim
   }))
 
-  dispatch(setPoolsVeRvrsUserData(veRvrsUserDataTest))
+  dispatch(setPoolsVeRvrsUserData(veRvrsUserData))
   dispatch(setPoolsUserData(userData))
 }
 

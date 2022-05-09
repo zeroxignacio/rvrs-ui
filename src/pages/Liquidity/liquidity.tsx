@@ -207,43 +207,12 @@ const Dashboard = () => {
                     width="60px"
                     style={{ marginRight: '8px' }}
                     className="img-fluid"
-                    src={`${process.env.PUBLIC_URL}/images/farms/rvrsust.svg`}
-                    alt="logo"
-                  />
-                  <Flex flexDirection="column">
-                    <Typography style={{ color: 'white' }}>RVRS/UST</Typography>
-                    <TypographySmall>Community</TypographySmall>
-                  </Flex>
-                </Flex>
-                <Flex flexDirection="column">
-                  <Typography style={{ color: '#8C3DF5' }}>Foxswap</Typography>
-                  <TypographySmall>Platform</TypographySmall>
-                </Flex>
-                <Flex flexDirection="column">
-                  <Typography style={{ color: 'white' }}>TBD</Typography>
-                  <TypographySmall>Liquidity</TypographySmall>
-                </Flex>
-                <Flex flexDirection="column">
-                  <Typography style={{ color: 'white' }}>TBD</Typography>
-                  <TypographySmall>APR</TypographySmall>
-                </Flex>
-              </Flex>
-            </LpContainer>
-          </a>
-          <a target="_blanK" rel="noreferrer" href="https://app.sushi.com/" className="nav-links">
-            <LpContainer>
-              <Flex alignItems="center" justifyContent="space-between">
-                <Flex alignItems="center">
-                  <img
-                    width="60px"
-                    style={{ marginRight: '8px' }}
-                    className="img-fluid"
                     src={`${process.env.PUBLIC_URL}/images/farms/rvrsusdc.svg`}
                     alt="logo"
                   />
                   <Flex flexDirection="column">
                     <Typography style={{ color: 'white' }}>RVRS/USDC</Typography>
-                    <TypographySmall>Secondary</TypographySmall>
+                    <TypographySmall>Core</TypographySmall>
                   </Flex>
                 </Flex>
                 <Flex flexDirection="column">
@@ -299,7 +268,7 @@ const LpContainer = styled.div`
   margin-top: 10px;
   background: #181818;
   :hover {
-    opacity: 0.8;
+    opacity: 0.6;
   }
 `
 
