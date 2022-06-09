@@ -156,7 +156,7 @@ const Dashboard = () => {
             </Tippy>
           </Flex>
 
-          <Flex justifyContent="center" marginTop="8px">
+         {/* <Flex justifyContent="center" marginTop="8px">
             <Tippy content="Current RVRS price and price change (as per Coingecko API)">
               <ContentCard style={{ marginRight: '8px' }}>
                 <Flex justifyContent="center">
@@ -192,7 +192,7 @@ const Dashboard = () => {
                 <Typography> Monthly Inflation</Typography>
               </ContentCard>
             </Tippy>
-          </Flex>
+          </Flex> */ }
           <Flex justifyContent="center" marginTop="8px">
 
             {/* 
