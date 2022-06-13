@@ -242,7 +242,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                     <a
                       target="_blanK"
                       rel="noreferrer"
-                      href="https://app.sushi.com/swap?outputCurrency=0xed0b4b0f0e2c17646682fc98ace09feb99af3ade"
+                      href="https://app.sushi.com/swap?outputCurrency=0x53Ad1f6eA77b4Fb9c44d27eBdef0510Eafd2760a"
                       className="nav-links"
                     >
                       <TypographyBold style={{ fontSize: '15px' }}>Get Some&nbsp;</TypographyBold>
@@ -314,7 +314,7 @@ const Card: React.FC<HarvestProps> = ({ pool }) => {
                         <a
                           target="_blanK"
                           rel="noreferrer"
-                          href="https://app.sushi.com/swap?outputCurrency=0xed0b4b0f0e2c17646682fc98ace09feb99af3ade"
+                          href="https://app.sushi.com/swap?outputCurrency=0x53Ad1f6eA77b4Fb9c44d27eBdef0510Eafd2760a"
                           className="nav-links"
                         >
                           <TypographyBold style={{ fontSize: '15px' }}>Get Some&nbsp;</TypographyBold>

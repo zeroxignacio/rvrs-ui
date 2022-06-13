@@ -17,14 +17,11 @@ const Nav = (props) => {
     <MenuContainer>
       <ButtonGroup style={{ marginRight: '20px' }}>
         <Ripples>
-          <NavButton
+          <NavButton2
             style={{ marginRight: '-5px;' }}
-            as={StyledNavLink}
-            to="/vervrs"
-            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/vervrs')}
           >
             veRVRS
-          </NavButton>
+          </NavButton2>
         </Ripples>
         <Ripples>
           <NavButton
@@ -54,6 +51,8 @@ const Nav = (props) => {
           </NavButton>
         </Ripples>
       </ButtonGroup>
+
+      {/*
 
       <ButtonGroup>
         {account != null && account.length > 1 ? (
@@ -106,6 +105,7 @@ const Nav = (props) => {
           </Flex>
         )}
       </ButtonGroup>
+        */ }
     </MenuContainer>
   )
 }
