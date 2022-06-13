@@ -74,7 +74,6 @@ const Dashboard = () => {
   const marketCapStr = marketCap
     .toNumber()
     .toLocaleString('en-us', { maximumFractionDigits: 0, minimumFractionDigits: 0 })
-
   const treasuryUSD = new BigNumber(1300000) // get this from spreadsheet
   const ratio = treasuryUSD.div(marketCapNoLp).toNumber()
   const ratioStr = ratio.toLocaleString('en-us', { maximumFractionDigits: 2, minimumFractionDigits: 2 })

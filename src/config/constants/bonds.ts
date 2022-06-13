@@ -28,8 +28,7 @@ const pools2: Pool2Config[] = [
         endBlock: 20004471,
         lockBlock: 20004471,
         tokenDecimals: 18,
-    },
-    */
+    }, */
 ]
 
 export default pools2
