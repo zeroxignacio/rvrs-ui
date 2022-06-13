@@ -131,6 +131,23 @@ export const useLpBalance3 = (tokenAddress: string) => {
   return balance
 }
 
+export const useLpBalance4 = (tokenAddress: string) => {
+  const [balance, setBalance] = useState(new BigNumber(0))
+  const { slowRefresh } = useRefresh()
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const rvrsContract = getContract(cakeABI, getCakeAddress())
+      const bal = await rvrsContract.methods.balanceOf('0x15b78becf030cb136c1db53b79408bf0483dc1e8').call()
+      setBalance(new BigNumber(bal))
+    }
+
+    fetchBalance()
+  }, [tokenAddress, slowRefresh])
+
+  return balance
+}
+
 export const useStakedBalance = (tokenAddress: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
   const { slowRefresh } = useRefresh()

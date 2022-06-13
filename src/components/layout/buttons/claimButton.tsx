@@ -1,8 +1,8 @@
 import styled, {keyframes} from 'styled-components'
 
 const claimButton = styled.button`
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 500;
     background: transparent;
     color: #EEEEEE;
     justify-content: center;

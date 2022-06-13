@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
 import ModalActions from 'components/modals/components/modal/modalActions'
 import TokenInput from 'components/modals/components/modal/input'
 import ModalButton from 'components/layout/buttons/modalButton'
+import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 import Modal from './components/modal'
 import 'react-toastify/dist/ReactToastify.css'
 import useI18n from '../../hooks/useI18n'
@@ -35,30 +35,6 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
     setVal(fullBalance)
   }, [fullBalance, setVal])
 
-  const notifySuccess = () =>
-    toast.success('Success!', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-
-  const notifyPending = () =>
-    toast.info('Confirm transaction...', {
-      position: 'top-left',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    })
-
   return (
     <Modal title={`${TranslateString(999, 'Bond')} ${tokenName}`} onDismiss={onDismiss}>
       <TokenInput
@@ -70,27 +46,19 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
       />
       <ModalActions>
         <ModalButton
-          style={{ justifyContent: 'center' }}
           onClick={async () => {
             notifyPending()
-            setPendingTx(true)
-            await onConfirm(val)
-            setPendingTx(false)
-            notifySuccess()
-            onDismiss()
+            try {
+              setPendingTx(true)
+              await onConfirm(val)
+              setPendingTx(false)
+              notifySuccess()
+              onDismiss()
+            } catch (e) {
+              notifyError()
+            }
           }}
         >
-          <ToastContainer
-            position="top-left"
-            autoClose={10000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
           Confirm
         </ModalButton>
       </ModalActions>

@@ -1,21 +1,23 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
-import Modal from 'components/modals/components/modal'
 import ModalActions from 'components/modals/components/modal/modalActions'
-import { getFullDisplayBalance } from 'utils/formatBalance'
 import 'react-toastify/dist/ReactToastify.css'
+import Modal from 'components/modals/components/modal/Modal'
 import ModalButton from 'components/layout/buttons/modalButton'
+import styled, { keyframes } from 'styled-components'
 import TokenInput from 'components/modals/components/modal/input'
+import { getFullDisplayBalance } from 'utils/formatBalance'
 import { notifyError, notifyPending, notifySuccess } from 'components/Toasts'
 
-interface DepositModalProps {
+interface WithdrawModalProps {
   max: BigNumber
   onConfirm: (amount: string) => void
   onDismiss?: () => void
+  pricePerShare?: BigNumber
   tokenName?: string
 }
 
-const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss }) => {
+const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const fullBalance = useMemo(() => {
@@ -32,7 +34,16 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss }) 
   }, [fullBalance, setVal])
 
   return (
-    <Modal title="Stake RVRS" onDismiss={onDismiss}>
+    <Modal title="Unstake RVRS" onDismiss={onDismiss}>
+
+
+      <TypographyAlert>
+Are you sure?
+        <br/>
+        
+          You will lose all of your veRVRS
+          
+        </TypographyAlert>
       <TokenInput onSelectMax={handleSelectMax} onChange={handleChange} value={val} max={fullBalance} symbol="RVRS" />
       <ModalActions>
         <ModalButton
@@ -52,8 +63,19 @@ const StakeModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss }) 
           Confirm
         </ModalButton>
       </ModalActions>
+
+      
     </Modal>
   )
 }
 
-export default StakeModal
+const TypographyAlert = styled.p`
+  font-size: 12px;
+  color: yellow;
+  font-weight: 400;
+  min-width: 90px;
+  margin-top: 30px;
+  margin-right: 5px;
+`
+
+export default WithdrawModal

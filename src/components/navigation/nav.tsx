@@ -16,26 +16,12 @@ const Nav = (props) => {
   return (
     <MenuContainer>
       <ButtonGroup style={{ marginRight: '20px' }}>
-          <NavButton2 style={{marginLeft:'0px'}}>
+        <Ripples>
+          <NavButton2
+            style={{ marginRight: '-5px;' }}
+          >
             veRVRS
           </NavButton2>
-        <Ripples>
-          <NavButton
-            as={StyledNavLink}
-            to="/bonds"
-            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/bonds')}
-          >
-            Bonds
-          </NavButton>
-        </Ripples>
-        <Ripples>
-          <NavButton
-            as={StyledNavLink}
-            to="/staking"
-            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/staking')}
-          >
-            Staking
-          </NavButton>
         </Ripples>
         <Ripples>
           <NavButton
@@ -46,8 +32,28 @@ const Nav = (props) => {
             Airdrop
           </NavButton>
         </Ripples>
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/liquidity"
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/liquidity')}
+          >
+            Liquidity
+          </NavButton>
+        </Ripples>
+        <Ripples>
+          <NavButton
+            as={StyledNavLink}
+            to="/bonds"
+            isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/bonds')}
+          >
+            Bonds
+          </NavButton>
+        </Ripples>
       </ButtonGroup>
-      
+
+      {/*
+
       <ButtonGroup>
         {account != null && account.length > 1 ? (
           <Flex style={{ alignItems: 'center' }}>
@@ -62,7 +68,7 @@ const Nav = (props) => {
               </ChainButton>
             </div>
             <WalletButton
-              style={{ justifyContent: 'space-between', alignItems: 'center', marginRight:'0px' }}
+              style={{ justifyContent: 'space-between', alignItems: 'center', marginRight: '0px' }}
               as={WalletNavLink}
               to="/dashboard"
               isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/dashboard')}
@@ -86,7 +92,7 @@ const Nav = (props) => {
               </ChainButton>
             </div>
             <WalletButton
-              style={{background:'white', color:'black'}}
+              style={{ background: 'white', color: 'black' }}
               as={WalletNavLink}
               to="/dashboard"
               isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/dashboard')}
@@ -99,6 +105,7 @@ const Nav = (props) => {
           </Flex>
         )}
       </ButtonGroup>
+        */ }
     </MenuContainer>
   )
 }
@@ -187,9 +194,23 @@ const NavButton2 = styled.p`
   font-size: 16px;
   font-weight: 500;
   padding: 8px;
-  color: grey;
+  transition: 0.3s ease-in-out;
   margin-right: 2px;
-  cursor: not-allowed
+  color: grey;
+  &:hover {
+    background: white;
+    color: #121212;
+  }
+`
+
+const New = styled.div`
+  font-size: 10px;
+  font-weight: 500;
+  color: white;
+  display: inline-flex;
+  background: #6699a3;
+  padding: 1px;
+  height: 10px;
 `
 
 const activeClassName = 'ACTIVE'

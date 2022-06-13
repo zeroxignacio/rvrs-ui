@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import autoRvrsAbi from "config/abi/autorvrs.json";
+import autoRvrsAbi from 'config/abi/autorvrs.json'
 import poolsConfig from 'config/constants/stake'
-import { fetchPoolsAllowance, fetchUserBalances, fetchUserStakeBalances } from './fetchPoolsUser'
+import { fetchPoolsAllowance, fetchUserBalances, fetchUserStakeBalances, fetchUserVeRvrsBalances } from './fetchPoolsUser'
 import { PoolsState, Pool } from '../types'
-import { fetchPoolsTotalStaking } from "./fetchPools";
-import { getAutoRvrsAddress } from "../../utils/addressHelpers";
-import multicall from "../../utils/multicall";
+import { fetchPoolsTotalStaking, fetchPoolsVeRvrsData } from './fetchPools'
+import { getAutoRvrsAddress } from '../../utils/addressHelpers'
+import multicall from '../../utils/multicall'
 
 const initialState: PoolsState = { data: [...poolsConfig] }
 
@@ -20,6 +20,18 @@ export const PoolsSlice = createSlice({
         const livePoolData = livePoolsData.find((entry) => entry.sousId === pool.sousId)
         return { ...pool, ...livePoolData }
       })
+    },
+    setPoolsVeRvrsUserData: (state, action) => {
+      const userData = action.payload
+      state.data = state.data.map((pool) => {
+        const userPoolData = userData.find((entry) => entry.sousId === pool.sousId)
+        return { ...pool, veRvrsUserData: userPoolData }
+      })
+    },
+    updatePoolsVeRvrsUserData: (state, action) => {
+      const { field, value, sousId } = action.payload
+      const index = state.data.findIndex((p) => p.sousId === sousId)
+      state.data[index] = { ...state.data[index], veRvrsUserData: { ...state.data[index].veRvrsUserData, [field]: value } }
     },
     setPoolsUserData: (state, action) => {
       const userData = action.payload
@@ -37,19 +49,44 @@ export const PoolsSlice = createSlice({
 })
 
 // Actions
-export const { setPoolsPublicData, setPoolsUserData, updatePoolsUserData } = PoolsSlice.actions
+export const {
+  setPoolsPublicData,
+  setPoolsUserData,
+  setPoolsVeRvrsUserData,
+  updatePoolsUserData,
+  updatePoolsVeRvrsUserData
+} = PoolsSlice.actions
 
 // Thunks
 export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
   const { userInfo, pricePerFullShare } = await fetchPoolsTotalStaking()
-
+  const veRvrsData =  await fetchPoolsVeRvrsData()
+  const veRvrsPublicDatas = {
+    totalStaked: veRvrsData[0][0].toString(),
+    totalSupply: veRvrsData[1][0].toString(),
+    generationRate: veRvrsData[2][0].toString(),
+    maxCap: veRvrsData[3][0].toString(),
+    withdrawFee: veRvrsData[4][0].toString(),
+    withdrawFeeTime: veRvrsData[5][0].toString()
+  }
+  const _18_ZEROS = '000000000000000000'
+  const veRvrsPublicDatasTest = {
+    totalStaked: `6000000${_18_ZEROS}`,
+    totalSupply: `100000${_18_ZEROS}`,
+    generationRate: `10000${_18_ZEROS}`,
+    maxCap: `4${_18_ZEROS}`,
+    withdrawFee: `20${_18_ZEROS}`,
+    withdrawFeeTime: `12${_18_ZEROS}`,
+  }
   const liveData = poolsConfig.map((pool) => {
     return {
       ...pool,
       totalStaked: userInfo[0].amount,
-      pricePerShare: pricePerFullShare[0].toString()
+      pricePerShare: pricePerFullShare[0].toString(),
+      veRvrsPublicData: veRvrsPublicDatas // change to veRvrsPublicDatas on la
     }
   })
+  console.log('fetchPoolsPublicDataAsync', veRvrsPublicDatas)
 
   dispatch(setPoolsPublicData(liveData))
 }
@@ -72,17 +109,43 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
   const stakingTokenBalances = await fetchUserBalances(account)
   const stakedBalances = await fetchUserStakeBalances(account)
   const userInfo = await fetchPoolsUserInfo(account)
+  const veRvrsUserInfo = await fetchUserVeRvrsBalances(account)
 
   const userData = poolsConfig.map((pool) => ({
     sousId: pool.sousId,
     allowance: allowances[pool.sousId],
-    stakingTokenBalance: stakingTokenBalances[pool.sousId],
-    stakedBalance: stakedBalances[pool.sousId],
-    lastDepositedTime: userInfo[pool.sousId].lastDepositedTime,
-    lastUserActionTime: userInfo[pool.sousId].lastUserActionTime,
-    reverseAtlastUserAction: userInfo[pool.sousId].reverseAtlastUserAction,
+    stakingTokenBalance: stakingTokenBalances[0],
+    stakedBalance: stakedBalances[0],
+    lastDepositedTime: userInfo[0].lastDepositedTime,
+    lastUserActionTime: userInfo[0].lastUserActionTime,
+    reverseAtlastUserAction: userInfo[0].reverseAtlastUserAction,
   }))
 
+  const veRvrsUserData = poolsConfig.map((pool) => ({
+    sousId: pool.sousId,
+    allowance: allowances[1],
+    rvrsStaked: veRvrsUserInfo[0].amount.toString(),
+    veRvrsBalance: veRvrsUserInfo[1][0].toString(),
+    pendingRvrs: veRvrsUserInfo[2][0].toString(),
+    pendingVeRvrs: veRvrsUserInfo[3][0].toString(),
+    lastClaim: veRvrsUserInfo[0].lastClaim.toString(),
+    lastDeposit: veRvrsUserInfo[0].lastDeposit.toString(),
+  }))
+  console.log('veRvrsUserData', veRvrsUserData)
+
+  const _18_ZEROS = '000000000000000000'
+  const veRvrsUserDataTest = poolsConfig.map((pool) => ({
+    sousId: pool.sousId,
+    allowance: allowances[1],
+    rvrsStaked: `0000${_18_ZEROS}`,
+    veRvrsBalance: `0000${_18_ZEROS}`,
+    pendingRvrs: `10${_18_ZEROS}`,
+    pendingVeRvrs: `123${_18_ZEROS}`,
+    lastClaim: '1651536000', // use this to get timestamps: https://www.epochconverter.com/
+    lastDeposit: '1651449600', // last deposit is 1 day before last claim
+  }))
+
+  dispatch(setPoolsVeRvrsUserData(veRvrsUserData))
   dispatch(setPoolsUserData(userData))
 }
 
@@ -94,12 +157,12 @@ export const updateUserAllowance = (sousId: string, account: string) => async (d
 
 export const updateUserBalance = (sousId: string, account: string) => async (dispatch) => {
   const tokenBalances = await fetchUserBalances(account)
-  dispatch(updatePoolsUserData({ sousId, field: 'stakingTokenBalance', value: tokenBalances[sousId] }))
+  dispatch(updatePoolsUserData({ sousId, field: 'stakingTokenBalance', value: tokenBalances[0] }))
 }
 
 export const updateUserStakedBalance = (sousId: string, account: string) => async (dispatch) => {
   const stakedBalances = await fetchUserStakeBalances(account)
-  dispatch(updatePoolsUserData({ sousId, field: 'stakedBalance', value: stakedBalances[sousId] }))
+  dispatch(updatePoolsUserData({ sousId, field: 'stakedBalance', value: stakedBalances[0] }))
 }
 
 /* export const updateUserPendingReward = (sousId: string, account: string) => async (dispatch) => {

@@ -16,17 +16,17 @@ const NOTCONNECTED = (props) => {
     <Page>
       <CardContainer>
         <Card>
-          <TypographyTitle disabled={rvrs.isLocked.unlockWalletButton} onClick={onPresentConnectModal} {...props}>
-            Connect to Reverse
-          </TypographyTitle>
-
           <TypographySmall>
-            
-            ...and gain access to decentralized investments
+            reverse is currently undergoing a protocol migration
             <br />
-            on Harmony, Avalanche, Ethereum, and beyond
+            please join the discord to stay up to date!
           </TypographySmall>
-          <br/>
+          <TypographySmall style={{color: 'red'}}>
+            reverse is undergoing a token migration.
+            <br />
+            please join the discord to stay up to date
+          </TypographySmall>
+          <br />
           <Flex alignItems="center" justifyContent="center">
             <a
               style={{ marginLeft: '-5px' }}
@@ -38,7 +38,12 @@ const NOTCONNECTED = (props) => {
               <TypographyBold>Docs</TypographyBold>
             </a>
             ∙
-            <a target="_blanK" rel="noreferrer" href="https://paladinsec.co/projects/reverse-protocol/" className="nav-links">
+            <a
+              target="_blanK"
+              rel="noreferrer"
+              href="https://paladinsec.co/projects/reverse-protocol/"
+              className="nav-links"
+            >
               <TypographyBold>Security Audit</TypographyBold>
             </a>
             ∙
@@ -105,8 +110,6 @@ const pulse = keyframes`
     text-shadow: 2px 2px #6699A3;
   }
 `
-
-
 
 const TypographyTitle = styled.h1`
   font-size: 20px;

@@ -53,6 +53,7 @@ const MenuBottom = (props) => {
             >
               <TypographyBold>Audit</TypographyBold>
             </a>
+            {/*
             ∙
             <a
               target="_blanK"
@@ -70,9 +71,8 @@ const MenuBottom = (props) => {
               className="nav-links"
             >
               <TypographyBold>Fiat Onramp</TypographyBold>
-            </a>
-          </Flex>
-          {/* <object type="image/svg+xml" data="/images/reverse.svg" width="120px" style={{ marginTop: "-20px" }}>&nbsp;</object> */}
+            </a> */}
+          </Flex>  
         </Flex>
         <Typography>
           2022 Reverse Protocol.
